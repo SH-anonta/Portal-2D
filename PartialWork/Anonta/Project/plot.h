@@ -1,0 +1,14 @@
+#ifndef PLOT_H
+#define PLOT_H
+
+// all the plotting helper functions
+
+void plot(double x, double y){
+    glVertex3f(x,y, 0);
+}
+
+void plot(vector<Point> points){
+}
+
+
+#endif
