@@ -1,12 +1,25 @@
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <iostream>
+
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#define SS printf("AAAAAAAAAAAAA");
+using namespace std;
+
+int CC_= 0;
+#define SS printf("AAAAAAAAAAAAAAAAAAA( %d )>>\n",++CC_
+#define DD(x_) cout<<">>>>( "<<++CC_<<" ) "<<#x_<<": "<<x_<<endl;
+
+
+
+void plot(double x, double y){
+    glVertex3f(x/100, y/100, 0.0);
+}
+
 
 
 void drawVerticalLine(double x){
-    glColor3f(.8,.8,.8);
-
     glBegin(GL_LINES);
     plot(x, 0);
     plot(x, 1);
@@ -14,11 +27,9 @@ void drawVerticalLine(double x){
 }
 
 void drawHorizontalLine(double y){
-    glColor3f(.8,.8,.8);
-
     glBegin(GL_LINES);
-    plot(-3, y);
-    plot(3, y);
+    plot(0, y);
+    plot(1, y);
     glEnd();
 }
 
@@ -42,5 +53,6 @@ void drawGrid(){
 
     glEnd();
 }
+
 
 #endif

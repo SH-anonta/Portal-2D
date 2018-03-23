@@ -10,6 +10,7 @@ using namespace std;
 #include "./primitives.h"
 #include "./plot.h"
 #include "./debug.h"
+#include "./window.h"
 
 #ifndef INCLUDE_ME_H
 #define INCLUDE_ME_H
