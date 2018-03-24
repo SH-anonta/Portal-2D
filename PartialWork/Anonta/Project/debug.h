@@ -1,15 +1,15 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#define SS printf("AAAAAAAAAAAAA");
+#define SS printf("AAAAAAAAAAAAA\n");
 
 
 void drawVerticalLine(double x){
     glColor3f(.8,.8,.8);
 
     glBegin(GL_LINES);
-    plot(x, 0);
-    plot(x, 1);
+    plot(x, -10);
+    plot(x, 10);
     glEnd();
 }
 

@@ -7,11 +7,14 @@ float _angle = 0.0;
 float _cameraAngle = 0.0;
 float _ang_tri = 0.0;
 float angle= 0.0;
+
 // this is where all drawing code belongs
 void drawScreen(){
 //    drawHorizontalLine(.5);
+    glPointSize(5);
 
     w_engine.execute();
+//    drawVerticalLine();
 
 //    glPushMatrix(); //Save the transformations performed thus far
 //	glTranslatef(1.0, 1.0, 0.0);
@@ -103,7 +106,7 @@ int main(int argc, char** argv){
     //Initialize GLUT
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(400, 400);
+	glutInitWindowSize(800, 700);
 	glutInitWindowPosition(200,100);
 
     //Create the window

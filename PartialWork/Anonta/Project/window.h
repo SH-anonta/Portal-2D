@@ -56,27 +56,64 @@ public:
 
 class GameWindow: public Window{
 public:
-    Wall wall= Wall::createWall(3, .1);
+    Map game_map = createMapTheVoid();
+    Player player1;
 
     GameWindow(): Window(){
         printf("Game window loaded\n");
+        player1= Player(game_map.p1position);
     }
 
     void execute() override{
+
+//        if(player1.move_up){
+//            SS
+//        }
+
         drawMap();
+        updatePlayerPositions();
+        drawPlayers();
+    }
+
+    void updatePlayerPositions(){
+//        printf("%f %f\n", player1.position.x, player1.next_position.x);
+        player1.calculateNextPosition();
+        player1.updatePosition();
     }
 
     void drawMap(){
-        wall.draw();
+        game_map.draw();
     }
+
+    void drawPlayers(){
+        player1.draw();
+    }
+
 
     void keyPress(unsigned char key, int x, int y) override{
 //        printf("%c\n", key);
 
         // when enter is pressed
         if(key == 13){
-            printf("Game SCREEN!\n");
+           printf("Game SCREEN!\n");
         }
+        else if(key == 'w'){
+            player1.move_up = !player1.move_up;
+            player1.move_down = false;
+        }
+        else if(key == 'a'){
+            player1.move_left = !player1.move_left ;
+            player1.move_right = false;
+        }
+        else if(key == 's'){
+            player1.move_down = !player1.move_down;
+            player1.move_up = false;
+        }
+        else if(key == 'd'){
+            player1.move_right = !player1.move_right ;
+            player1.move_left = false;
+        }
+
     }
 
     void specialKeyPress(int key, int x, int y) override{
