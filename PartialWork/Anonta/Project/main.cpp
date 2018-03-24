@@ -1,28 +1,52 @@
 #include "./include_me.h"
 
-float _cameraAngle = 0.0;
-WindowEngine w_engine;
+WindowEngine w_engine(new SplashScreenWindow());
 
-double angle= 0;
+float _angle = 0.0;
+float _cameraAngle = 0.0;
+float _ang_tri = 0.0;
+float angle= 0.0;
 // this is where all drawing code belongs
 void drawScreen(){
-    drawHorizontalLine(.5);
-
-    angle+= .5;
-//    printf("%f\n", angle);
-
-    glRotated(angle, 0,0,1);
-    glPushMatrix(); //Save the transformations performed thus far
-
-    glBegin(GL_LINES);
-    plot(.5, .5);
-    plot(3, .5);
-    glEnd();
+//    drawHorizontalLine(.5);
 
     w_engine.execute();
 
-    glPopMatrix(); //Undo the move to the center of the triangle
+    glPushMatrix(); //Save the transformations performed thus far
+	glTranslatef(1.0, 1.0, 0.0);
+	//glScalef(0.5,0.5,0); //Move to the center of the trapezoid
+    glRotatef(_ang_tri ,0.0, 0.0, 1.0); //Rotate about the z-axis
+
+	glBegin(GL_TRIANGLES);
+
+	//Triangle
+	glVertex3f(0.5, -0.5, 0.0);
+	glVertex3f(0.0, 0.5, 0.0);
+	glVertex3f(-0.5, -0.5, 0.0);
+
+	glEnd();
 }
+
+
+void update(int value) {
+//	glutPostRedisplay();
+//	glutTimerFunc(25, update, 0);
+
+    _angle += 2.0f;
+	if (_angle > 360) {
+		_angle -= 360;
+	}
+	_ang_tri += 2.0f;
+	if (_ang_tri > 360) {
+		_ang_tri -= 360;
+	}
+
+	glutPostRedisplay(); //Tell GLUT that the display has changed
+
+	//Tell GLUT to call update again in 25 milliseconds
+	glutTimerFunc(25, update, 0);
+}
+
 
 //DO NOT TOUCH THIS
 // put drawing code in drawScreen function
@@ -73,10 +97,6 @@ void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 }
 
-void update(int value) {
-	glutPostRedisplay();
-	glutTimerFunc(25, update, 0);
-}
 
 int main(int argc, char** argv){
     //Initialize GLUT
