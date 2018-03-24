@@ -1,6 +1,7 @@
 #include "./include_me.h"
 
-WindowEngine w_engine(new SplashScreenWindow());
+WindowEngine w_engine(new GameWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 
 float _angle = 0.0;
 float _cameraAngle = 0.0;
@@ -12,19 +13,19 @@ void drawScreen(){
 
     w_engine.execute();
 
-    glPushMatrix(); //Save the transformations performed thus far
-	glTranslatef(1.0, 1.0, 0.0);
-	//glScalef(0.5,0.5,0); //Move to the center of the trapezoid
-    glRotatef(_ang_tri ,0.0, 0.0, 1.0); //Rotate about the z-axis
-
-	glBegin(GL_TRIANGLES);
-
-	//Triangle
-	glVertex3f(0.5, -0.5, 0.0);
-	glVertex3f(0.0, 0.5, 0.0);
-	glVertex3f(-0.5, -0.5, 0.0);
-
-	glEnd();
+//    glPushMatrix(); //Save the transformations performed thus far
+//	glTranslatef(1.0, 1.0, 0.0);
+//	//glScalef(0.5,0.5,0); //Move to the center of the trapezoid
+//    glRotatef(_ang_tri ,0.0, 0.0, 1.0); //Rotate about the z-axis
+//
+//	glBegin(GL_TRIANGLES);
+//
+//	//Triangle
+//	glVertex3f(0.5, -0.5, 0.0);
+//	glVertex3f(0.0, 0.5, 0.0);
+//	glVertex3f(-0.5, -0.5, 0.0);
+//
+//	glEnd();
 }
 
 

@@ -56,6 +56,7 @@ public:
 
 class GameWindow: public Window{
 public:
+    Wall wall= Wall::createWall(3, .1);
 
     GameWindow(): Window(){
         printf("Game window loaded\n");
@@ -66,7 +67,7 @@ public:
     }
 
     void drawMap(){
-
+        wall.draw();
     }
 
     void keyPress(unsigned char key, int x, int y) override{
