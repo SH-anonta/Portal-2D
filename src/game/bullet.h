@@ -1,18 +1,26 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-Color DEFAULT_BULLET_COLOR = Color(1,1,1);
+Color DEFAULT_BULLET_COLOR = Color(1,.1,.1);
+float BULLET_SPEED= .05;
+
 class Bullet{
 public:
     Point position;
+    float x_increment;
+    float y_increment;
 
-    Bullet(Point& position){
+    Bullet(Point& position, float x_increment, float y_increment){
         this->position = position;
+        this->x_increment = x_increment;
+        this->y_increment = y_increment;
     }
 
-    Bullet(double x, double y){
+    Bullet(double x, double y, float x_increment, float y_increment){
         position.x= x;
         position.y= y;
+        this->x_increment = x_increment;
+        this->y_increment = y_increment;
     }
 
     void draw(){
@@ -20,6 +28,11 @@ public:
         glBegin(GL_POINTS);
         plot(position);
         glEnd();
+    }
+
+    void updatePosition(){
+        position.x += x_increment* BULLET_SPEED;
+        position.y += y_increment* BULLET_SPEED;
     }
 };
 

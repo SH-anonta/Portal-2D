@@ -5,7 +5,7 @@ Color DEFAULT_PLAYER_COLOR = Color(.8,.2,.1);
 double PLAYER_SPEED = .05;   // positions per iteration
 
 enum Direction{
-    East, West, North, South, NorthEast, NorthWest, SouthEast, SouthWest
+    Up, Down, Left, Right
 };
 
 //struct Direction{
@@ -19,7 +19,7 @@ class Player{
 public:
     static constexpr float move_step= .05;
 
-    Direction direction = North;
+    Direction direction = Up;
     Point position;
     Point next_position;    // next position that will be occupied by the player if the game allows it
     Color color;
@@ -64,22 +64,38 @@ public:
     // movement methods
     void moveUp(){
         next_position.y+= move_step;
-        direction = North;
+        direction = Up;
     }
 
     void moveDown(){
         next_position.y-= move_step;
-        direction = South;
+        direction = Down;
     }
 
     void moveLeft(){
         next_position.x-= move_step;
-        direction = West;
+        direction = Left;
     }
 
     void moveRight(){
         next_position.x+= move_step;
-        direction = East;
+        direction = Right;
+    }
+
+    Bullet shootBullet(){
+        int x_inc= 0;
+        int y_inc= 0;
+
+        if(direction == Up)
+            y_inc= 1;
+        else if(direction == Down)
+            y_inc= -1;
+        else if(direction == Left)
+            x_inc= -1;
+        else if(direction == Right)
+            x_inc= 1;
+
+        return Bullet(position, x_inc, y_inc);
     }
 };
 

@@ -86,13 +86,9 @@ public:
     }
 
     void execute() override{
-
-//        if(player1.move_up){
-//            SS
-//        }
-
         drawMap();
         updatePlayerPositions();
+        updateBulletPositions();
         drawPlayers();
     }
 
@@ -142,6 +138,31 @@ public:
 
     }
 
+    void updateBulletPositions(){
+        //spawn new bullets
+
+        printf("len: %d\n", bullets.size());
+        if(key_pressed[' ']){
+            Bullet new_bullet =  player1.shootBullet();
+            bullets.push_front(new_bullet);
+        }
+        // todo add event handler for player2 shooting
+
+        auto bullets_end = bullets.end();
+        for(auto bullet =  bullets.begin(); bullet != bullets_end; bullet++){
+
+            bullet->updatePosition();
+
+            if(game_map.detectCollision(*bullet)){
+                bullet= bullets.erase(bullet);
+            }
+            else{
+                bullet->draw();
+            }
+
+        }
+    }
+
     void drawMap(){
         game_map.draw();
     }
@@ -160,7 +181,7 @@ public:
 
         key_pressed[key]= true;
 
-//        printf("press: %c\n", key);
+        printf("press: %c\n", key);
 
         if(key == 13){
         // when enter is pressed

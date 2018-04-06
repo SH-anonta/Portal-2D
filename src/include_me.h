@@ -11,10 +11,10 @@ using namespace std;
 #include "./primitives.h"
 #include "./plot.h"
 #include "./debug.h"
+#include "./game/bullet.h"
 #include "./game/player.h"
 #include "./game/maps.h"
 #include "./game/game.h"
-#include "./game/bullet.h"
 #include "./window.h"
 
 #ifndef INCLUDE_ME_H

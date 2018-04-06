@@ -52,6 +52,14 @@ public:
                points[0].y <= player.next_position.y &&
                points[3].y >= player.next_position.y;
     }
+
+    bool detectCollision(Bullet& bullet){
+
+        return points[0].x <= bullet.position.x &&
+               points[1].x >= bullet.position.x &&
+               points[0].y <= bullet.position.y &&
+               points[3].y >= bullet.position.y;
+    }
 };
 
 class Map{
@@ -76,6 +84,13 @@ public:
     bool detectCollision(Player& player){
         for(int i= 0, len= walls.size(); i<len; i++){
             if(walls[i].detectCollision(player)) return true;
+        }
+        return false;
+    }
+
+    bool detectCollision(Bullet& bullet){
+        for(int i= 0, len= walls.size(); i<len; i++){
+            if(walls[i].detectCollision(bullet)) return true;
         }
         return false;
     }
