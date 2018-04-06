@@ -33,17 +33,6 @@ void drawScreen(){
 
 
 void update(int value) {
-//	glutPostRedisplay();
-//	glutTimerFunc(25, update, 0);
-
-    _angle += 2.0f;
-	if (_angle > 360) {
-		_angle -= 360;
-	}
-	_ang_tri += 2.0f;
-	if (_ang_tri > 360) {
-		_ang_tri -= 360;
-	}
 
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 
@@ -85,21 +74,32 @@ void keyHandler(unsigned char key, int x, int y){
 
 // handles special key presses line arrow keys
 void specialKeyHandler(int key, int x, int y){
-    w_engine.keyPress(key, x, y);
+    w_engine.specialKeyPress(key, x, y);
 }
 
+void keyUpHandler(unsigned char key, int x, int y){
+    w_engine.keyUp(key, x, y);
+}
+
+void idle(){
+    glutPostRedisplay();
+}
 
 void setCallbacks(){
     glutDisplayFunc(updateScreen);
 	glutReshapeFunc(handleResize);
 	glutKeyboardFunc(keyHandler);
 	glutSpecialFunc(specialKeyHandler);
+	glutKeyboardUpFunc(keyUpHandler);
+
+//	glutIdleFunc(idle);
 }
 
 //Initializes 3D rendering
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 }
+
 
 
 int main(int argc, char** argv){
