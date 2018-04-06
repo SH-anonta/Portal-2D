@@ -125,8 +125,20 @@ public:
             player2.moveRight();
         }
 
-        player1.updatePosition();
-        player2.updatePosition();
+
+        if(!game_map.detectCollision(player1)){
+            player1.updatePosition();
+        }
+        else{
+            player1.resetNextPosition();
+        }
+        if(!game_map.detectCollision(player2)){
+            player2.updatePosition();
+        }
+        else{
+            player2.resetNextPosition();
+        }
+
     }
 
     void drawMap(){
@@ -147,55 +159,29 @@ public:
 
         key_pressed[key]= true;
 
-        printf("press: %c\n", key);
+//        printf("press: %c\n", key);
 
         if(key == 13){
         // when enter is pressed
            printf("Game SCREEN!\n");
         }
-//        else if(key == 'w'){
-//            player1.moveUp();
-//        }
-//        else if(key == 'a'){
-//            player1.moveLeft();
-//        }
-//        else if(key == 's'){
-//            player1.moveDown();
-//        }
-//        else if(key == 'd'){
-//            player1.moveRight();
-//        }
-
-//        glutPostRedisplay();
     }
 
     void specialKeyPress(int key, int x, int y) override{
 
-//        printf("-> %d\n", key);
-
-        key_pressed[key]= true;
-//        if(key == GLUT_KEY_UP){
-//            player2.moveUp();
-//        }
-//        else if(key == GLUT_KEY_DOWN){
-//            player2.moveDown();
-//        }
-//        else if(key == GLUT_KEY_LEFT){
-//            player2.moveLeft();
-//        }
-//        else if(key == GLUT_KEY_RIGHT){
-//            player2.moveRight();
-//        }
         if(key == GLUT_KEY_F12){
             printf("TODO: Load Show help screen\n");
             // todo, show help screen
         }
 
-//        glutPostRedisplay();
     }
 
     void keyUp(unsigned char key, int x, int y) override{
-        printf("Release: %c\n", key);
+//        printf("Release: %c\n", key);
+
+        if(key >= 'A' && key <= 'Z'){
+            key += ' ';
+        }
         key_pressed[key]= false;
     }
 };
