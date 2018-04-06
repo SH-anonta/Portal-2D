@@ -3,10 +3,8 @@
 WindowEngine w_engine(new GameWindow());
 //WindowEngine w_engine(new SplashScreenWindow());
 
-float _angle = 0.0;
 float _cameraAngle = 0.0;
-float _ang_tri = 0.0;
-float angle= 0.0;
+
 
 // this is where all drawing code belongs
 void drawScreen(){

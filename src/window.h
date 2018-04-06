@@ -72,6 +72,8 @@ public:
     Player player1;
     Player player2;
 
+    list<Bullet> bullets;
+
     GameWindow(): Window(){
         printf("Game window loaded\n");
         player1= Player(game_map.p1position);
@@ -95,10 +97,8 @@ public:
     }
 
     void updatePlayerPositions(){
-//        printf("%f %f\n", player1.position.x, player1.next_position.x);
 
-//        printf(key_pressed[key] ? "true" : "false");
-
+        //player 1 keys
         if(key_pressed['w']){
             player1.moveUp();
         }
@@ -112,6 +112,7 @@ public:
             player1.moveRight();
         }
 
+        //player 2 keys
         if(key_pressed['5']){
             player2.moveUp();
         }

@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cmath>
 #include <vector>
+#include <list>
 #include <GL/gl.h>
 #include <GL/glut.h>
 
@@ -13,6 +14,7 @@ using namespace std;
 #include "./game/player.h"
 #include "./game/maps.h"
 #include "./game/game.h"
+#include "./game/bullet.h"
 #include "./window.h"
 
 #ifndef INCLUDE_ME_H
