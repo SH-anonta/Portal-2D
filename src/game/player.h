@@ -15,6 +15,8 @@ enum Direction{
 //    bool right;
 //};
 
+const double RELOAD_TIME= 0.1;    // in seconds
+
 class Player{
 public:
     static constexpr float move_step= .05;
@@ -24,8 +26,11 @@ public:
     Point next_position;    // next position that will be occupied by the player if the game allows it
     Color color;
 
+    clock_t last_bullet_shoot_time;
+
     Player(){
         printf("Player created\n");
+        last_bullet_shoot_time= 0;
     }
 
     Player(Point& pos){
@@ -33,12 +38,16 @@ public:
         position.x= next_position.x = pos.x;
         position.y= next_position.y = pos.y;
         color = DEFAULT_PLAYER_COLOR;
+
+        last_bullet_shoot_time= 0;
     }
 
     Player(double x, double y){
         printf("Player created\n");
         position.x= next_position.x = x;
         position.y= next_position.y = y;
+
+        last_bullet_shoot_time= 0;
     }
 
     // simply assign next_position to position
@@ -82,7 +91,27 @@ public:
         direction = Right;
     }
 
+
+    bool reloadTimeIsOver(){
+        clock_t time_now= clock();
+
+//        printf("time diff: %d\n", time_now - last_bullet_shoot_time);
+//        getchar();
+//        printf("time : %d\n", last_bullet_shoot_time);
+//        printf("time : %d\n", time_now);
+//        printf("time : %lf\n", (time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC);
+//        printf("time : %d\n", (time_now - last_bullet_shoot_time));
+//        printf("time : %f\n", double((time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC));
+
+
+
+        return double(double(time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC) > RELOAD_TIME;
+    }
+
     Bullet shootBullet(){
+        //record when this bullet was shot
+        last_bullet_shoot_time= clock();
+
         int x_inc= 0;
         int y_inc= 0;
 
@@ -97,6 +126,8 @@ public:
 
         return Bullet(position, x_inc, y_inc);
     }
+
+
 };
 
 #endif

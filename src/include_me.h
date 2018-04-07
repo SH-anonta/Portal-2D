@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <list>
+#include <ctime>
 #include <GL/gl.h>
 #include <GL/glut.h>
 
