@@ -12,15 +12,15 @@ public:
 
     Bullet(Point& position, float x_increment, float y_increment){
         this->position = position;
-        this->x_increment = x_increment;
-        this->y_increment = y_increment;
+        this->x_increment = x_increment*BULLET_SPEED;
+        this->y_increment = y_increment*BULLET_SPEED;
     }
 
     Bullet(double x, double y, float x_increment, float y_increment){
         position.x= x;
         position.y= y;
-        this->x_increment = x_increment;
-        this->y_increment = y_increment;
+        this->x_increment = x_increment*BULLET_SPEED;
+        this->y_increment = y_increment*BULLET_SPEED;
     }
 
     void draw(){
@@ -31,8 +31,8 @@ public:
     }
 
     void updatePosition(){
-        position.x += x_increment* BULLET_SPEED;
-        position.y += y_increment* BULLET_SPEED;
+        position.x += x_increment;
+        position.y += y_increment;
     }
 };
 

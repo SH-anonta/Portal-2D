@@ -88,6 +88,7 @@ public:
     void execute() override{
         drawMap();
         updatePlayerPositions();
+        spawnNewBullets();
         updateBulletPositions();
         drawPlayers();
     }
@@ -129,6 +130,7 @@ public:
         else{
             player1.resetNextPosition();
         }
+
         if(!game_map.detectCollision(player2)){
             player2.updatePosition();
         }
@@ -141,21 +143,17 @@ public:
     void spawnNewBullets(){
         if(key_pressed[' '] && player1.reloadTimeIsOver()){
             Bullet new_bullet =  player1.shootBullet();
-            bullets.push_front(new_bullet);
+            bullets.push_back(new_bullet);
         }
 
         if(key_pressed['0'] && player2.reloadTimeIsOver()){
             Bullet new_bullet =  player2.shootBullet();
-            bullets.push_front(new_bullet);
+            bullets.push_back(new_bullet);
         }
     }
 
     void updateBulletPositions(){
-        //spawn new bullets
-        spawnNewBullets();
-
 //        printf("len: %d\n", bullets.size());
-
 
         // todo add event handler for player2 shooting
 
@@ -169,7 +167,8 @@ public:
             if(game_map.detectCollision(*bullet)){
                 bullet= bullets.erase(bullet);
             }
-            else if(bullet != bullets_end){
+
+            if(bullet != bullets_end){
                 bullet->draw();
             }
             bullet++;

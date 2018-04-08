@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-Color DEFAULT_PLAYER_COLOR = Color(.8,.2,.1);
+Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
 double PLAYER_SPEED = .05;   // positions per iteration
 
 enum Direction{
