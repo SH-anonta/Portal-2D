@@ -30,6 +30,21 @@ public:
         glEnd();
     }
 
+    static void drawBullets(list<Bullet>& bullets){
+
+        auto bullets_end = bullets.end();
+        auto bullet =  bullets.begin();
+
+        setColor(DEFAULT_BULLET_COLOR);
+        glBegin(GL_POINTS);
+
+        while(bullet != bullets_end){
+            plot(bullet->position);
+            bullet++;
+        }
+        glEnd();
+    }
+
     void updatePosition(){
         position.x += x_increment;
         position.y += y_increment;

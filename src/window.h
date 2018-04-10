@@ -211,11 +211,10 @@ public:
                 bullet= bullets.erase(bullet);
             }
 
-            if(bullet != bullets_end){
-                bullet->draw();
-            }
             bullet++;
         }
+
+        Bullet::drawBullets(bullets);
     }
 
     void drawMap(){

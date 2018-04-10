@@ -14,7 +14,7 @@ void plot(Point& p){
     glVertex3f(p.x,p.y, 0);
 }
 
-void plot(vector<Point> points){
+void plot(vector<Point>& points){
 }
 
 void setColor(Color& c){
