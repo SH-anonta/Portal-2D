@@ -3,6 +3,7 @@
 
 class WindowEngine;
 class Window;
+class HelpScreenWindow;
 class GameWindow;
 
 class Window{
@@ -60,9 +61,50 @@ public:
 
     void switchWindow(Window* new_window){
         currentWindow = new_window;
+        currentWindow ->w_engine = this;    // very important
     }
 };
 
+
+class HelpScreenWindow: public Window{
+public :
+
+    Window* previous_window;    // this window gets loaded after user exits this window
+
+    HelpScreenWindow(Window* previous_window): Window(){
+        this->previous_window = previous_window;
+    }
+
+    void execute() override{
+
+
+//        printf("HELP SCREEN!\n");
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+//        printf("%c\n", key);
+
+        // when enter is pressed
+//        if(key == 13){
+//            printf("Help: Enter Key pressed\n");
+//            printf("->> %d\n", previous_window);
+//        }
+        if(key == 27){
+            // when escape is pressed
+            this->w_engine->switchWindow(previous_window);
+        }
+
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+//        printf("%d\n", key);
+
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+    }
+
+};
 
 class GameWindow: public Window{
 public:
@@ -191,6 +233,10 @@ public:
         if(key >= 'A' && key <= 'Z'){
             key += ' ';
         }
+//        if(key == 13){
+//            printf("GW: Enter Key pressed\n");
+//            printf("->> %d\n", this);
+//        }
 
         key_pressed[key]= true;
 
@@ -201,8 +247,7 @@ public:
     void specialKeyPress(int key, int x, int y) override{
 
         if(key == GLUT_KEY_F12){
-            printf("TODO: Load Show help screen\n");
-            // todo, show help screen
+            this->w_engine->switchWindow(new HelpScreenWindow(this));
         }
 
     }
@@ -246,7 +291,6 @@ public:
 
     }
 };
-
 
 
 
