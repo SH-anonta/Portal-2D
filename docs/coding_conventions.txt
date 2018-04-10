@@ -1,0 +1,45 @@
+# Naming conventions:
+
+	* Function name: camel case
+
+	example: createNewPlayer
+
+	* Class name: pascal case
+
+	example: GameMap
+
+	* variable name: all lower case with underscore
+
+	example: player_position
+
+	* constant variable name: all uppercase with underscore
+
+	example: DEFAULT_SPEED
+
+
+# Brace position:
+
+	* start brace should always be on the first line
+
+	example:
+
+	void getMap(){	// <- starting brace goes here, not in the next line
+		
+	}
+
+
+# Indentation:
+
+	* 1 Tab should equal 4 spaces
+
+
+# Don't do this:
+
+	void
+	funcName()
+	{
+		
+
+	}
+
+	//seek help instead of this...
