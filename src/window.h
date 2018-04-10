@@ -66,7 +66,8 @@ public:
 
 class GameWindow: public Window{
 public:
-    Map game_map = createMapTheVoid();
+//    Map game_map = createMapTheVoid();
+    Map game_map = createMap_NeedleEye();
     bool key_pressed[300];
 
     Player player1;
@@ -193,12 +194,8 @@ public:
 
         key_pressed[key]= true;
 
-        printf("press: %c\n", key);
+//        printf("press: %c\n", key);
 
-        if(key == 13){
-        // when enter is pressed
-           printf("Game SCREEN!\n");
-        }
     }
 
     void specialKeyPress(int key, int x, int y) override{

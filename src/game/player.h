@@ -1,25 +1,18 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
-double PLAYER_SPEED = .05;   // positions per iteration
 
 enum Direction{
     Up, Down, Left, Right
 };
 
-//struct Direction{
-//    bool up;
-//    bool down;
-//    bool left;
-//    bool right;
-//};
-
 const double RELOAD_TIME= 0.1;    // in seconds
+Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
+double PLAYER_SPEED = .01;   // positions per iteration
 
 class Player{
 public:
-    static constexpr float move_step= .05;
+    static constexpr float move_step= .03;
 
     Direction direction = Up;
     Point position;

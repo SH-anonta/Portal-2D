@@ -96,6 +96,7 @@ public:
     }
 };
 
+double WALL_THICKNESS = .1;
 
 Map createMapTheVoid(){
     Map gmap;
@@ -122,6 +123,21 @@ Map createMapTheVoid(){
     gmap.p2position = Point(2.5, 2.5);
 
     return gmap;
+}
+
+Map createMap_NeedleEye(){
+    Map m = createMapTheVoid();
+
+    Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
+    Wall middle_horizontal2= Wall::createWall(3, WALL_THICKNESS);
+
+    middle_horizontal1.translate(-3.0, 0);
+    middle_horizontal2.translate(.05, 0);
+
+    m.walls.push_back(middle_horizontal1);
+    m.walls.push_back(middle_horizontal2);
+
+    return m;
 }
 
 #endif
