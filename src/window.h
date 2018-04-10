@@ -130,9 +130,12 @@ public:
 
     void execute() override{
         drawMap();
-        updatePlayerPositions();
+
         spawnNewBullets();
         updateBulletPositions();
+        Bullet::drawBullets(bullets);   // draw all bullets at once
+
+        updatePlayerPositions();
         drawPlayers();
     }
 
@@ -198,8 +201,6 @@ public:
     void updateBulletPositions(){
 //        printf("len: %d\n", bullets.size());
 
-        // todo add event handler for player2 shooting
-
         auto bullets_end = bullets.end();
         auto bullet =  bullets.begin();
 
@@ -210,11 +211,10 @@ public:
             if(game_map.detectCollision(*bullet)){
                 bullet= bullets.erase(bullet);
             }
-
-            bullet++;
+            else{
+                bullet++;
+            }
         }
-
-        Bullet::drawBullets(bullets);
     }
 
     void drawMap(){
