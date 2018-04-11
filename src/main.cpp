@@ -11,7 +11,6 @@ void drawScreen(){
 //    drawHorizontalLine(.5);
     glPointSize(5);
 
-
 //    printf("->> %d\n", w_engine.currentWindow);
 
     w_engine.execute();
@@ -87,8 +86,6 @@ void setCallbacks(){
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 }
-
-
 
 int main(int argc, char** argv){
     //Initialize GLUT

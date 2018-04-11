@@ -2,7 +2,7 @@
 #define BULLET_H
 
 Color DEFAULT_BULLET_COLOR = Color(1,.1,.1);
-float BULLET_SPEED= .09;
+float BULLET_SPEED= .05;
 
 class Bullet{
 public:

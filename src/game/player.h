@@ -92,17 +92,15 @@ public:
     bool reloadTimeIsOver(){
         clock_t time_now= clock();
 
-//        printf("time diff: %d\n", time_now - last_bullet_shoot_time);
-//        getchar();
-//        printf("time : %d\n", last_bullet_shoot_time);
-//        printf("time : %d\n", time_now);
-//        printf("time : %lf\n", (time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC);
-//        printf("time : %d\n", (time_now - last_bullet_shoot_time));
-//        printf("time : %f\n", double((time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC));
-
-
-
         return double(double(time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC) > RELOAD_TIME;
+    }
+
+    void takeDamage(){
+        health -= 10;
+    }
+
+    bool detectHit(Bullet& bullet){
+        return abs(position.x - bullet.position.x) < .0001 && abs(position.y - bullet.position.y) < .0001;
     }
 
     Bullet shootBullet(){

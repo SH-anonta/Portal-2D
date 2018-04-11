@@ -266,6 +266,14 @@ public:
             if(game_map.detectCollision(*bullet)){
                 bullet= bullets.erase(bullet);
             }
+            else if(player1.detectHit(*bullet)){
+                bullet= bullets.erase(bullet);
+                player1.takeDamage();
+            }
+            else if(player2.detectHit(*bullet)){
+                bullet= bullets.erase(bullet);
+                player2.takeDamage();
+            }
             else{
                 bullet++;
             }
@@ -291,16 +299,9 @@ public:
 //            printf("->> %d\n", this);
 //        }
 
-        if(key == 'x'){
-            player1.health -= 10;
-        }
-        if(key == 'c'){
-            player2.health -= 10;
-        }
-
         key_pressed[key]= true;
-
 //        printf("press: %c\n", key);
+
 
     }
 
