@@ -8,12 +8,13 @@ enum Direction{
 
 const double RELOAD_TIME= 0.1;    // in seconds
 Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
+const int MAX_PLAYER_HEALTH= 100;
 double PLAYER_SPEED = .01;   // positions per iteration
 
 class Player{
 public:
-    static constexpr float move_step= .03;
-
+    static constexpr float move_step= .05;
+    int health;
     Direction direction = Up;
     Point position;
     Point next_position;    // next position that will be occupied by the player if the game allows it
@@ -24,6 +25,8 @@ public:
     Player(){
         printf("Player created\n");
         last_bullet_shoot_time= 0;
+        color = DEFAULT_PLAYER_COLOR;
+        health= MAX_PLAYER_HEALTH;
     }
 
     Player(Point& pos){
@@ -31,6 +34,7 @@ public:
         position.x= next_position.x = pos.x;
         position.y= next_position.y = pos.y;
         color = DEFAULT_PLAYER_COLOR;
+        health= MAX_PLAYER_HEALTH;
 
         last_bullet_shoot_time= 0;
     }
@@ -39,7 +43,7 @@ public:
         printf("Player created\n");
         position.x= next_position.x = x;
         position.y= next_position.y = y;
-
+        health= MAX_PLAYER_HEALTH;
         last_bullet_shoot_time= 0;
     }
 

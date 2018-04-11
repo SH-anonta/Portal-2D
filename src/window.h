@@ -129,14 +129,69 @@ public:
     }
 
     void execute() override{
+        drawHealthBars();
+
+        updatePlayerPositions();
+        drawPlayers();
+
         drawMap();
 
         spawnNewBullets();
         updateBulletPositions();
         Bullet::drawBullets(bullets);   // draw all bullets at once
 
-        updatePlayerPositions();
-        drawPlayers();
+    }
+
+    void drawHealthBars(){
+
+        float p1_bar_width = (float)player1.health / (float)MAX_PLAYER_HEALTH;
+        float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
+
+        float thickness = .15;
+        glColor4f(.9,.9,.9, .4);
+
+        // player 1 health bar
+
+        glPushMatrix();
+        glTranslatef(-2.7, 2.7, 0);
+        glScalef(2.5,1,1);
+
+        glBegin(GL_QUADS);
+        plot(0,0);
+        plot(p1_bar_width,0);
+        plot(p1_bar_width, thickness);
+        plot(0, thickness);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        plot(0,0);
+        plot(1,0);
+        plot(1, thickness);
+        plot(0, thickness);
+        glEnd();
+        glPopMatrix();
+
+        // player 2 health bar
+
+        glPushMatrix();
+        glScalef(2.5,1,1);
+        glTranslatef(0.13, 2.7, 0);
+
+        glBegin(GL_QUADS);
+        plot(1-p2_bar_width,0);
+        plot(1,0);
+        plot(1, thickness);
+        plot(1-p2_bar_width, thickness);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        plot(0,0);
+        plot(1,0);
+        plot(1, thickness);
+        plot(0, thickness);
+        glEnd();
+
+        glPopMatrix();
     }
 
     void updatePlayerPositions(){
@@ -226,7 +281,6 @@ public:
         player2.draw();
     }
 
-
     void keyPress(unsigned char key, int x, int y) override{
         // convert upper case characters to lower case character
         if(key >= 'A' && key <= 'Z'){
@@ -236,6 +290,13 @@ public:
 //            printf("GW: Enter Key pressed\n");
 //            printf("->> %d\n", this);
 //        }
+
+        if(key == 'x'){
+            player1.health -= 10;
+        }
+        if(key == 'c'){
+            player2.health -= 10;
+        }
 
         key_pressed[key]= true;
 

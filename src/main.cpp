@@ -99,6 +99,8 @@ int main(int argc, char** argv){
 
     //Create the window
 	glutCreateWindow("Portal 2D");
+//    glutFullScreen();
+
 	initRendering();
 
     setCallbacks();

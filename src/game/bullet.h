@@ -2,7 +2,7 @@
 #define BULLET_H
 
 Color DEFAULT_BULLET_COLOR = Color(1,.1,.1);
-float BULLET_SPEED= .05;
+float BULLET_SPEED= .09;
 
 class Bullet{
 public:
@@ -35,6 +35,7 @@ public:
         auto bullets_end = bullets.end();
         auto bullet =  bullets.begin();
 
+//        glPointSize(3);
         setColor(DEFAULT_BULLET_COLOR);
         glBegin(GL_POINTS);
 
