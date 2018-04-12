@@ -116,9 +116,9 @@ public:
     Player player2;
 
 //    Portal portal2= Portal(-1,0, Up);
-//    Portal portal1= Portal(-1,-2.8, Down);
-    Portal portal1= Portal(-2.89,-1, Left);
-    Portal portal2= Portal(3,-1, Right);
+    Portal portal1= Portal(-1,-2.8, Down);
+    Portal portal2= Portal(-2.89,-1, Left);
+//    Portal portal2= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;

@@ -97,7 +97,7 @@ public:
     }
 
     bool detectHit(Bullet& bullet){
-        return abs(position.x - bullet.position.x) < .0001 && abs(position.y - bullet.position.y) < .0001;
+        return abs(position.x - bullet.position.x) < .02 && abs(position.y - bullet.position.y) < .02;
     }
 
     Bullet shootBullet(){

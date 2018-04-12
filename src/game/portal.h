@@ -1,7 +1,7 @@
 #ifndef PORTAL_H
 #define PORTAL_H
 
-const float PORTAL_LENGTH= 0.4;
+const float PORTAL_LENGTH= 0.3;
 const float PORTAL_THICKNESS= 0.05;
 const Color DEFAULT_PORTAL_COLOR = Color(1, 0, 0);
 
@@ -98,23 +98,22 @@ public:
                 bullet.position = Point(p.x+adj.x, p.y+collision_point+adj.y);
             }
 
-
-//            bullet.position = Point(p.x+.1, p.y);
-
             bullet.updateDirection(getOppositeDirection(linked_portal->orientation));
         }
     }
 
     // get how much position should be adjusted for a given orientation in order to avoid collision after teleportation
     Point getPositionAdjustment(Direction d){
+
+        // .06 is just above the thickness of portals
         if(d == Left)
-            return Point(.1,0);
+            return Point(.06,0);
         if(d == Right)
-            return Point(-.1,0);
+            return Point(-.06,0);
         if(d == Up)
-            return Point(0,-.1);
+            return Point(0,-.06);
         if(d == Down)
-            return Point(0,.1);
+            return Point(0,.06);
 
     }
 
