@@ -115,10 +115,10 @@ public:
     Player player1;
     Player player2;
 
-//    Portal portal= Portal(-1,0, Up);
-//    Portal portal= Portal(-2.9,-1, Left);
-//    Portal portal= Portal(-1,-2.8, Down);
-    Portal portal= Portal(3,-1, Right);
+//    Portal portal2= Portal(-1,0, Up);
+//    Portal portal1= Portal(-1,-2.8, Down);
+    Portal portal1= Portal(-2.89,-1, Left);
+    Portal portal2= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;
@@ -129,6 +129,8 @@ public:
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
 
+        portal1.setLinkedPortal(&portal2);
+        portal2.setLinkedPortal(&portal1);
 
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
@@ -141,7 +143,9 @@ public:
         updatePlayerPositions();
         drawPlayers();
 
+        doTeleportations();
         drawPortals();
+
         drawMap();
 
         spawnNewBullets();
@@ -149,8 +153,13 @@ public:
         Bullet::drawBullets(bullets);   // draw all bullets at once
     }
 
+    void doTeleportations(){
+
+    }
+
     void drawPortals(){
-        portal.draw();
+        portal1.draw();
+        portal2.draw();
     }
 
     void drawHealthBars(){
@@ -276,6 +285,9 @@ public:
         while(bullet != bullets_end){
 
             bullet->updatePosition();
+
+            portal2.teleportBullet(*bullet);
+            portal1.teleportBullet(*bullet);
 
             if(player1.detectHit(*bullet)){
                 bullet= bullets.erase(bullet);

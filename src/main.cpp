@@ -24,7 +24,7 @@ void update(int value) {
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 
 	//Tell GLUT to call update again in 25 milliseconds
-	glutTimerFunc(25, update, 0);
+	glutTimerFunc(18, update, 0);
 }
 
 
@@ -93,7 +93,6 @@ void initRendering() {
 int main(int argc, char** argv){
     //Initialize GLUT
 	glutInit(&argc, argv);
-
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(800,700);

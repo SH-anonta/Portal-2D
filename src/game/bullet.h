@@ -10,17 +10,15 @@ public:
     float x_increment;
     float y_increment;
 
-    Bullet(Point& position, float x_increment, float y_increment){
+    Bullet(Point& position, Direction direction){
         this->position = position;
-        this->x_increment = x_increment*BULLET_SPEED;
-        this->y_increment = y_increment*BULLET_SPEED;
+        updateXYIncrements(direction);
     }
 
-    Bullet(double x, double y, float x_increment, float y_increment){
+    Bullet(double x, double y, Direction direction){
         position.x= x;
         position.y= y;
-        this->x_increment = x_increment*BULLET_SPEED;
-        this->y_increment = y_increment*BULLET_SPEED;
+        updateXYIncrements(direction);
     }
 
     void draw(){
@@ -35,7 +33,6 @@ public:
         auto bullets_end = bullets.end();
         auto bullet =  bullets.begin();
 
-//        glPointSize(3);
         setColor(DEFAULT_BULLET_COLOR);
         glBegin(GL_POINTS);
 
@@ -49,6 +46,27 @@ public:
     void updatePosition(){
         position.x += x_increment;
         position.y += y_increment;
+    }
+
+    void updateXYIncrements(Direction direction){
+        x_increment= 0;
+        y_increment= 0;
+
+        if(direction == Up)
+            y_increment= 1;
+        else if(direction == Down)
+            y_increment= -1;
+        else if(direction == Left)
+            x_increment= -1;
+        else if(direction == Right)
+            x_increment= 1;
+
+        this->x_increment = x_increment*BULLET_SPEED;
+        this->y_increment = y_increment*BULLET_SPEED;
+    }
+
+    void updateDirection(Direction direction){
+        updateXYIncrements(direction);
     }
 };
 

@@ -6,6 +6,13 @@ enum Direction{
     Up, Down, Left, Right
 };
 
+Direction getOppositeDirection(Direction d){
+    if(d == Up) return Down;
+    if(d == Down) return Up;
+    if(d == Left) return Right;
+    if(d == Right) return Left;
+}
+
 class Point{
 public:
     double x, y;

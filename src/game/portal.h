@@ -1,7 +1,7 @@
 #ifndef PORTAL_H
 #define PORTAL_H
 
-const float PORTAL_LENGTH= 0.5;
+const float PORTAL_LENGTH= 0.4;
 const float PORTAL_THICKNESS= 0.05;
 const Color DEFAULT_PORTAL_COLOR = Color(1, 0, 0);
 
@@ -9,6 +9,7 @@ class Portal{
 public:
     vector<Point> points;
     Color color = DEFAULT_PORTAL_COLOR;
+    Portal* linked_portal = nullptr;
 
     Direction orientation;
 
@@ -50,7 +51,6 @@ public:
             printf("Error: invalid direction encountered");
         }
 
-
     }
 
     void draw(){
@@ -59,6 +59,63 @@ public:
         glBegin(GL_QUADS);
         plot(points);
         glEnd();
+    }
+
+    void setLinkedPortal(Portal* p){
+        linked_portal= p;
+    }
+
+    bool detectCollision(Bullet& bullet){
+        return points[0].x <= bullet.position.x &&
+               points[1].x >= bullet.position.x &&
+               points[0].y <= bullet.position.y &&
+               points[3].y >= bullet.position.y;
+    }
+
+    // if bullet is on portal, teleport it to new position
+    Point teleportBullet(Bullet& bullet){
+        if(detectCollision(bullet)){
+            printf("Portal collision\n");
+
+            Point& p = linked_portal->points[0];
+            float collision_point = 0;
+
+            if(orientation == Up || orientation == Down){
+                collision_point = bullet.position.x - points[0].x;
+            }
+            else{
+                collision_point = bullet.position.y - points[0].y;
+            }
+
+            if(linked_portal->orientation == Up || linked_portal->orientation == Down){
+                Point adj = getPositionAdjustment(linked_portal->orientation);
+
+                bullet.position = Point(p.x+collision_point+adj.x, p.y+adj.y);
+            }
+            else{
+                Point adj = getPositionAdjustment(linked_portal->orientation);
+
+                bullet.position = Point(p.x+adj.x, p.y+collision_point+adj.y);
+            }
+
+
+//            bullet.position = Point(p.x+.1, p.y);
+
+            bullet.updateDirection(getOppositeDirection(linked_portal->orientation));
+        }
+    }
+
+    // get how much position should be adjusted for a given orientation in order to avoid collision after teleportation
+    Point getPositionAdjustment(Direction d){
+        if(d == Left)
+            return Point(.1,0);
+        if(d == Right)
+            return Point(-.1,0);
+        if(d == Up)
+            return Point(0,-.1);
+        if(d == Down)
+            return Point(0,.1);
+
     }
 
 };

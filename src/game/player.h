@@ -104,19 +104,7 @@ public:
         //record when this bullet was shot
         last_bullet_shoot_time= clock();
 
-        int x_inc= 0;
-        int y_inc= 0;
-
-        if(direction == Up)
-            y_inc= 1;
-        else if(direction == Down)
-            y_inc= -1;
-        else if(direction == Left)
-            x_inc= -1;
-        else if(direction == Right)
-            x_inc= 1;
-
-        return Bullet(position, x_inc, y_inc);
+        return Bullet(position, direction);
     }
 
 
