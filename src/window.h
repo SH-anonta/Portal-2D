@@ -115,7 +115,11 @@ public:
     Player player1;
     Player player2;
 
-    Portal portal= Portal(-1,0, Up);
+//    Portal portal= Portal(-1,0, Up);
+//    Portal portal= Portal(-2.9,-1, Left);
+//    Portal portal= Portal(-1,-2.8, Down);
+    Portal portal= Portal(3,-1, Right);
+
 
     list<Bullet> bullets;
 
@@ -134,17 +138,15 @@ public:
     void execute() override{
         drawHealthBars();
 
-        drawPortals();
         updatePlayerPositions();
         drawPlayers();
 
+        drawPortals();
         drawMap();
 
         spawnNewBullets();
         updateBulletPositions();
         Bullet::drawBullets(bullets);   // draw all bullets at once
-
-
     }
 
     void drawPortals(){

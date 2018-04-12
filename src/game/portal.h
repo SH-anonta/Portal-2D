@@ -1,14 +1,13 @@
 #ifndef PORTAL_H
 #define PORTAL_H
 
-const float PORTAL_LENGTH= 0.3;
-const Color DEFAULT_PORTAL_COLOR = Color(.8, .4, .3);
+const float PORTAL_LENGTH= 0.5;
+const float PORTAL_THICKNESS= 0.05;
+const Color DEFAULT_PORTAL_COLOR = Color(1, 0, 0);
 
 class Portal{
 public:
-    Point position;
-    Point pointa;
-    Point pointb;
+    vector<Point> points;
     Color color = DEFAULT_PORTAL_COLOR;
 
     Direction orientation;
@@ -18,37 +17,47 @@ public:
     }
 
     Portal(float x, float y, Direction ori){
-        position.x = x;
-        position.y = y;
         orientation = ori;
 
-        if(orientation == Up || orientation == Down){
-            pointa.x = position.x - PORTAL_LENGTH;
-            pointa.y = position.y;
-
-            pointb.x = position.x + PORTAL_LENGTH;
-            pointb.y = position.y;
+        // order in which points are inserted is very important
+        // points must be inserted in clockwise order
+        // bottom left, bottom right, top right then top left
+        if(orientation == Up){
+            points.push_back(Point(x-PORTAL_LENGTH, y));
+            points.push_back(Point(x+PORTAL_LENGTH, y));
+            points.push_back(Point(x+PORTAL_LENGTH, y+PORTAL_THICKNESS));
+            points.push_back(Point(x-PORTAL_LENGTH, y+PORTAL_THICKNESS));
+        }
+        else if(orientation == Down){
+            points.push_back(Point(x-PORTAL_LENGTH, y-PORTAL_THICKNESS));
+            points.push_back(Point(x+PORTAL_LENGTH, y-PORTAL_THICKNESS));
+            points.push_back(Point(x+PORTAL_LENGTH, y));
+            points.push_back(Point(x-PORTAL_LENGTH, y));
+        }
+        else if(orientation == Left){
+            points.push_back(Point(x-PORTAL_THICKNESS, y-PORTAL_LENGTH));
+            points.push_back(Point(x, y-PORTAL_LENGTH));
+            points.push_back(Point(x, y+PORTAL_LENGTH));
+            points.push_back(Point(x-PORTAL_THICKNESS, y+PORTAL_LENGTH));
+        }
+        else if(orientation == Right){
+            points.push_back(Point(x, y-PORTAL_LENGTH));
+            points.push_back(Point(x+PORTAL_THICKNESS, y-PORTAL_LENGTH));
+            points.push_back(Point(x+PORTAL_THICKNESS, y+PORTAL_LENGTH));
+            points.push_back(Point(x, y+PORTAL_LENGTH));
         }
         else{
-            pointa.x = position.x;
-            pointa.y = position.y-PORTAL_LENGTH;
-
-            pointb.x = position.x;
-            pointb.y = position.y+PORTAL_LENGTH;
+            printf("Error: invalid direction encountered");
         }
 
 
     }
 
     void draw(){
-        // a and b are two end points of the line that represents the portal
-        // a is left and b is right, in case the portal has orientation Up or Down
-        // a is bottom and b is top, in case the portal has orientation Left or Right
-        glLineWidth(5);
         setColor(color);
-        glBegin(GL_LINES);
-        plot(pointa);
-        plot(pointb);
+
+        glBegin(GL_QUADS);
+        plot(points);
         glEnd();
     }
 

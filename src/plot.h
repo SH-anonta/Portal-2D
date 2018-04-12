@@ -15,6 +15,9 @@ void plot(Point& p){
 }
 
 void plot(vector<Point>& points){
+    for(int i= 0, len= points.size(); i<len; i++){
+        glVertex3f(points[i].x, points[i].y, 0);
+    }
 }
 
 void setColor(Color& c){

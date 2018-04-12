@@ -137,7 +137,7 @@ Map createMap_NeedleEye(){
     Map game_map = createMapTheVoid();
 
     Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
-    Wall middle_horizontal2= Wall::createWall(3, WALL_THICKNESS);
+    Wall middle_horizontal2= Wall::createWall(2.95, WALL_THICKNESS);
 
     middle_horizontal1.translate(-3.0, 0);
     middle_horizontal2.translate(.05, 0);
