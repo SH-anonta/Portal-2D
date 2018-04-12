@@ -85,29 +85,26 @@ void setCallbacks(){
 //Initializes 3D rendering
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
+//  glMatrixMode(GL_PROJECTION);
+//	glEnable(GL_BLEND);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 int main(int argc, char** argv){
     //Initialize GLUT
 	glutInit(&argc, argv);
 
-//    glMatrixMode(GL_PROJECTION);
-//	glEnable(GL_BLEND);
-//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(800,700);
 	glutInitWindowPosition(300,50);
 
-    //Create the window
 	glutCreateWindow("Portal 2D");
 //    glutFullScreen();
 
 	initRendering();
-
     setCallbacks();
-
-    glutTimerFunc(25, update, 0); //Add a timer
+    glutTimerFunc(25, update, 0);
 
     glutMainLoop();
     return 0;

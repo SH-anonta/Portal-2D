@@ -9,22 +9,21 @@ Color DEFAULT_WALL_COLOR= Color(.2, .4, .8);
 class Wall{
 public:
     vector<Point> points;
-    Color color;
 
     Wall(vector<Point>& pts){
         points = pts;
-
-        color = DEFAULT_WALL_COLOR;
     }
 
+    // this function is meant to be called by the Map class only
+    // call to setColor glBegin and glEnd have been omitted intentionally for performance concerns
     void draw(){
-        setColor(color);
+//        setColor(color);
 
-        glBegin(GL_QUADS);
+//        glBegin(GL_QUADS);
         for(int i= 0; i<4; i++){
             plot(points[i]);
         }
-        glEnd();
+//        glEnd();
     }
 
     static Wall createWall(double w, double h){
@@ -76,9 +75,17 @@ public:
     }
 
     void draw(){
+        setColor(DEFAULT_WALL_COLOR);
+        glBegin(GL_QUADS);
         for(int i= 0, len= walls.size(); i<len; i++){
             walls[i].draw();
         }
+
+        glEnd();
+    }
+
+    void addWall(Wall wall){
+        walls.push_back(wall);
     }
 
     bool detectCollision(Player& player){
@@ -98,6 +105,7 @@ public:
 
 double WALL_THICKNESS = .1;
 
+// a map with 4 borders
 Map createMapTheVoid(){
     Map gmap;
     double thickness= .1;
@@ -114,10 +122,10 @@ Map createMapTheVoid(){
     right.translate(3, -3);
 
 
-    gmap.walls.push_back(bottom);
-    gmap.walls.push_back(top);
-    gmap.walls.push_back(left);
-    gmap.walls.push_back(right);
+    gmap.addWall(bottom);
+    gmap.addWall(top);
+    gmap.addWall(left);
+    gmap.addWall(right);
 
     gmap.p1position = Point(-2.5, -2.5);
     gmap.p2position = Point(2.5, 2.5);
@@ -126,7 +134,7 @@ Map createMapTheVoid(){
 }
 
 Map createMap_NeedleEye(){
-    Map m = createMapTheVoid();
+    Map game_map = createMapTheVoid();
 
     Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
     Wall middle_horizontal2= Wall::createWall(3, WALL_THICKNESS);
@@ -134,10 +142,10 @@ Map createMap_NeedleEye(){
     middle_horizontal1.translate(-3.0, 0);
     middle_horizontal2.translate(.05, 0);
 
-    m.walls.push_back(middle_horizontal1);
-    m.walls.push_back(middle_horizontal2);
+    game_map.addWall(middle_horizontal1);
+    game_map.addWall(middle_horizontal2);
 
-    return m;
+    return game_map;
 }
 
 #endif

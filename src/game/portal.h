@@ -16,6 +16,7 @@ public:
     Portal(){
 
     }
+
     Portal(float x, float y, Direction ori){
         position.x = x;
         position.y = y;
