@@ -115,6 +115,8 @@ public:
     Player player1;
     Player player2;
 
+    Portal portal= Portal(-1,0, Up);
+
     list<Bullet> bullets;
 
     GameWindow(): Window(){
@@ -122,6 +124,7 @@ public:
         player1= Player(game_map.p1position);
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
+
 
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
@@ -131,6 +134,7 @@ public:
     void execute() override{
         drawHealthBars();
 
+        drawPortals();
         updatePlayerPositions();
         drawPlayers();
 
@@ -140,6 +144,11 @@ public:
         updateBulletPositions();
         Bullet::drawBullets(bullets);   // draw all bullets at once
 
+
+    }
+
+    void drawPortals(){
+        portal.draw();
     }
 
     void drawHealthBars(){
@@ -148,10 +157,13 @@ public:
         float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
 
         float thickness = .15;
-        glColor4f(.9,.9,.9, .4);
+
+        glEnable(GL_BLEND);
+
+        glLineWidth(1);
+        glColor4f(.9,.9,.9, .5);
 
         // player 1 health bar
-
         glPushMatrix();
         glTranslatef(-2.7, 2.7, 0);
         glScalef(2.5,1,1);
@@ -263,16 +275,16 @@ public:
 
             bullet->updatePosition();
 
-            if(game_map.detectCollision(*bullet)){
-                bullet= bullets.erase(bullet);
-            }
-            else if(player1.detectHit(*bullet)){
+            if(player1.detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
                 player1.takeDamage();
             }
             else if(player2.detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
                 player2.takeDamage();
+            }
+            else if(game_map.detectCollision(*bullet)){
+                bullet= bullets.erase(bullet);
             }
             else{
                 bullet++;

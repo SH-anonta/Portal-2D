@@ -2,9 +2,6 @@
 #define PLAYER_H
 
 
-enum Direction{
-    Up, Down, Left, Right
-};
 
 const double RELOAD_TIME= 0.1;    // in seconds
 Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);

@@ -1,6 +1,11 @@
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
 
+
+enum Direction{
+    Up, Down, Left, Right
+};
+
 class Point{
 public:
     double x, y;
@@ -12,6 +17,11 @@ public:
         this->x= x;
         this->y= y;
     }
+//
+//    Point(Point& p){
+//        x = p.x;
+//        y = p.y;
+//    }
 };
 
 class Color{
