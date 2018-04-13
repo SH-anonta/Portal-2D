@@ -2,7 +2,10 @@
 #define MAPS_H
 
 
-Color DEFAULT_WALL_COLOR= Color(.2, .4, .8);
+Color DEFAULT_WALL_COLOR= Color(.2, .7, .5);
+//Color MAP_BACKGROUND_COLOR= Color(.8, .8, .8);
+Color MAP_BACKGROUND_COLOR= Color(.05, .15, .1);
+Color MAP_BACKGROUND_GRID_COLOR= Color(.5, .5, .5);
 
 // Points that define the wall, should be in counter clockwise order
 // this is important for collision detection
@@ -80,8 +83,34 @@ public:
         for(int i= 0, len= walls.size(); i<len; i++){
             walls[i].draw();
         }
+        glEnd();
+
+        setColor(MAP_BACKGROUND_GRID_COLOR);
+        glBegin(GL_LINES);
+        // draw horizontal lines
+        for(float r= -3; r<3; r+= .5){
+            plot(-3, r);
+            plot(3, r);
+        }
+
+        // draw vertical lines
+        for(float c= -3; c<3; c+= .5){
+            plot(c, -3);
+            plot(c, 3);
+        }
+        glEnd();
+
+
+        setColor(MAP_BACKGROUND_COLOR);
+        glBegin(GL_QUADS);
+        plot(-3,-3);
+        plot(3,-3);
+        plot(3,3);
+        plot(-3,3);
 
         glEnd();
+
+
     }
 
     void addWall(Wall wall){

@@ -167,7 +167,7 @@ public:
     }
 
     void execute() override{
-        drawHealthBars();
+
 
         updatePlayerPositions();
         drawPlayers();
@@ -175,11 +175,13 @@ public:
         doTeleportations();
         drawPortals();
 
-        drawMap();
-
         spawnNewBullets();
         updateBulletPositions();
         Bullet::drawBullets(bullets);   // draw all bullets at once
+
+        drawHealthBars();
+
+        drawMap();
     }
 
     void doTeleportations(){
@@ -198,7 +200,7 @@ public:
         float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
 
         glEnable(GL_BLEND);
-        glDisable(GL_DEPTH_TEST);
+//        glDisable(GL_DEPTH_TEST);
 
         glLineWidth(1);
         glColor4f(1,1,1, 1);
@@ -394,7 +396,7 @@ public:
     float r= 0, g= 0,b= 0;   // current color intensity, starts at black
 
     int current_iteration = 0;
-    const int TOTAL_ITERATIONS= 50;    // how long the animation will take to complete
+    const int TOTAL_ITERATIONS= 70;    // how long the animation will take to complete
 
     // how much to increment on each iteration
     const float ri= final_r/TOTAL_ITERATIONS;   // text color
@@ -418,7 +420,7 @@ public:
         }
         else{
             glColor3f(1,1,1);
-            drawString(-.3,-2.5, "<PRESS ENTER>", GLUT_BITMAP_9_BY_15);
+            drawString(-.4,-2.5, "<PRESS ENTER>", GLUT_BITMAP_9_BY_15);
         }
 
         glColor3f(r,g,b);

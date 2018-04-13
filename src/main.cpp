@@ -1,26 +1,19 @@
 #include "./include_me.h"
 
-WindowEngine w_engine(new SplashScreenWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new HelpScreenWindow(NULL));
+WindowEngine w_engine(new GameWindow());
 
 float _cameraAngle = 0.0;
 
 
 // this is where all drawing code belongs
 void drawScreen(){
-//    drawHorizontalLine(.5);
-    glPointSize(5);
-
-//    printf("->> %d\n", w_engine.currentWindow);
-
     w_engine.execute();
-//    drawVerticalLine();
-
 }
 
 
 void update(int value) {
-
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 
 	//Tell GLUT to call update again in 25 milliseconds
@@ -84,10 +77,10 @@ void setCallbacks(){
 
 //Initializes 3D rendering
 void initRendering() {
-//    glMatrixMode(GL_PROJECTION);
+    glPointSize(5);
+    glMatrixMode(GL_PROJECTION);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
-//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 int main(int argc, char** argv){
