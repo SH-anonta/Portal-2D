@@ -104,6 +104,8 @@ public :
         drawString(0, 1.4, "Open Portal 2----------- E --------------- 6     ");
 
         glPopMatrix();
+
+        drawMainBackground();
     }
 
     void keyPress(unsigned char key, int x, int y) override{
@@ -136,9 +138,9 @@ public:
     Player player2;
 
     Portal portal2= Portal(-1,0, Up);
-//    Portal portal1= Portal(-1,-2.8, Down);
+    Portal portal1= Portal(-1,-2.8, Down);
 //    Portal portal1= Portal(-1,.1, Down);
-    Portal portal1= Portal(-2.89,-1, Left);
+//    Portal portal1= Portal(-2.89,-1, Left);
 //    Portal portal2= Portal(3,-1, Right);
 
 
@@ -409,7 +411,6 @@ public:
 
     void execute() override{
 //        printf("SPLASH SCREEN!\n");
-//        glColor3f(0.2,0.6,.9);
 
         if(current_iteration < TOTAL_ITERATIONS){
            r+= ri;
@@ -428,6 +429,8 @@ public:
         glTranslatef(-.4,0,1);
         drawString(0,0, "PORTAL  2D", GLUT_BITMAP_TIMES_ROMAN_24);
         glPopMatrix();
+
+        drawMainBackground();
     }
 
     void onWindowLoad() override{

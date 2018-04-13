@@ -13,6 +13,7 @@ using namespace std;
 #include "./primitives.h"
 #include "./plot.h"
 #include "./debug.h"
+#include "./game/backgrounds.h"
 #include "./text_draw.h"
 #include "./game/bullet.h"
 #include "./game/portal.h"

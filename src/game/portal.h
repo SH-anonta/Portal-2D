@@ -3,7 +3,7 @@
 
 const float PORTAL_LENGTH= 0.3;
 const float PORTAL_THICKNESS= 0.06;
-const Color DEFAULT_PORTAL_COLOR = Color(1, 0, 0);
+const Color DEFAULT_PORTAL_COLOR = Color(.6, 0, 0);
 
 class Portal{
 public:
