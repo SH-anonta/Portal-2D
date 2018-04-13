@@ -386,15 +386,42 @@ public:
 class SplashScreenWindow:public Window{
 public:
 
+    // final rgb color to achieve
+    float final_r= 0.2;
+    float final_g= 0.6;
+    float final_b= 0.9;
+
+    float r= 0, g= 0,b= 0;   // current color intensity, starts at black
+
+    int current_iteration = 0;
+    const int TOTAL_ITERATIONS= 50;    // how long the animation will take to complete
+
+    // how much to increment on each iteration
+    const float ri= final_r/TOTAL_ITERATIONS;   // text color
+    const float gi= final_g/TOTAL_ITERATIONS;   // text color
+    const float bi= final_b/TOTAL_ITERATIONS;   // text color
+
     SplashScreenWindow(): Window(){
 
     }
 
     void execute() override{
 //        printf("SPLASH SCREEN!\n");
-        glColor3f(0.2,0.6,.9);
-//        glColor3i(82,153, 211);
+//        glColor3f(0.2,0.6,.9);
 
+        if(current_iteration < TOTAL_ITERATIONS){
+           r+= ri;
+           g+= gi;
+           b+= bi;
+
+           current_iteration++;
+        }
+        else{
+            glColor3f(1,1,1);
+            drawString(-.3,-2.5, "<PRESS ENTER>", GLUT_BITMAP_9_BY_15);
+        }
+
+        glColor3f(r,g,b);
         glPushMatrix();
         glTranslatef(-.4,0,1);
         drawString(0,0, "PORTAL  2D", GLUT_BITMAP_TIMES_ROMAN_24);
