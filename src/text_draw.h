@@ -1,7 +1,7 @@
 #ifndef TEXT_DRAW_H
 #define TEXT_DRAW_H
 
-void drawString(int x, int y, char *str, void *font= GLUT_BITMAP_HELVETICA_18){
+void drawString(float x, float y, char *str, void *font= GLUT_BITMAP_HELVETICA_18){
     int len;
 
     glRasterPos2f(x, y);

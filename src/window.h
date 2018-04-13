@@ -87,6 +87,23 @@ public :
 
     void execute() override{
 //        printf("HELP SCREEN!\n");
+        glColor3f(0.2,0.6,.9);
+
+
+        glPushMatrix();
+        glTranslatef(-2.9, 0,0);
+
+        drawString(0, 2.5, "..............Key..............\n");
+        drawString(0, 2.3, "Action------------- Player1--------------Player2       ");
+        drawString(0, 2.1, "Move Up----------- W --------------- 5     ");
+        drawString(0, 1.9, "Move Down----------- S--------------- 2     ");
+        drawString(0, 1.8, "Move Left----------- A --------------- 1     ");
+        drawString(0, 1.7, "Move Right----------- D --------------- 3     ");
+        drawString(0, 1.6, "Shoot----------- <Space> --------------- 0     ");
+        drawString(0, 1.5, "Open Portal 1----------- Q. --------------- 4     ");
+        drawString(0, 1.4, "Open Portal 2----------- E --------------- 6     ");
+
+        glPopMatrix();
     }
 
     void keyPress(unsigned char key, int x, int y) override{
@@ -370,17 +387,13 @@ public:
 
     void execute() override{
 //        printf("SPLASH SCREEN!\n");
-        glColor3f(1,1,1);
+        glColor3f(0.2,0.6,.9);
+//        glColor3i(82,153, 211);
 
-//        glBegin(GL_QUADS);
-//        plot(0,0);
-//        plot(2,0);
-//        plot(2,2);
-//        plot(0,2);
-//        glEnd();
-
-
-        drawString(0,0, "PORTAL 2D");
+        glPushMatrix();
+        glTranslatef(-.4,0,1);
+        drawString(0,0, "PORTAL  2D", GLUT_BITMAP_TIMES_ROMAN_24);
+        glPopMatrix();
     }
 
     void onWindowLoad() override{
