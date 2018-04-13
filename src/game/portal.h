@@ -2,7 +2,7 @@
 #define PORTAL_H
 
 const float PORTAL_LENGTH= 0.3;
-const float PORTAL_THICKNESS= 0.05;
+const float PORTAL_THICKNESS= 0.06;
 const Color DEFAULT_PORTAL_COLOR = Color(1, 0, 0);
 
 class Portal{
@@ -75,7 +75,7 @@ public:
     // if bullet is on portal, teleport it to new position
     Point teleportBullet(Bullet& bullet){
         if(detectCollision(bullet)){
-            printf("Portal collision\n");
+//            printf("Portal collision\n");
 
             Point& p = linked_portal->points[0];
             float collision_point = 0;

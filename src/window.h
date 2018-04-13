@@ -14,6 +14,10 @@ public:
 //        this->w_engine = w_engine;
     }
 
+    virtual void onWindowLoad(){
+        printf("Window class executed, needs to be overwritten\n");
+    }
+
     virtual void execute(){
         printf("Window class executed, needs to be overwritten\n");
     }
@@ -61,7 +65,8 @@ public:
 
     void switchWindow(Window* new_window){
         currentWindow = new_window;
-        currentWindow ->w_engine = this;    // very important
+        currentWindow->w_engine = this;    // very important
+        currentWindow->onWindowLoad();
     }
 };
 
@@ -75,20 +80,17 @@ public :
         this->previous_window = previous_window;
     }
 
+    void onWindowLoad() override{
+        printf("Help screen loaded\n");
+    }
+
     void execute() override{
-
-
 //        printf("HELP SCREEN!\n");
     }
 
     void keyPress(unsigned char key, int x, int y) override{
 //        printf("%c\n", key);
 
-        // when enter is pressed
-//        if(key == 13){
-//            printf("Help: Enter Key pressed\n");
-//            printf("->> %d\n", previous_window);
-//        }
         if(key == 27){
             // when escape is pressed
             this->w_engine->switchWindow(previous_window);
@@ -116,9 +118,10 @@ public:
     Player player2;
 
 //    Portal portal2= Portal(-1,0, Up);
-    Portal portal1= Portal(-1,-2.8, Down);
-    Portal portal2= Portal(-2.89,-1, Left);
-//    Portal portal2= Portal(3,-1, Right);
+//    Portal portal1= Portal(-1,-2.8, Down);
+//    Portal portal1= Portal(-1,.1, Down);
+    Portal portal1= Portal(-2.89,-1, Left);
+    Portal portal2= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;
@@ -131,6 +134,14 @@ public:
 
         portal1.setLinkedPortal(&portal2);
         portal2.setLinkedPortal(&portal1);
+
+        for(int i = 0; i<300; i++){
+            key_pressed[i]= false;
+        }
+    }
+
+    void onWindowLoad() override{
+        printf("Game window loaded\n");
 
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
@@ -358,6 +369,11 @@ public:
 
     void execute() override{
 //        printf("SPLASH SCREEN!\n");
+    }
+
+    void onWindowLoad() override{
+        printf("Splash screen window loaded\n");
+
     }
 
     void keyPress(unsigned char key, int x, int y) override{
