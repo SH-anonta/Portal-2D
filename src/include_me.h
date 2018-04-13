@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <ctime>
+#include <cstring>
 #include <GL/gl.h>
 #include <GL/glut.h>
 
@@ -12,6 +13,7 @@ using namespace std;
 #include "./primitives.h"
 #include "./plot.h"
 #include "./debug.h"
+#include "./text_draw.h"
 #include "./game/bullet.h"
 #include "./game/portal.h"
 #include "./game/player.h"

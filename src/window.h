@@ -45,6 +45,7 @@ public:
     WindowEngine(Window* initail_window){
         currentWindow = initail_window;
         currentWindow->w_engine = this;
+        currentWindow->onWindowLoad();
     }
 
     void execute(){
@@ -117,11 +118,11 @@ public:
     Player player1;
     Player player2;
 
-//    Portal portal2= Portal(-1,0, Up);
+    Portal portal2= Portal(-1,0, Up);
 //    Portal portal1= Portal(-1,-2.8, Down);
 //    Portal portal1= Portal(-1,.1, Down);
     Portal portal1= Portal(-2.89,-1, Left);
-    Portal portal2= Portal(3,-1, Right);
+//    Portal portal2= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;
@@ -175,10 +176,10 @@ public:
 
     void drawHealthBars(){
 
+        float thickness = .05;
         float p1_bar_width = (float)player1.health / (float)MAX_PLAYER_HEALTH;
         float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
 
-        float thickness = .15;
 
         glEnable(GL_BLEND);
 
@@ -369,6 +370,17 @@ public:
 
     void execute() override{
 //        printf("SPLASH SCREEN!\n");
+        glColor3f(1,1,1);
+
+//        glBegin(GL_QUADS);
+//        plot(0,0);
+//        plot(2,0);
+//        plot(2,2);
+//        plot(0,2);
+//        glEnd();
+
+
+        drawString(0,0, "PORTAL 2D");
     }
 
     void onWindowLoad() override{
