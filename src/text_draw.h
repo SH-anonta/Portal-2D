@@ -10,5 +10,4 @@ void drawString(float x, float y, char *str, void *font= GLUT_BITMAP_HELVETICA_1
         glutBitmapCharacter(font, str[i]);
     }
 }
-
 #endif

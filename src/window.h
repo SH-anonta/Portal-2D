@@ -197,11 +197,13 @@ public:
         float p1_bar_width = (float)player1.health / (float)MAX_PLAYER_HEALTH;
         float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
 
-
         glEnable(GL_BLEND);
+        glDisable(GL_DEPTH_TEST);
 
         glLineWidth(1);
-        glColor4f(.9,.9,.9, .5);
+        glColor4f(1,1,1, 1);
+
+        {
 
         // player 1 health bar
         glPushMatrix();
@@ -244,6 +246,9 @@ public:
         glEnd();
 
         glPopMatrix();
+        }
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void updatePlayerPositions(){
