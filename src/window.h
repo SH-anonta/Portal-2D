@@ -223,6 +223,8 @@ public:
         glTranslatef(-2.7, 2.7, 0);
         glScalef(2.5,1,1);
 
+        drawString(-0.06,0, "P1", GLUT_BITMAP_HELVETICA_12);
+
         glBegin(GL_QUADS);
         plot(0,0);
         plot(p1_bar_width,0);
@@ -240,9 +242,12 @@ public:
 
         // player 2 health bar
 
+
         glPushMatrix();
         glScalef(2.5,1,1);
         glTranslatef(0.13, 2.7, 0);
+
+        drawString(1.01,0, "P2", GLUT_BITMAP_HELVETICA_12);
 
         glBegin(GL_QUADS);
         plot(1-p2_bar_width,0);
