@@ -137,10 +137,10 @@ public:
     Player player1;
     Player player2;
 
-    Portal portal2= Portal(-1,0, Up);
+//    Portal portal2= Portal(-1,0, Up);
     Portal portal1= Portal(-1,-2.8, Down);
 //    Portal portal1= Portal(-1,.1, Down);
-//    Portal portal1= Portal(-2.89,-1, Left);
+    Portal portal2= Portal(-2.89,-1, Left);
 //    Portal portal2= Portal(3,-1, Right);
 
 
@@ -286,18 +286,18 @@ public:
         }
 
 
-        if(!game_map.detectCollision(player1)){
-            player1.updatePosition();
-        }
-        else{
+        if(game_map.detectCollision(player1)){
             player1.resetNextPosition();
         }
+        else{
+            player1.updatePosition();
+        }
 
-        if(!game_map.detectCollision(player2)){
-            player2.updatePosition();
+        if(game_map.detectCollision(player2)){
+            player2.resetNextPosition();
         }
         else{
-            player2.resetNextPosition();
+            player2.updatePosition();
         }
 
     }

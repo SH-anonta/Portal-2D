@@ -6,6 +6,7 @@ Color BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
 
 void drawMainBackground(){
     setColor(BACKGROUND_GRID_COLOR);
+
     glBegin(GL_LINES);
     // draw horizontal lines
     for(float r= -3; r<3; r+= .6){
