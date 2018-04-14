@@ -22,6 +22,9 @@ public:
         printf("Window class executed, needs to be overwritten\n");
     }
 
+    virtual void draw(){
+    }
+
     virtual void keyPress(unsigned char key, int x, int y){
         printf("%c\n", key);
         printf("Window class executed, needs to be overwritten\n");
@@ -94,6 +97,10 @@ public :
 
         glPopMatrix();
         drawMainBackground();
+    }
+
+    void draw()override {
+
     }
 
     void drawTexts(){
@@ -171,8 +178,27 @@ public:
 
     void execute() override{
         setColor(DEFAULT_TEXT_COLOR);
-        drawString(-.4,0, "Quit Game?");
+        drawString(-.4,0, "Quit Game?", GLUT_BITMAP_TIMES_ROMAN_24);
+
+//        glEnable(GL_BLEND);
+//        glDisable(GL_DEPTH);
+        // transparent
+//        glColor4f(0.1, 0.1, 0.1, .5);
+//        glBegin(GL_POLYGON);
+//        plot(-3, -3);
+//        plot(3.1, -3);
+//        plot(3.1, 3);
+//        plot(-3, 3);
+//        glEnd();
+
+//        this->previous_window->draw();
+//        glEnable(GL_DEPTH);
+
         drawMainBackground();
+    }
+
+    void draw()override {
+
     }
 
     void onWindowLoad() override{
@@ -245,6 +271,10 @@ public:
 
     void execute() override{
         updateGame();
+        drawGame();
+    }
+
+    void draw()override {
         drawGame();
     }
 
@@ -519,6 +549,10 @@ public:
         glPopMatrix();
 
         drawMainBackground();
+    }
+
+    void draw()override {
+
     }
 
     void onWindowLoad() override{
