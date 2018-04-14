@@ -1,8 +1,8 @@
 #include "./include_me.h"
 
-WindowEngine w_engine(new SplashScreenWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new HelpScreenWindow(NULL));
-//WindowEngine w_engine(new GameWindow());
+WindowEngine w_engine(new GameWindow());
 
 float _cameraAngle = 0.0;
 
@@ -11,7 +11,6 @@ float _cameraAngle = 0.0;
 void drawScreen(){
     w_engine.execute();
 }
-
 
 void update(int value) {
 	glutPostRedisplay(); //Tell GLUT that the display has changed

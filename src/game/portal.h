@@ -10,6 +10,8 @@ public:
     vector<Point> points;
     Color color = DEFAULT_PORTAL_COLOR;
     Portal* linked_portal = nullptr;
+    Point centroid;
+    float angle = 90;
 
     Direction orientation;
 
@@ -51,14 +53,35 @@ public:
             printf("Error: invalid direction encountered");
         }
 
+        centroid = getCentroid();
     }
 
     void draw(){
         setColor(color);
+        glPushMatrix();
+        if(angle > 0){
+            angle-= 3;
+        }
+
+
+        glTranslatef(centroid.x, centroid.y, 0);
+//        glTranslatef(points[0].x, points[0].y, 0);
+        glRotatef(angle, 0,0,0);
+//        glTranslatef(-1*points[0].x, -1*points[0].y, 0);
+        glTranslatef(-1*centroid.x, -1*centroid.y, 0);
+
 
         glBegin(GL_QUADS);
         plot(points);
         glEnd();
+
+
+        glPopMatrix();
+    }
+
+    Point getCentroid(){
+        return Point((points[0].x+points[1].x+points[2].x+points[3].x)/4,
+                     (points[0].y+points[1].y+points[2].y+points[3].y)/4);
     }
 
     void setLinkedPortal(Portal* p){
