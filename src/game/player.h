@@ -5,7 +5,7 @@
 
 const double RELOAD_TIME= 0.1;    // in seconds
 Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
-const int DAMAGE_PER_HIT= 10;
+const int DAMAGE_PER_HIT= 5;
 const int MAX_PLAYER_HEALTH= 100;
 double PLAYER_SPEED = .01;   // positions per iteration
 

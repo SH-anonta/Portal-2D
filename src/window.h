@@ -137,11 +137,11 @@ public:
     Player player1;
     Player player2;
 
-//    Portal portal2= Portal(-1,0, Up);
+    Portal portal2= Portal(-1,0, Up);
     Portal portal1= Portal(-1,-2.8, Down);
 //    Portal portal1= Portal(-1,.1, Down);
-    Portal portal2= Portal(-2.89,-1, Left);
-//    Portal portal2= Portal(3,-1, Right);
+    Portal portal3= Portal(-2.89,-1, Left);
+    Portal portal4= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;
@@ -152,8 +152,15 @@ public:
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
 
-        portal1.setLinkedPortal(&portal2);
-        portal2.setLinkedPortal(&portal1);
+        portal1.setLinkedPortal(&portal4);
+        portal2.setLinkedPortal(&portal3);
+        portal3.setLinkedPortal(&portal2);
+        portal4.setLinkedPortal(&portal1);
+
+        portal1.color = Color(.9, .7, .1);
+        portal2.color = Color(.7, .4, .3);
+        portal3.color = Color(.7, .4, .7);
+        portal4.color = Color(.8, .5,.3);
 
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
@@ -193,6 +200,8 @@ public:
     void drawPortals(){
         portal1.draw();
         portal2.draw();
+        portal3.draw();
+        portal4.draw();
     }
 
     void drawHealthBars(){
@@ -205,7 +214,7 @@ public:
 //        glDisable(GL_DEPTH_TEST);
 
         glLineWidth(1);
-        glColor4f(1,1,1, 1);
+        glColor4f(.9,.9,.9, 1);
 
         {
 
@@ -324,8 +333,10 @@ public:
 
             bullet->updatePosition();
 
-            portal2.teleportBullet(*bullet);
             portal1.teleportBullet(*bullet);
+            portal2.teleportBullet(*bullet);
+            portal3.teleportBullet(*bullet);
+            portal4.teleportBullet(*bullet);
 
             if(player1.detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
@@ -362,6 +373,11 @@ public:
 //            printf("GW: Enter Key pressed\n");
 //            printf("->> %d\n", this);
 //        }
+
+        //TODO: remove, only here for debugging purpose
+        if(key == 'x'){
+            bullets.clear();
+        }
 
         key_pressed[key]= true;
 //        printf("press: %c\n", key);
