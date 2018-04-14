@@ -87,25 +87,58 @@ public :
 
     void execute() override{
 //        printf("HELP SCREEN!\n");
-        glColor3f(0.2,0.6,.9);
+
+        glPushMatrix();
+        glTranslatef(.1, .05, 0);
+        drawTexts();
+
+        glPopMatrix();
+        drawMainBackground();
+    }
+
+    void drawTexts(){
+        ///  printf("HELP SCREEN!\n");
+
 
 
         glPushMatrix();
         glTranslatef(-2.9, 0,0);
 
-        drawString(0, 2.5, "..............Key..............\n");
-        drawString(0, 2.3, "Action------------- Player1--------------Player2       ");
-        drawString(0, 2.1, "Move Up----------- W --------------- 5     ");
-        drawString(0, 1.9, "Move Down----------- S--------------- 2     ");
-        drawString(0, 1.8, "Move Left----------- A --------------- 1     ");
-        drawString(0, 1.7, "Move Right----------- D --------------- 3     ");
-        drawString(0, 1.6, "Shoot----------- <Space> --------------- 0     ");
-        drawString(0, 1.5, "Open Portal 1----------- Q. --------------- 4     ");
-        drawString(0, 1.4, "Open Portal 2----------- E --------------- 6     ");
+        drawString(0, 2.6, "Controls");
+
+        glColor3f(.9,.9,.9);
+        drawString(0, 2.3, "Action");
+        drawString(2.5, 2.3, "Player1");
+        drawString(5,2.3,  "Player2");
+
+        glColor3f(0.2,0.6,.9);
+
+        drawString(0, 2.0, "Move Up");
+        drawString(2.5, 2.0,"W");
+        drawString(5,2.0,  "5");
+        drawString(0, 1.7, "MoveDown");
+        drawString(2.5,1.7," S");
+        drawString(5,1.7,"2");
+        drawString(0, 1.4, "MoveLeft");
+        drawString(2.5,1.4,"A");
+        drawString(5, 1.4,"1");
+        drawString(0, 1.1, "Move Right");
+        drawString(2.5,1.1,"D");
+        drawString(5,1.1,"3");
+        drawString(0, 0.8, "Shoot");
+        drawString(2.5,0.8,"<Space>");
+        drawString(5,0.8,"0");
+        drawString(0, 0.5, "Open Portal 1");
+        drawString(2.5,0.5," Q");
+        drawString(5,0.5,"4");
+        drawString(0, 0.3, "Pause game");
+        drawString(2.5,0.3,"Esc");
+        drawString(5,0.3,"Esc");
+        drawString(0, 0.0, "Help screeen");
+        drawString(2.5,0.0,"F12");
+        drawString(5,0.0,"F12");
 
         glPopMatrix();
-
-        drawMainBackground();
     }
 
     void keyPress(unsigned char key, int x, int y) override{
@@ -128,6 +161,41 @@ public :
 
 };
 
+class ConfirmQuitGameWindow: public Window{
+    Window* previous_window;
+public:
+
+    ConfirmQuitGameWindow(Window* previous_window){
+        this->previous_window = previous_window;
+    }
+
+    void execute() override{
+        setColor(DEFAULT_TEXT_COLOR);
+        drawString(-.4,0, "Quit Game?");
+        drawMainBackground();
+    }
+
+    void onWindowLoad() override{
+        printf("Confirm quit game window loaded\n");
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+//        printf("%c\n", key);
+        if(key == 27){
+            // when escape is pressed
+            this->w_engine->switchWindow(previous_window);
+        }
+
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+//        printf("%d\n", key);
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+    }
+};
+
 class GameWindow: public Window{
 public:
 //    Map game_map = createMapTheVoid();
@@ -137,9 +205,9 @@ public:
     Player player1;
     Player player2;
 
-    Portal portal2= Portal(-1,0, Up);
-    Portal portal1= Portal(-1,-2.8, Down);
 //    Portal portal1= Portal(-1,.1, Down);
+    Portal portal1= Portal(-1,-2.8, Down);
+    Portal portal2= Portal(-1,0, Up);
     Portal portal3= Portal(-2.89,-1, Left);
     Portal portal4= Portal(3,-1, Right);
 
@@ -176,26 +244,24 @@ public:
     }
 
     void execute() override{
+        updateGame();
+        drawGame();
+    }
 
-
+    void updateGame(){
         updatePlayerPositions();
-        drawPlayers();
-
-        doTeleportations();
-        drawPortals();
-
         spawnNewBullets();
         updateBulletPositions();
+    }
+
+    void drawGame(){
+        drawPlayers();
+        drawPortals();
         Bullet::drawBullets(bullets);   // draw all bullets at once
-
         drawHealthBars();
-
         drawMap();
     }
 
-    void doTeleportations(){
-
-    }
 
     void drawPortals(){
         portal1.draw();
@@ -223,7 +289,7 @@ public:
         glTranslatef(-2.7, 2.7, 0);
         glScalef(2.5,1,1);
 
-        drawString(-0.06,0, "P1", GLUT_BITMAP_HELVETICA_12);
+        drawString(-0.05,0, "P1", GLUT_BITMAP_HELVETICA_12);
 
         glBegin(GL_QUADS);
         plot(0,0);
@@ -241,11 +307,9 @@ public:
         glPopMatrix();
 
         // player 2 health bar
-
-
         glPushMatrix();
         glScalef(2.5,1,1);
-        glTranslatef(0.13, 2.7, 0);
+        glTranslatef(0.11, 2.7, 0);
 
         drawString(1.01,0, "P2", GLUT_BITMAP_HELVETICA_12);
 
@@ -383,7 +447,10 @@ public:
         if(key == 'x'){
             bullets.clear();
         }
-
+        else if(key == 27){
+            // if escape was pressed
+            this->w_engine->switchWindow(new ConfirmQuitGameWindow(this));
+        }
         key_pressed[key]= true;
 //        printf("press: %c\n", key);
 
