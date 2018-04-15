@@ -180,20 +180,16 @@ public:
         setColor(DEFAULT_TEXT_COLOR);
         drawString(-.4,0, "Quit Game?", GLUT_BITMAP_TIMES_ROMAN_24);
 
-//        glEnable(GL_BLEND);
-//        glDisable(GL_DEPTH);
         // transparent
-//        glColor4f(0.1, 0.1, 0.1, .5);
-//        glBegin(GL_POLYGON);
-//        plot(-3, -3);
-//        plot(3.1, -3);
-//        plot(3.1, 3);
-//        plot(-3, 3);
+//        glColor4f(0.1, 0.1, 0.1, .8);
+//        glBegin(GL_QUADS);
+//        plot(-4, -4);
+//        plot(4, -4);
+//        plot(4, 4);
+//        plot(-4, 4);
 //        glEnd();
 
 //        this->previous_window->draw();
-//        glEnable(GL_DEPTH);
-
         drawMainBackground();
     }
 
@@ -306,11 +302,8 @@ public:
         float p1_bar_width = (float)player1.health / (float)MAX_PLAYER_HEALTH;
         float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
 
-        glEnable(GL_BLEND);
-//        glDisable(GL_DEPTH_TEST);
-
         glLineWidth(1);
-        glColor4f(.9,.9,.9, 1);
+        glColor4f(.9,.9,.9, .9);
 
         {
 
@@ -360,7 +353,6 @@ public:
         glPopMatrix();
         }
 
-        glEnable(GL_DEPTH_TEST);
     }
 
     void updatePlayerPositions(){
