@@ -1,0 +1,11 @@
+A PVP 2D shooter game inspired by the computer game Portal 
+   
+Game objective: Shoot the opponent player until their health reduces to zero
+
+High level requirements:
+•	Allow players to move in eight directions (vertical, horizontal, and diagonals)
+•	Allow players to shoot bullets, in four directions (vertical and horizontal)
+•	Allow players to open two way space portals (max two portals per player)
+•	Allow players to choose between multiple game maps (Maps consist of walls, and pits)
+•	Allow players to walk through open portals
+•	Allow players to shoot bullets through open portals
