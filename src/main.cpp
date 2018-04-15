@@ -16,7 +16,7 @@ void update(int value) {
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 
 	//Tell GLUT to call update again in 25 milliseconds
-	glutTimerFunc(18, update, 0);
+	glutTimerFunc(10, update, 0);
 }
 
 

@@ -106,8 +106,6 @@ public :
     void drawTexts(){
         ///  printf("HELP SCREEN!\n");
 
-
-
         glPushMatrix();
         glTranslatef(-2.9, 0,0);
 

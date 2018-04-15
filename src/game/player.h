@@ -11,7 +11,7 @@ double PLAYER_SPEED = .01;   // positions per iteration
 
 class Player{
 public:
-    static constexpr float move_step= .05;
+    static constexpr float move_step= .03;
     int health;
     Direction direction = Up;
     Point position;
@@ -100,7 +100,7 @@ public:
     }
 
     bool detectHit(Bullet& bullet){
-        return abs(position.x - bullet.position.x) < .02 && abs(position.y - bullet.position.y) < .02;
+        return abs(position.x - bullet.position.x) < .03 && abs(position.y - bullet.position.y) < .03;
     }
 
     Bullet shootBullet(){
