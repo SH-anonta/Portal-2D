@@ -238,7 +238,7 @@ public:
 //    Map game_map = createMap_Pockets();
 
     bool key_pressed[300];
-
+    bool SHIFT_IS_PRESSED= false;
     Player player1;
     Player player2;
 
@@ -374,10 +374,16 @@ public:
     void updatePlayerPositions(){
 
         //player 1 keys
+//        if(glutGetModifiers() & GLUT_ACTIVE_SHIFT){
+//            printf("SDAd\n");
+//        }
+        if(key_pressed['w']){
+            if(SHIFT_IS_PRESSED){
 
-        if(key_pressed[GLUT_ACTIVE_SHIFT] && key_pressed['w']){
-            printf("sdofhjasdofaosdfndoasf");
-//            player1.moveUp();
+            }
+            else{
+                player1.moveUp();
+            }
         }
         else if(key_pressed['w']){
             player1.moveUp();
@@ -476,6 +482,14 @@ public:
         player2.draw();
     }
 
+    // this method must be invoked by a GLUT "core input callback"
+    // else this method of shift key press checking will not work
+    // This method is meant to be invoked by keyPress() method (Which is indirectly invoked by a code input callback)
+    void updateShiftKeyStatus(){
+        // Check if shift is pressed
+        this->SHIFT_IS_PRESSED = GLUT_ACTIVE_SHIFT & glutGetModifiers();
+    }
+
     void keyPress(unsigned char key, int x, int y) override{
         // convert upper case characters to lower case character
         if(key >= 'A' && key <= 'Z'){
@@ -483,6 +497,7 @@ public:
         }
 
         key_pressed[key]= true;
+        updateShiftKeyStatus();
 
         //TODO: remove, only here for debugging purpose
         if(key == 'x'){
