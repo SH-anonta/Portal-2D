@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <ctime>
+#include <string>
 #include <cstring>
 #include <GL/gl.h>
 #include <GL/glut.h>

@@ -561,6 +561,91 @@ public:
     }
 };
 
+class MainMenuWindow: public Window{
+    // options are shown from top to bottom, option at index 0 is shown on top
+    vector<char*> menu_options = {"Play", "Controls", "Guide", "Exit"};
+    int selected_option_idx = 0;
+
+public:
+
+    MainMenuWindow(){
+    }
+
+    void execute() override{
+        draw();
+    }
+
+    void draw()override {
+
+        glPushMatrix();
+        glTranslatef(-2.5,2.5,0);
+
+        drawMenueOptions();
+        glPopMatrix();
+
+
+        drawMainBackground();
+    }
+
+    void drawMenueOptions(){
+        float LINE_SPACING = 0.25;
+        float y = 0;        //level of line
+
+
+        for(int i= 0, len = menu_options.size(); i<len; i++){
+            if(selected_option_idx == i){
+                glColor3f(.9,.9,.9);
+            }
+            else{
+                glColor3f(0.2,0.6,.9);
+            }
+
+            drawString(0, y, menu_options[i]);
+            y-= LINE_SPACING;
+        }
+    }
+
+    void onWindowLoad() override{
+        printf("Main Menu window loaded\n");
+
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+        // when enter is pressed
+        if(key == 13){
+//            this->w_engine->switchWindow(new GameWindow());
+        }
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+//        printf("%d\n", key);
+        if(key == GLUT_KEY_UP){
+            selectOptionAbove();
+        }
+        else if(key == GLUT_KEY_DOWN){
+            selectOptionBellow();
+        }
+
+//        printf("%d\n", selected_option_idx);
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
+
+    void selectOptionAbove(){
+        selected_option_idx = (selected_option_idx-1)%menu_options.size();
+    }
+
+    void selectOptionBellow(){
+        selected_option_idx = (selected_option_idx+1)%menu_options.size();
+    }
+};
+
 class SplashScreenWindow:public Window{
 public:
 
@@ -638,8 +723,6 @@ public:
 
     }
 };
-
-
 
 
 #endif

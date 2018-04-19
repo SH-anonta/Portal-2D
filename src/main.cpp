@@ -1,6 +1,7 @@
 #include "./include_me.h"
 
-WindowEngine w_engine(new SplashScreenWindow());
+WindowEngine w_engine(new MainMenuWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 //Window    Engine w_engine(new HelpScreenWindow(NULL));
 //WindowEngine w_engine(new GameWindow());
 
