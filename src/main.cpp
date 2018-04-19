@@ -60,6 +60,10 @@ void keyUpHandler(unsigned char key, int x, int y){
     w_engine.keyUp(key, x, y);
 }
 
+void specialKeyUpHandler(int key, int x, int y){
+    w_engine.specialKeyUp(key, x, y);
+}
+
 void idle(){
     glutPostRedisplay();
 }
@@ -68,8 +72,9 @@ void setCallbacks(){
     glutDisplayFunc(updateScreen);
 	glutReshapeFunc(handleResize);
 	glutKeyboardFunc(keyHandler);
-	glutSpecialFunc(specialKeyHandler);
 	glutKeyboardUpFunc(keyUpHandler);
+	glutSpecialFunc(specialKeyHandler);
+	glutSpecialUpFunc(specialKeyUpHandler);
 
 //	glutIdleFunc(idle);
 }

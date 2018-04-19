@@ -31,11 +31,15 @@ public:
     }
 
     virtual void specialKeyPress(int key, int x, int y){
-        printf("%d\n", key);
+//        printf("%d\n", key);
         printf("Window class executed, needs to be overwritten\n");
     }
 
     virtual void keyUp(unsigned char key, int x, int y){
+        printf("Window class executed, needs to be overwritten\n");
+    }
+
+    virtual void specialKeyUp(int key, int x, int y){
         printf("Window class executed, needs to be overwritten\n");
     }
 };
@@ -65,6 +69,10 @@ public:
 
     void keyUp(unsigned char key, int x, int y){
         currentWindow->keyUp(key, x, y);
+    }
+
+    void specialKeyUp(int key, int x, int y){
+        currentWindow->specialKeyUp(key, x, y);
     }
 
     void switchWindow(Window* new_window){
@@ -164,6 +172,9 @@ public :
     void keyUp(unsigned char key, int x, int y) override{
     }
 
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
 };
 
 class ConfirmQuitGameWindow: public Window{
@@ -213,6 +224,10 @@ public:
     }
 
     void keyUp(unsigned char key, int x, int y) override{
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
     }
 };
 
@@ -359,7 +374,12 @@ public:
     void updatePlayerPositions(){
 
         //player 1 keys
-        if(key_pressed['w']){
+
+        if(key_pressed[GLUT_ACTIVE_SHIFT] && key_pressed['w']){
+            printf("sdofhjasdofaosdfndoasf");
+//            player1.moveUp();
+        }
+        else if(key_pressed['w']){
             player1.moveUp();
         }
         if(key_pressed['a']){
@@ -461,10 +481,8 @@ public:
         if(key >= 'A' && key <= 'Z'){
             key += ' ';
         }
-//        if(key == 13){
-//            printf("GW: Enter Key pressed\n");
-//            printf("->> %d\n", this);
-//        }
+
+        key_pressed[key]= true;
 
         //TODO: remove, only here for debugging purpose
         if(key == 'x'){
@@ -474,13 +492,14 @@ public:
             // if escape was pressed
             this->w_engine->switchWindow(new ConfirmQuitGameWindow(this));
         }
-        key_pressed[key]= true;
+
 //        printf("press: %c\n", key);
 
 
     }
 
     void specialKeyPress(int key, int x, int y) override{
+//        key_pressed[key]= true;
 
         if(key == GLUT_KEY_F12){
             this->w_engine->switchWindow(new HelpScreenWindow(this));
@@ -495,6 +514,10 @@ public:
             key += ' ';
         }
         key_pressed[key]= false;
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
     }
 };
 
@@ -568,6 +591,10 @@ public:
     }
 
     void keyUp(unsigned char key, int x, int y) override{
+
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
 
     }
 };
