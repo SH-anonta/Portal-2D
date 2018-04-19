@@ -220,6 +220,8 @@ class GameWindow: public Window{
 public:
 //    Map game_map = createMapTheVoid();
     Map game_map = createMap_NeedleEye();
+//    Map game_map = createMap_Pockets();
+
     bool key_pressed[300];
 
     Player player1;
@@ -228,6 +230,7 @@ public:
 //    Portal portal1= Portal(-1,.1, Down);
     Portal portal1= Portal(-1,-2.8, Down);
     Portal portal2= Portal(-1,0, Up);
+//    Portal portal3= Portal(-1.2, .1, Down);
     Portal portal3= Portal(-2.89,-1, Left);
     Portal portal4= Portal(3,-1, Right);
 

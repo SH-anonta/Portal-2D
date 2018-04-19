@@ -7,6 +7,7 @@ Color DEFAULT_WALL_COLOR= Color(.2, .7, .5);
 Color MAP_BACKGROUND_COLOR= Color(.05, .15, .1);
 Color MAP_BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
 
+
 // Points that define the wall, should be in counter clockwise order
 // this is important for collision detection
 class Wall{
@@ -151,6 +152,68 @@ Map createMap_NeedleEye(){
     game_map.addWall(middle_horizontal2);
 
     return game_map;
+}
+
+//Map createMap_Pockets(){
+//    double thickness= .1;
+//    Map game_map = createMapTheVoid();
+//
+//    Wall wall_a  = Wall::createWall(2, thickness);
+//    Wall wall_b  = Wall::createWall(thickness, 2);
+//    Wall wall_c  = Wall::createWall(2, thickness);
+//
+//    wall_c.translate(0, 2);
+//
+//    game_map.addWall(wall_a);
+//    game_map.addWall(wall_b);
+//    game_map.addWall(wall_c);
+//
+//    return game_map;
+//}
+
+Map createMap_Pockets(){
+    Map gmap = createMapTheVoid();
+    double thickness= .1;
+
+    Wall bottomLeft1 = Wall::createWall(2, thickness);
+    bottomLeft1.translate(-2.7, -2.4);
+
+    Wall bottomLeft2 = Wall::createWall(thickness, 2);
+    bottomLeft2.translate(-0.8, -2.4);
+
+    Wall bottomLeft3 = Wall::createWall(2, thickness);
+    bottomLeft3.translate(-2.7, -0.4);
+
+
+    Wall topLeft1 = Wall::createWall(2, thickness);
+    topLeft1.translate(-2.7, 2.4);
+
+    Wall topLeft2 = Wall::createWall(thickness, 2);
+    topLeft2.translate(-2.7, 1.7);
+
+    //Wall topLeft3 = Wall::createWall(6, thickness);
+    //topLeft1.translate(-0.8, 2.8);
+
+    //Wall left = Wall::createWall(thickness, 6);
+    //left.translate(-3, -3);
+
+    //Wall right= Wall::createWall(thickness, 6);
+    //right.translate(3, -3);
+
+
+//    gmap.addWall(bottomLeft1);
+//    gmap.addWall(bottomLeft2);
+//    gmap.addWall(bottomLeft3);
+    gmap.addWall(topLeft1);
+    gmap.addWall(topLeft2);
+    //gmap.addWall(topLeft3);
+    //gmap.addWall(left);
+    //gmap.addWall(right);
+
+    gmap.p1position = Point(-2.5, -2.5);
+    gmap.p2position = Point(2.5, 2.5);
+
+    return gmap;
 }
 
 #endif
