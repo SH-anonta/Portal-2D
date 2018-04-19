@@ -86,6 +86,22 @@ public:
         direction = Right;
     }
 
+    void shiftUp(){
+        next_position.y+= move_step;
+    }
+
+    void shiftDown(){
+        next_position.y-= move_step;
+    }
+
+    void shiftLeft(){
+        next_position.x-= move_step;
+    }
+
+    void shiftRight(){
+        next_position.x+= move_step;
+    }
+
 
     bool reloadTimeIsOver(){
         clock_t time_now= clock();

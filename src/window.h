@@ -276,6 +276,8 @@ public:
     void onWindowLoad() override{
         printf("Game window loaded\n");
 
+        this->SHIFT_IS_PRESSED = false;
+
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
         }
@@ -372,47 +374,70 @@ public:
     }
 
     void updatePlayerPositions(){
-
-        //player 1 keys
-//        if(glutGetModifiers() & GLUT_ACTIVE_SHIFT){
-//            printf("SDAd\n");
-//        }
-        if(key_pressed['w']){
-            if(SHIFT_IS_PRESSED){
-
+        if(SHIFT_IS_PRESSED){
+            // player 1 shift movements
+            if(key_pressed['w']){
+                player1.shiftUp();
             }
-            else{
+            if(key_pressed['a']){
+                player1.shiftLeft();
+            }
+            if(key_pressed['s']){
+                player1.shiftDown();
+            }
+            if(key_pressed['d']){
+                player1.shiftRight();
+            }
+        }
+        else{
+            //player 1 movements
+            if(key_pressed['w']){
                 player1.moveUp();
             }
-        }
-        else if(key_pressed['w']){
-            player1.moveUp();
-        }
-        if(key_pressed['a']){
-            player1.moveLeft();
-        }
-        if(key_pressed['s']){
-            player1.moveDown();
-        }
-        if(key_pressed['d']){
-            player1.moveRight();
+            if(key_pressed['a']){
+                player1.moveLeft();
+            }
+            if(key_pressed['s']){
+                player1.moveDown();
+            }
+            if(key_pressed['d']){
+                player1.moveRight();
+            }
         }
 
-        //player 2 keys
-        if(key_pressed['5']){
-            player2.moveUp();
+        if(key_pressed['+']){
+            //player 2 shift movements
+            if(key_pressed['5']){
+                player2.shiftUp();
+            }
+            if(key_pressed['1']){
+                player2.shiftLeft();
+            }
+            if(key_pressed['2']){
+                player2.shiftDown();
+            }
+            if(key_pressed['3']){
+                player2.shiftRight();
+            }
         }
-        if(key_pressed['1']){
-            player2.moveLeft();
-        }
-        if(key_pressed['2']){
-            player2.moveDown();
-        }
-        if(key_pressed['3']){
-            player2.moveRight();
+        else{
+            //player 2 movements
+            if(key_pressed['5']){
+                player2.moveUp();
+            }
+            if(key_pressed['1']){
+                player2.moveLeft();
+            }
+            if(key_pressed['2']){
+                player2.moveDown();
+            }
+            if(key_pressed['3']){
+                player2.moveRight();
+            }
         }
 
-
+        // if the new position of player causes a collision, reset position to prevision value
+        // else update actual position to new position
         if(game_map.detectCollision(player1)){
             player1.resetNextPosition();
         }
