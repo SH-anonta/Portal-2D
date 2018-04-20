@@ -1,0 +1,16 @@
+Action				Player1			Player2
+
+Move Up				W				5
+Move Down			S 				2
+Move Left			A 				1
+Move Right			D 				3
+Shoot				<space>			0
+Open Portal 1		Q 				4
+Open Portal 2		E 				6
+Shift Up			Shift+W 		Shift+5
+Shift Down			Shift+S 		Shift+2
+Shift Left			Shift+A 		Shift+1
+Shift Right			Shift+D 		Shift+3
+Show Help Screen	F12 			F12
+Pause Game			Esc				Esc
+
