@@ -756,7 +756,10 @@ public:
     }
 
     void execute() override{
-//        printf("SPLASH SCREEN!\n");
+        draw();
+    }
+
+    void draw()override {
 
         if(current_iteration < TOTAL_ITERATIONS){
            r+= ri;
@@ -767,7 +770,7 @@ public:
         }
         else{
             glColor3f(1,1,1);
-            drawString(-.4,-2.5, "<PRESS ENTER>", GLUT_BITMAP_9_BY_15);
+            drawString(-.4,-2.5, "<PRESS ANY KEY>", GLUT_BITMAP_9_BY_15);
         }
 
         glColor3f(r,g,b);
@@ -779,23 +782,15 @@ public:
         drawMainBackground();
     }
 
-    void draw()override {
-
-    }
-
     void onWindowLoad() override{
         printf("Splash screen window loaded\n");
 
     }
 
     void keyPress(unsigned char key, int x, int y) override{
-//        printf("%c\n", key);
-
-        // when enter is pressed
-        if(key == 13){
-            printf("Splash: Enter Key pressed\n");
-            this->w_engine->switchWindow(new GameWindow());
-        }
+        // when any is pressed
+//            this->w_engine->switchWindow(new GameWindow());
+        this->w_engine->switchWindow(new MainMenuWindow());
     }
 
     void specialKeyPress(int key, int x, int y) override{
