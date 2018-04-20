@@ -855,14 +855,19 @@ public:
 
     }
 
+    void goToMainMenue(){
+        //this->w_engine->switchWindow(new GameWindow());
+        this->w_engine->switchWindow(new MainMenuWindow());
+    }
+
     void keyPress(unsigned char key, int x, int y) override{
         // when any is pressed
-//            this->w_engine->switchWindow(new GameWindow());
-        this->w_engine->switchWindow(new MainMenuWindow());
+        goToMainMenue();
     }
 
     void specialKeyPress(int key, int x, int y) override{
 //        printf("%d\n", key);
+        goToMainMenue();
     }
 
     void keyUp(unsigned char key, int x, int y) override{
