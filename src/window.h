@@ -666,7 +666,7 @@ public:
             this->w_engine->switchWindow(new HelpScreenWindow(this));
         }
         else if(chosen_option_idx == 2){
-
+            this->w_engine->switchWindow(new GameGuideWindow(this));
         }
         else if(chosen_option_idx == 3){
             exit(0);
