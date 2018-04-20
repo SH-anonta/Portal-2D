@@ -1,5 +1,7 @@
+
 Game objective
 Shoot your opponent until their health drops to nothing
+
 
 Map
 You will be placed on a map to fight your opponent. Maps have...
@@ -13,8 +15,10 @@ You will be placed on a map to fight your opponent. Maps have...
 	Hearts
 	Hearts spawn randomly on the map, collect them to increase your health
 
+
 Guns
 You have a gun. Shoot your opponent with it
+
 
 Portal Guns
 You can open two portals (Portal A and B)

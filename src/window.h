@@ -93,27 +93,25 @@ public :
     }
 
     void onWindowLoad() override{
-        printf("Help screen loaded\n");
+        printf("Help Window loaded\n");
     }
 
     void execute() override{
 //        printf("HELP SCREEN!\n");
+        draw();
+    }
 
+    void draw() override{
         glPushMatrix();
         glTranslatef(.1, .05, 0);
         drawTexts();
 
         glPopMatrix();
+
         drawMainBackground();
     }
 
-    void draw()override {
-
-    }
-
     void drawTexts(){
-        ///  printf("HELP SCREEN!\n");
-
         glPushMatrix();
         glTranslatef(-2.9, 0,0);
 
@@ -175,6 +173,77 @@ public :
     void specialKeyUp(int key, int x, int y) override{
 
     }
+};
+
+class GameGuideWindow: public Window{
+    Window* previous_window;    // this window gets loaded after user exits this window
+    float text_translate_y= 0.0;     // how much to translate the text in y axis shown in this window, needed for scrolling
+
+public:
+    GameGuideWindow(Window* previous_window){
+        this->previous_window = previous_window;
+    }
+
+    void onWindowLoad() override{
+        printf("Game Guide loaded\n");
+    }
+
+    void execute() override{
+        draw();
+    }
+
+    void draw()override {
+        glPushMatrix();
+
+        glTranslatef(0, text_translate_y, 0);
+
+        drawTexts();
+        glPopMatrix();
+
+        drawMainBackground();
+    }
+
+    void drawTexts(){
+        glColor3f(.9,.9,.9);
+        drawString(0, 0, "Place holder text");
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+//        printf("%c\n", key);
+
+        if(key == 27){
+            // when escape is pressed
+            this->w_engine->switchWindow(previous_window);
+        }
+
+    }
+
+    void scrollUp(){
+        text_translate_y+= 0.03;
+    }
+
+    void scrollDown(){
+        text_translate_y-= 0.03;
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+//        printf("%d\n", key);
+        if(key == GLUT_KEY_UP){
+            scrollUp();
+        }
+        else if(key == GLUT_KEY_DOWN){
+            scrollDown();
+        }
+
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
+
 };
 
 class ConfirmQuitGameWindow: public Window{
@@ -587,6 +656,23 @@ public:
         drawMainBackground();
     }
 
+    void handleChosenOption(int chosen_option_idx){
+//        printf("%d\n", chosen_option_idx);
+
+        if(chosen_option_idx == 0){
+            this->w_engine->switchWindow(new GameWindow());
+        }
+        else if(chosen_option_idx == 1){
+            this->w_engine->switchWindow(new HelpScreenWindow(this));
+        }
+        else if(chosen_option_idx == 2){
+
+        }
+        else if(chosen_option_idx == 3){
+            exit(0);
+        }
+    }
+
     void drawMenueOptions(){
         float LINE_SPACING = 0.25;
         float y = 0;        //level of line
@@ -614,6 +700,7 @@ public:
         // when enter is pressed
         if(key == 13){
 //            this->w_engine->switchWindow(new GameWindow());
+            handleChosenOption(selected_option_idx);
         }
     }
 
