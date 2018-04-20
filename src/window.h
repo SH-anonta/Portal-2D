@@ -112,6 +112,74 @@ public :
     }
 
     void drawTexts(){
+        double size_d=-.2;
+
+        glPushMatrix();
+        glTranslatef(-2.9, 0,0);
+
+        glColor3f(.9,.9,.9);
+        drawString(0, 2.6, "Controls");
+
+
+        drawString(0, 2.4+size_d, "Action",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5, 2.4+size_d, "Player1",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,2.4+size_d,  "Player2",GLUT_BITMAP_HELVETICA_18);
+
+        glColor3f(0.2,0.6,.9);
+
+        drawString(0, 2.0+size_d, "Move Up",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5, 2.0+size_d,"W",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,2.0+size_d,  "5",GLUT_BITMAP_HELVETICA_18);
+        drawString(0, 1.7+size_d, "Move Down",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,1.7+size_d,"S",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,1.7+size_d,"2",GLUT_BITMAP_HELVETICA_18);
+        drawString(0, 1.4+size_d, "Move Left",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,1.4+size_d,"A",GLUT_BITMAP_HELVETICA_18);
+        drawString(5, 1.4+size_d,"1",GLUT_BITMAP_HELVETICA_18);
+        drawString(0, 1.1+size_d, "Move Right",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,1.1+size_d,"D",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,1.1+size_d,"3",GLUT_BITMAP_HELVETICA_18);
+        drawString(0, 0.8+size_d, "Shoot",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,0.8+size_d,"<Space>",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,0.8+size_d,"0",GLUT_BITMAP_HELVETICA_18);
+        drawString(0, 0.5+size_d, "Open Portal 1",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,0.5+size_d," Q",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,0.5+size_d,"4",GLUT_BITMAP_HELVETICA_18);
+
+        drawString(0, 0.3+size_d, "Open Portal 2",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,0.3+size_d," E",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,0.3+size_d,"6",GLUT_BITMAP_HELVETICA_18);
+
+
+        drawString(0, 0.0+size_d, "Shift Up",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,0.0+size_d,"Shift+W ",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,0.0+size_d,"Shift+5",GLUT_BITMAP_HELVETICA_18);
+
+        drawString(0, -0.3+size_d, "Shift Down",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,-0.3+size_d,"Shift+S ",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.3+size_d,"Shift+2",GLUT_BITMAP_HELVETICA_18);
+
+       drawString(0, -0.6+size_d, "Shift Left",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,-0.6+size_d,"Shift+A ",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.6+size_d,"Shift+1",GLUT_BITMAP_HELVETICA_18);
+
+        drawString(0, -0.9+size_d, "Shift Right",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,-0.9+size_d,"Shift+D",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.9+size_d,"Shift+3",GLUT_BITMAP_HELVETICA_18);
+
+
+       drawString(0, -1.2+size_d, "Pause game",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,-1.2+size_d,"Esc",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-1.2+size_d,"Esc",GLUT_BITMAP_HELVETICA_18);
+
+        drawString(0, -1.5+size_d, "Help screeen",GLUT_BITMAP_HELVETICA_18);
+        drawString(2.5,-1.5+size_d,"F12",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-1.5+size_d,"F12",GLUT_BITMAP_HELVETICA_18);
+
+        glPopMatrix();
+    }
+
+    void old_drawTexts(){
         glPushMatrix();
         glTranslatef(-2.9, 0,0);
 

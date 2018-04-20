@@ -3,7 +3,7 @@
 WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new MainMenuWindow());
 //WindowEngine w_engine(new GameGuideWindow(NULL));
-//Window    Engine w_engine(new HelpScreenWindow(NULL));
+//WindowEngine w_engine(new HelpScreenWindow(NULL));
 //WindowEngine w_engine(new GameWindow());
 
 float _cameraAngle = 0.0;
