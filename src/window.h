@@ -153,19 +153,19 @@ public :
 
         drawString(0, 0.0+size_d, "Shift Up",GLUT_BITMAP_HELVETICA_18);
         drawString(2.5,0.0+size_d,"Shift+W ",GLUT_BITMAP_HELVETICA_18);
-        drawString(5,0.0+size_d,"Shift+5",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,0.0+size_d,"Enter+5",GLUT_BITMAP_HELVETICA_18);
 
         drawString(0, -0.3+size_d, "Shift Down",GLUT_BITMAP_HELVETICA_18);
         drawString(2.5,-0.3+size_d,"Shift+S ",GLUT_BITMAP_HELVETICA_18);
-        drawString(5,-0.3+size_d,"Shift+2",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.3+size_d,"Enter+2",GLUT_BITMAP_HELVETICA_18);
 
        drawString(0, -0.6+size_d, "Shift Left",GLUT_BITMAP_HELVETICA_18);
         drawString(2.5,-0.6+size_d,"Shift+A ",GLUT_BITMAP_HELVETICA_18);
-        drawString(5,-0.6+size_d,"Shift+1",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.6+size_d,"Enter+1",GLUT_BITMAP_HELVETICA_18);
 
         drawString(0, -0.9+size_d, "Shift Right",GLUT_BITMAP_HELVETICA_18);
         drawString(2.5,-0.9+size_d,"Shift+D",GLUT_BITMAP_HELVETICA_18);
-        drawString(5,-0.9+size_d,"Shift+3",GLUT_BITMAP_HELVETICA_18);
+        drawString(5,-0.9+size_d,"Enter+3",GLUT_BITMAP_HELVETICA_18);
 
 
        drawString(0, -1.2+size_d, "Pause game",GLUT_BITMAP_HELVETICA_18);
@@ -175,47 +175,6 @@ public :
         drawString(0, -1.5+size_d, "Help screeen",GLUT_BITMAP_HELVETICA_18);
         drawString(2.5,-1.5+size_d,"F12",GLUT_BITMAP_HELVETICA_18);
         drawString(5,-1.5+size_d,"F12",GLUT_BITMAP_HELVETICA_18);
-
-        glPopMatrix();
-    }
-
-    void old_drawTexts(){
-        glPushMatrix();
-        glTranslatef(-2.9, 0,0);
-
-        drawString(0, 2.6, "Controls");
-
-        glColor3f(.9,.9,.9);
-        drawString(0, 2.3, "Action");
-        drawString(2.5, 2.3, "Player1");
-        drawString(5,2.3,  "Player2");
-
-        glColor3f(0.2,0.6,.9);
-
-        drawString(0, 2.0, "Move Up");
-        drawString(2.5, 2.0,"W");
-        drawString(5,2.0,  "5");
-        drawString(0, 1.7, "MoveDown");
-        drawString(2.5,1.7," S");
-        drawString(5,1.7,"2");
-        drawString(0, 1.4, "MoveLeft");
-        drawString(2.5,1.4,"A");
-        drawString(5, 1.4,"1");
-        drawString(0, 1.1, "Move Right");
-        drawString(2.5,1.1,"D");
-        drawString(5,1.1,"3");
-        drawString(0, 0.8, "Shoot");
-        drawString(2.5,0.8,"<Space>");
-        drawString(5,0.8,"0");
-        drawString(0, 0.5, "Open Portal 1");
-        drawString(2.5,0.5," Q");
-        drawString(5,0.5,"4");
-        drawString(0, 0.3, "Pause game");
-        drawString(2.5,0.3,"Esc");
-        drawString(5,0.3,"Esc");
-        drawString(0, 0.0, "Help screeen");
-        drawString(2.5,0.0,"F12");
-        drawString(5,0.0,"F12");
 
         glPopMatrix();
     }
@@ -542,7 +501,9 @@ public:
             }
         }
 
-        if(key_pressed['+']){
+
+        // if enter key is pressed
+        if(key_pressed[13]){
             //player 2 shift movements
             if(key_pressed['5']){
                 player2.shiftUp();
