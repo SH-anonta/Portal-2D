@@ -114,10 +114,10 @@ public:
 };
 
 class Map{
-public:
     vector<Wall> walls;
     vector<Pit> pits;
-
+    string map_name;
+public:
     Point p1position;
     Point p2position;
 
@@ -168,104 +168,17 @@ public:
         }
         return false;
     }
+
+    string getMapName(){
+        return map_name;
+    }
+
+    void setMapName(const string& name){
+        map_name = name;
+    }
 };
 
 double WALL_THICKNESS = .1;
 
-// a map with 4 borders
-Map createMapTheVoid(){
-    Map gmap;
-    double thickness= .1;
-    Wall bottom = Wall::createWall(6, thickness);
-    bottom.translate(-2.9, -2.9);
-
-    Wall top = Wall::createWall(6, thickness);
-    top.translate(-2.9, 2.8);
-
-    Wall left = Wall::createWall(thickness, 6);
-    left.translate(-3, -3);
-
-    Wall right= Wall::createWall(thickness, 6);
-    right.translate(3, -3);
-
-
-    gmap.addWall(bottom);
-    gmap.addWall(top);
-    gmap.addWall(left);
-    gmap.addWall(right);
-
-    gmap.p1position = Point(-2.5, -2.5);
-    gmap.p2position = Point(2.5, 2.5);
-
-    return gmap;
-}
-
-Map createMap_ChokePoint(){
-    Map game_map = createMapTheVoid();
-
-    // walls
-    Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
-    Wall middle_horizontal2= Wall::createWall(2.95, WALL_THICKNESS);
-
-    middle_horizontal1.translate(-3.0, 0);
-    middle_horizontal2.translate(.05, 0);
-
-    game_map.addWall(middle_horizontal1);
-    game_map.addWall(middle_horizontal2);
-
-    // pits
-
-    Pit center_pit = Pit::createPit(1,1);
-
-    center_pit.translate(-.5, -.5);
-    game_map.addPit(center_pit);
-
-    return game_map;
-}
-
-Map createMap_Pockets(){
-    Map gmap = createMapTheVoid();
-    double thickness= .1;
-
-    Wall bottomLeft1 = Wall::createWall(2, thickness);
-    bottomLeft1.translate(-2.7, -2.4);
-
-    Wall bottomLeft2 = Wall::createWall(thickness, 2);
-    bottomLeft2.translate(-0.8, -2.4);
-
-    Wall bottomLeft3 = Wall::createWall(2, thickness);
-    bottomLeft3.translate(-2.7, -0.4);
-
-
-    Wall topLeft1 = Wall::createWall(2, thickness);
-    topLeft1.translate(-2.7, 2.4);
-
-    Wall topLeft2 = Wall::createWall(thickness, 2);
-    topLeft2.translate(-2.7, 1.7);
-
-    //Wall topLeft3 = Wall::createWall(6, thickness);
-    //topLeft1.translate(-0.8, 2.8);
-
-    //Wall left = Wall::createWall(thickness, 6);
-    //left.translate(-3, -3);
-
-    //Wall right= Wall::createWall(thickness, 6);
-    //right.translate(3, -3);
-
-
-//    gmap.addWall(bottomLeft1);
-//    gmap.addWall(bottomLeft2);
-//    gmap.addWall(bottomLeft3);
-    gmap.addWall(topLeft1);
-    gmap.addWall(topLeft2);
-    //gmap.addWall(topLeft3);
-    //gmap.addWall(left);
-    //gmap.addWall(right);
-
-    gmap.p1position = Point(-2.5, -2.5);
-    gmap.p2position = Point(2.5, 2.5);
-
-    return gmap;
-}
 
 #endif

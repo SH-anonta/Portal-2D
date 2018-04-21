@@ -20,6 +20,7 @@ using namespace std;
 #include "./game/portal.h"
 #include "./game/player.h"
 #include "./game/maps.h"
+#include "./game/map_factory.h"
 #include "./game/game.h"
 #include "./window.h"
 

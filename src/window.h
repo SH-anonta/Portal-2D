@@ -329,9 +329,7 @@ public:
 
 class GameWindow: public Window{
 public:
-//    Map game_map = createMapTheVoid();
-    Map game_map = createMap_ChokePoint();
-//    Map game_map = createMap_Pockets();
+    Map game_map;
 
     bool key_pressed[300];
     bool SHIFT_IS_PRESSED= false;
@@ -348,8 +346,10 @@ public:
 
     list<Bullet> bullets;
 
-    GameWindow(): Window(){
+    GameWindow(Map gmap): Window(){
         printf("Game window loaded\n");
+        game_map = gmap;
+
         player1= Player(game_map.p1position);
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
@@ -367,6 +367,8 @@ public:
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
         }
+
+
     }
 
     void onWindowLoad() override{
@@ -659,6 +661,118 @@ public:
     }
 };
 
+class MapSelectionMenue: public Window{
+    // options are shown from top to bottom, option at index 0 is shown on top
+    Window* previous_window;
+    vector<Map> menu_options = getAllMaps();
+    int selected_option_idx = 0;
+
+public:
+
+    MapSelectionMenue(Window* previous_window){
+        this->previous_window = previous_window;
+    }
+
+    void execute() override{
+        draw();
+    }
+
+    void draw()override {
+
+        glColor3f(.9,.9,.9);
+        glPushMatrix();
+
+        glTranslatef(-2.5,2.5,0);
+        drawMenueOptions();
+        glPopMatrix();
+
+        drawMapPreview();
+
+        drawMainBackground();
+    }
+
+    void drawMapPreview(){
+        // show map preview
+        glColor3f(.9,.9,.9);
+        drawString(-.5,1.6, "Preview");
+
+        glPushMatrix();
+        glTranslatef(1,0,0);
+        glScalef(.5,.5, 1);
+        menu_options[selected_option_idx].draw();
+        glPopMatrix();
+    }
+
+    void handleChosenOption(int chosen_option_idx){
+        //start game with selected map
+        this->w_engine->switchWindow(new GameWindow(menu_options[chosen_option_idx]));
+    }
+
+    void drawMenueOptions(){
+        float LINE_SPACING = 0.25;
+        float y = 0;        //level of line
+
+        drawString(0,0, "Maps");
+        y-= 2*LINE_SPACING;
+
+        for(int i= 0, len = menu_options.size(); i<len; i++){
+            if(selected_option_idx == i){
+                glColor3f(.9,.9,.9);
+            }
+            else{
+                glColor3f(0.2,0.6,.9);
+            }
+
+            drawString(0, y, (char*)menu_options[i].getMapName().c_str());
+            y-= LINE_SPACING;
+        }
+    }
+
+    void onWindowLoad() override{
+        printf("Map Selection Menu loaded\n");
+
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+        if(key == 27){
+            // when escape is pressed
+            this->w_engine->switchWindow(previous_window);
+        }
+        else if(key == 13){
+            // when enter is pressed
+            handleChosenOption(selected_option_idx);
+        }
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+//        printf("%d\n", key);
+        if(key == GLUT_KEY_UP){
+            selectOptionAbove();
+        }
+        else if(key == GLUT_KEY_DOWN){
+            selectOptionBellow();
+        }
+
+//        printf("%d\n", selected_option_idx);
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
+
+    void selectOptionAbove(){
+        selected_option_idx = (selected_option_idx-1)%menu_options.size();
+    }
+
+    void selectOptionBellow(){
+        selected_option_idx = (selected_option_idx+1)%menu_options.size();
+    }
+};
+
 class MainMenuWindow: public Window{
     // options are shown from top to bottom, option at index 0 is shown on top
     vector<char*> menu_options = {"Play", "Controls", "Guide", "Exit"};
@@ -674,13 +788,11 @@ public:
     }
 
     void draw()override {
-
         glPushMatrix();
         glTranslatef(-2.5,2.5,0);
 
         drawMenueOptions();
         glPopMatrix();
-
 
         drawMainBackground();
     }
@@ -689,7 +801,7 @@ public:
 //        printf("%d\n", chosen_option_idx);
 
         if(chosen_option_idx == 0){
-            this->w_engine->switchWindow(new GameWindow());
+            this->w_engine->switchWindow(new MapSelectionMenue(this));
         }
         else if(chosen_option_idx == 1){
             this->w_engine->switchWindow(new HelpScreenWindow(this));
@@ -706,6 +818,9 @@ public:
         float LINE_SPACING = 0.25;
         float y = 0;        //level of line
 
+        glColor3f(.9,.9,.9);
+        drawString(0,0, "Main Menu");
+        y-= 2*LINE_SPACING;
 
         for(int i= 0, len = menu_options.size(); i<len; i++){
             if(selected_option_idx == i){
@@ -722,7 +837,6 @@ public:
 
     void onWindowLoad() override{
         printf("Main Menu window loaded\n");
-
     }
 
     void keyPress(unsigned char key, int x, int y) override{
