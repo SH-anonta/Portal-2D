@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+
+# artifact: the game executable
+!/artifacts/Portal2D.exe
