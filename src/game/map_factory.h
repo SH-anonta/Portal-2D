@@ -11,6 +11,7 @@ public:
     }
 };
 
+// create a map with four borders only
 class VoidMapFactory: public MapFactory{
 
 public:
@@ -77,7 +78,21 @@ class PocketsMapFactory: public MapFactory{
 
 public:
     Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Pockets");
 
+        return game_map;
+    }
+};
+
+class StrandedMapFactory: public MapFactory{
+
+public:
+    Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Stranded");
+
+        return game_map;
     }
 };
 
@@ -87,6 +102,7 @@ vector<Map> getAllMaps(){
 
     maps.push_back(VoidMapFactory().createMap());
     maps.push_back(ChokePointMapFactory().createMap());
+    maps.push_back(StrandedMapFactory().createMap());
 
     return maps;
 }

@@ -765,7 +765,10 @@ public:
     }
 
     void selectOptionAbove(){
-        selected_option_idx = (selected_option_idx-1)%menu_options.size();
+        selected_option_idx -= 1;
+        if(selected_option_idx < 0){
+            selected_option_idx = menu_options.size()-1;
+        }
     }
 
     void selectOptionBellow(){
@@ -868,7 +871,10 @@ public:
     }
 
     void selectOptionAbove(){
-        selected_option_idx = (selected_option_idx-1)%menu_options.size();
+        selected_option_idx -= 1;
+        if(selected_option_idx < 0){
+            selected_option_idx = menu_options.size()-1;
+        }
     }
 
     void selectOptionBellow(){
