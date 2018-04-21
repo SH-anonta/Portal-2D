@@ -3,6 +3,8 @@
 
 
 Color DEFAULT_WALL_COLOR= Color(.2, .7, .5);
+//Color DEFAULT_PIT_COLOR= Color(.1, .1, .1);
+Color DEFAULT_PIT_COLOR= Color(0,0,0);
 //Color MAP_BACKGROUND_COLOR= Color(.8, .8, .8);
 Color MAP_BACKGROUND_COLOR= Color(.05, .15, .1);
 Color MAP_BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
@@ -65,9 +67,59 @@ public:
     }
 };
 
+class Pit{
+public:
+    // points that make up the pit (a quad)
+    vector<Point> points;
+
+    Pit(vector<Point>& pts){
+        points = pts;
+    }
+
+    // this function is meant to be called by the Map class only
+    // call to setColor glBegin and glEnd have been omitted intentionally for performance concerns
+    void draw(){
+//        setColor(color);
+
+//        glBegin(GL_QUADS);
+        for(int i= 0; i<4; i++){
+            plot(points[i]);
+        }
+//        glEnd();
+    }
+
+    static Pit createPit(double w, double h){
+        vector<Point> pit_points= {
+            Point(0,0),
+            Point(w, 0),
+            Point(w, h),
+            Point(0, h)
+        };
+
+        return Pit(pit_points);
+    }
+
+    void translate(double tx, double ty){
+        for(int i= 0; i<4; i++){
+            points[i].x+= tx;
+            points[i].y+= ty;
+        }
+    }
+
+    bool detectCollision(Player& player){
+
+        return points[0].x <= player.next_position.x &&
+               points[1].x >= player.next_position.x &&
+               points[0].y <= player.next_position.y &&
+               points[3].y >= player.next_position.y;
+    }
+};
+
 class Map{
 public:
     vector<Wall> walls;
+    vector<Pit> pits;
+
     Point p1position;
     Point p2position;
 
@@ -84,14 +136,25 @@ public:
         for(int i= 0, len= walls.size(); i<len; i++){
             walls[i].draw();
         }
+
+        setColor(DEFAULT_PIT_COLOR);
+        for(int i= 0, len= pits.size(); i<len; i++){
+            pits[i].draw();
+        }
+
         glEnd();
 
-        drawMainBackground();
 
+
+        drawMainBackground();
     }
 
     void addWall(Wall wall){
         walls.push_back(wall);
+    }
+
+    void addPit(Pit pit){
+        pits.push_back(pit);
     }
 
     bool detectCollision(Player& player){
@@ -139,9 +202,10 @@ Map createMapTheVoid(){
     return gmap;
 }
 
-Map createMap_NeedleEye(){
+Map createMap_ChokePoint(){
     Map game_map = createMapTheVoid();
 
+    // walls
     Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
     Wall middle_horizontal2= Wall::createWall(2.95, WALL_THICKNESS);
 
@@ -151,25 +215,15 @@ Map createMap_NeedleEye(){
     game_map.addWall(middle_horizontal1);
     game_map.addWall(middle_horizontal2);
 
+    // pits
+
+    Pit center_pit = Pit::createPit(1,1);
+
+    center_pit.translate(-.5, -.5);
+    game_map.addPit(center_pit);
+
     return game_map;
 }
-
-//Map createMap_Pockets(){
-//    double thickness= .1;
-//    Map game_map = createMapTheVoid();
-//
-//    Wall wall_a  = Wall::createWall(2, thickness);
-//    Wall wall_b  = Wall::createWall(thickness, 2);
-//    Wall wall_c  = Wall::createWall(2, thickness);
-//
-//    wall_c.translate(0, 2);
-//
-//    game_map.addWall(wall_a);
-//    game_map.addWall(wall_b);
-//    game_map.addWall(wall_c);
-//
-//    return game_map;
-//}
 
 Map createMap_Pockets(){
     Map gmap = createMapTheVoid();

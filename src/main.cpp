@@ -1,10 +1,10 @@
 #include "./include_me.h"
 
-WindowEngine w_engine(new SplashScreenWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new MainMenuWindow());
 //WindowEngine w_engine(new GameGuideWindow(NULL));
 //WindowEngine w_engine(new HelpScreenWindow(NULL));
-//WindowEngine w_engine(new GameWindow());
+WindowEngine w_engine(new GameWindow());
 
 float _cameraAngle = 0.0;
 

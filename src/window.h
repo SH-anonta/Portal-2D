@@ -330,7 +330,7 @@ public:
 class GameWindow: public Window{
 public:
 //    Map game_map = createMapTheVoid();
-    Map game_map = createMap_NeedleEye();
+    Map game_map = createMap_ChokePoint();
 //    Map game_map = createMap_Pockets();
 
     bool key_pressed[300];

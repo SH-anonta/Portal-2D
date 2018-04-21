@@ -7,10 +7,10 @@ Move Right			D 				3
 Shoot				<space>			0
 Open Portal 1		Q 				4
 Open Portal 2		E 				6
-Shift Up			Shift+W 		Shift+5
-Shift Down			Shift+S 		Shift+2
-Shift Left			Shift+A 		Shift+1
-Shift Right			Shift+D 		Shift+3
+Shift Up			Shift+W 		Enter+5
+Shift Down			Shift+S 		Enter+2
+Shift Left			Shift+A 		Enter+1
+Shift Right			Shift+D 		Enter+3
 Show Help Screen	F12 			F12
 Pause Game			Esc				Esc
 
