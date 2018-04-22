@@ -168,6 +168,10 @@ public:
     void updateDirection(Direction new_direction){
         direction = new_direction;
     }
+
+    void openPortalOne(){
+
+    }
 };
 
 #endif

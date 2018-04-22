@@ -7,7 +7,7 @@ Map
 You will be placed on a map to fight your opponent. Maps have...
 	
 	Walls
-	You can't move or shoot through walls. You can however open portals on them
+	You can't move or shoot through walls
 
 	Pits
 	If you fall into a pit, you die instantly
@@ -22,11 +22,6 @@ You can open two portals (Portal A and B)
 You can travel and shoot through them
 Portals are opened on the nearest wall in front of you
 Opening portal A will close any open portal A. Same goes for portal B
-
-
-Controls 
-You can bring up the controls screen during a running game by pressing F12
-
 
 
 Collectibles
@@ -59,3 +54,7 @@ Collecting them will cause some temporary effect on you
 
 	Bear trap
 	You can't move
+
+
+Controls 
+You can bring up the controls screen during a running game by pressing F12
