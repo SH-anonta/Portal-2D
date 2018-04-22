@@ -49,15 +49,14 @@ public:
     }
 
     bool detectCollision(Player& player){
-
-        return points[0].x <= player.next_position.x &&
-               points[1].x >= player.next_position.x &&
-               points[0].y <= player.next_position.y &&
-               points[3].y >= player.next_position.y;
+        float buffer = .08;
+        return points[0].x <= player.next_position.x+buffer &&
+               points[1].x >= player.next_position.x-buffer &&
+               points[0].y <= player.next_position.y+buffer &&
+               points[3].y >= player.next_position.y-buffer;
     }
 
     bool detectCollision(Bullet& bullet){
-
         return points[0].x <= bullet.position.x &&
                points[1].x >= bullet.position.x &&
                points[0].y <= bullet.position.y &&

@@ -59,11 +59,39 @@ public:
     void draw(){
         setColor(color);
 
-        glBegin(GL_POINTS);
-        plot(position.x, position.y);
+        float h = .1;
+        float w = .1;
+
+
+        // rotate the player model to it's appropriate direction
+        glPushMatrix();
+        glTranslatef(position.x, position.y, 0);
+        if(direction == Down){
+            glRotatef(180, 0,0,1);
+        }
+        else if(direction == Left){
+            glRotatef(90, 0,0,1);
+        }
+        else if(direction == Right){
+            glRotatef(90, 0,0,-1);
+        }
+        glTranslatef(-1*position.x, -1*position.y, 0);
+
+        glBegin(GL_TRIANGLES);
+        plot(position.x-w, position.y-h);
+        plot(position.x+w, position.y-h);
+        plot(position.x, position.y+h);
         glEnd();
+
+
+
+        glPopMatrix();
     }
 
+
+    bool detectHit(Bullet& bullet){
+        return abs(position.x - bullet.position.x) < .08 && abs(position.y - bullet.position.y) < .08;
+    }
 
     // movement methods
     void moveUp(){
@@ -115,15 +143,27 @@ public:
         }
     }
 
-    bool detectHit(Bullet& bullet){
-        return abs(position.x - bullet.position.x) < .03 && abs(position.y - bullet.position.y) < .03;
-    }
-
     Bullet shootBullet(){
         //record when this bullet was shot
         last_bullet_shoot_time= clock();
+        float adj_x = 0;
+        float adj_y = 0;
 
-        return Bullet(position, direction);
+        if(direction == Up){
+            adj_y = .1;
+        }
+        else if(direction == Down){
+            adj_y = -.1;
+        }
+        else if(direction == Left){
+            adj_x = -.1;
+        }
+        else{
+            //right
+            adj_x = .1;
+        }
+
+        return Bullet(position.x+adj_x, position.y+adj_y, direction);
     }
 
 
