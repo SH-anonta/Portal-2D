@@ -49,7 +49,7 @@ public:
     }
 
     bool detectCollision(Player& player){
-        float buffer = .08;
+        float buffer = .06;
         return points[0].x <= player.next_position.x+buffer &&
                points[1].x >= player.next_position.x-buffer &&
                points[0].y <= player.next_position.y+buffer &&

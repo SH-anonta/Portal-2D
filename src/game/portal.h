@@ -112,12 +112,12 @@ public:
             }
 
             if(linked_portal->orientation == Up || linked_portal->orientation == Down){
-                Point adj = getPositionAdjustment(linked_portal->orientation);
+                Point adj = getBulletPositionAdjustment(linked_portal->orientation);
 
                 bullet.position = Point(p.x+collision_point+adj.x, p.y+adj.y);
             }
             else{
-                Point adj = getPositionAdjustment(linked_portal->orientation);
+                Point adj = getBulletPositionAdjustment(linked_portal->orientation);
 
                 bullet.position = Point(p.x+adj.x, p.y+collision_point+adj.y);
             }
@@ -126,8 +126,62 @@ public:
         }
     }
 
+    bool detectCollision(Player& player){
+
+        float buffer = .08;
+        return points[0].x <= player.next_position.x+buffer &&
+               points[1].x >= player.next_position.x-buffer &&
+               points[0].y <= player.next_position.y+buffer &&
+               points[3].y >= player.next_position.y-buffer;
+    }
+
+    // position adjustment after teliportation
+    Point getPlayerPositionAdjustment(Direction d){
+
+        // .06 is just above the thickness of portals
+        if(d == Left)
+            return Point(.2,0);
+        if(d == Right)
+            return Point(-.11,0);
+        if(d == Up)
+            return Point(0,-.11);
+        if(d == Down)
+            return Point(0,.2);
+
+    }
+
+    void teleportPlayer(Player& player){
+        if(detectCollision(player)){
+//            printf("Portal collision\n");
+
+            Point& p = linked_portal->points[0];
+            float collision_point = 0;
+
+            //calculate collision point
+            if(orientation == Up || orientation == Down){
+                collision_point = player.position.x - points[0].x;
+            }
+            else{
+                collision_point = player.position.y - points[0].y;
+            }
+
+            if(linked_portal->orientation == Up || linked_portal->orientation == Down){
+                Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
+
+                player.position = Point(p.x+collision_point+adj.x, p.y+adj.y);
+            }
+            else{
+                Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
+
+                player.position = Point(p.x+adj.x, p.y+collision_point+adj.y);
+            }
+
+            player.updateDirection(getOppositeDirection(linked_portal->orientation));
+        }
+    }
+
     // get how much position should be adjusted for a given orientation in order to avoid collision after teleportation
-    Point getPositionAdjustment(Direction d){
+    Point getBulletPositionAdjustment(Direction d){
 
         // .06 is just above the thickness of portals
         if(d == Left)

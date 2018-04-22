@@ -357,7 +357,6 @@ public:
         portal1.setLinkedPortal(portal4);
         portal2.setLinkedPortal(portal3);
 
-
         portal1.color = Color(.9, .7, .1);
         portal2.color = Color(.7, .4, .3);
         portal3.color = Color(.7, .4, .7);
@@ -502,7 +501,6 @@ public:
             }
         }
 
-
         // if enter key is pressed
         if(key_pressed[13]){
             //player 2 shift movements
@@ -534,6 +532,17 @@ public:
                 player2.moveRight();
             }
         }
+
+        // portal
+        portal1.teleportPlayer(player1);
+        portal2.teleportPlayer(player1);
+        portal3.teleportPlayer(player1);
+        portal4.teleportPlayer(player1);
+
+        portal1.teleportPlayer(player2);
+        portal2.teleportPlayer(player2);
+        portal3.teleportPlayer(player2);
+        portal4.teleportPlayer(player2);
 
         // if the new position of player causes a collision, reset position to prevision value
         // else update actual position to new position

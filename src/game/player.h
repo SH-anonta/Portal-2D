@@ -59,9 +59,8 @@ public:
     void draw(){
         setColor(color);
 
-        float h = .1;
-        float w = .1;
-
+        float h = .07;
+        float w = .07;
 
         // rotate the player model to it's appropriate direction
         glPushMatrix();
@@ -90,7 +89,7 @@ public:
 
 
     bool detectHit(Bullet& bullet){
-        return abs(position.x - bullet.position.x) < .08 && abs(position.y - bullet.position.y) < .08;
+        return abs(position.x - bullet.position.x) < .06 && abs(position.y - bullet.position.y) < .06;
     }
 
     // movement methods
@@ -150,23 +149,25 @@ public:
         float adj_y = 0;
 
         if(direction == Up){
-            adj_y = .1;
+            adj_y = .08;
         }
         else if(direction == Down){
-            adj_y = -.1;
+            adj_y = -.08;
         }
         else if(direction == Left){
-            adj_x = -.1;
+            adj_x = -.08;
         }
         else{
             //right
-            adj_x = .1;
+            adj_x = .08;
         }
 
         return Bullet(position.x+adj_x, position.y+adj_y, direction);
     }
 
-
+    void updateDirection(Direction new_direction){
+        direction = new_direction;
+    }
 };
 
 #endif
