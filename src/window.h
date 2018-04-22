@@ -354,10 +354,9 @@ public:
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
 
-        portal1.setLinkedPortal(&portal4);
-        portal2.setLinkedPortal(&portal3);
-        portal3.setLinkedPortal(&portal2);
-        portal4.setLinkedPortal(&portal1);
+        portal1.setLinkedPortal(portal4);
+        portal2.setLinkedPortal(portal3);
+
 
         portal1.color = Color(.9, .7, .1);
         portal2.color = Color(.7, .4, .3);

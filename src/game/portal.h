@@ -84,8 +84,9 @@ public:
                      (points[0].y+points[1].y+points[2].y+points[3].y)/4);
     }
 
-    void setLinkedPortal(Portal* p){
-        linked_portal= p;
+    void setLinkedPortal(Portal& p){
+        linked_portal= &p;
+        p.linked_portal = this;
     }
 
     bool detectCollision(Bullet& bullet){
