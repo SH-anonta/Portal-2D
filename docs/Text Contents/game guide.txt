@@ -12,9 +12,6 @@ You will be placed on a map to fight your opponent. Maps have...
 	Pits
 	If you fall into a pit, you die instantly
 
-	Hearts
-	Hearts spawn randomly on the map, collect them to increase your health
-
 
 Guns
 You have a gun. Shoot your opponent with it
@@ -32,3 +29,33 @@ You can bring up the controls screen during a running game by pressing F12
 
 
 
+Collectibles
+During the game, collectible items will pop up randomly
+Collecting them will cause some temporary effect on you
+	
+	Hearts
+	Increases your health
+
+	Poison
+	Decreases your health
+
+	Speed Boost
+	Increases your movement speed
+
+	Speed Bump
+	Increases your movement speed
+
+	Shield
+	Protects you from all damage
+
+	Machine Gun
+	Your gun fires more bullets per second
+
+	Jet Pack
+	you can walk on pits 
+
+	Death pill
+	You die instantly
+
+	Bear trap
+	You can't move
