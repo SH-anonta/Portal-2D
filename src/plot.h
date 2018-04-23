@@ -21,6 +21,6 @@ void plot(vector<Point>& points){
 }
 
 void setColor(Color& c){
-    glColor3f(c.r, c.b, c.g);
+    glColor3f(c.r, c.g, c.b);
 }
 #endif

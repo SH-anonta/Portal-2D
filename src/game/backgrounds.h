@@ -1,8 +1,8 @@
 #ifndef BACKGROUNDS_H
 #define BACKGROUNDS_H
 
-Color BACKGROUND_COLOR= Color(.05, .15, .1);
-Color BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
+Color BACKGROUND_COLOR= Color(.05, .1, .15);
+Color BACKGROUND_GRID_COLOR= Color(.15, .15, .3);
 Color DEFAULT_TEXT_COLOR= Color(0.2,0.6,.9);
 
 void drawMainBackground(){
