@@ -20,18 +20,13 @@ public:
         double thickness= .1;
         gmap.setMapName("Void");
 
-        Wall bottom = Wall::createWall(6, thickness);
-        bottom.translate(-2.9, -2.9);
+        Wall bottom = Wall(6, thickness, -2.9, -2.9);
 
-        Wall top = Wall::createWall(6, thickness);
-        top.translate(-2.9, 2.8);
+        Wall top = Wall(6, thickness, -2.9, 2.8);
 
-        Wall left = Wall::createWall(thickness, 6);
-        left.translate(-3, -3);
+        Wall left = Wall(thickness, 6, -3, -3);
 
-        Wall right= Wall::createWall(thickness, 6);
-        right.translate(3, -3);
-
+        Wall right= Wall(thickness, 6, 3, -3);
 
         gmap.addWall(bottom);
         gmap.addWall(top);
@@ -53,19 +48,14 @@ public:
         game_map.setMapName("Choke Point");
 
         // walls
-        Wall middle_horizontal1= Wall::createWall(2.95, WALL_THICKNESS);
-        Wall middle_horizontal2= Wall::createWall(2.95, WALL_THICKNESS);
-
-        middle_horizontal1.translate(-3.0, 0);
-        middle_horizontal2.translate(.05, 0);
+        Wall middle_horizontal1= Wall(2.95, WALL_THICKNESS, -3.0, 0);
+        Wall middle_horizontal2= Wall(2.95, WALL_THICKNESS, .05, 0);
 
         game_map.addWall(middle_horizontal1);
         game_map.addWall(middle_horizontal2);
 
         // pits
-        Pit center_pit = Pit::createPit(1,1);
-
-        center_pit.translate(-.5, -.5);
+        Pit center_pit = Pit(1,1, -.5, -.5);
         game_map.addPit(center_pit);
 
         return game_map;
@@ -85,13 +75,18 @@ public:
     }
 };
 
-class StrandedMapFactory: public MapFactory{
+class DivideMapFactory: public MapFactory{
 
 public:
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
-        game_map.setMapName("Stranded");
+        game_map.setMapName("Divide");
 
+        Pit middlePit = Pit(6, 2, -3, -1);
+
+//        Wall left_pit_wall = Wall();
+
+        game_map.addPit(middlePit);
         return game_map;
     }
 };
@@ -102,7 +97,7 @@ vector<Map> getAllMaps(){
 
     maps.push_back(VoidMapFactory().createMap());
     maps.push_back(ChokePointMapFactory().createMap());
-    maps.push_back(StrandedMapFactory().createMap());
+    maps.push_back(DivideMapFactory().createMap());
 
     return maps;
 }

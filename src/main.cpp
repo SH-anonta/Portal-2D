@@ -1,13 +1,14 @@
 #include "./include_me.h"
 
 //WindowEngine w_engine(new ConfirmQuitGameWindow(NULL));
-WindowEngine w_engine(new SplashScreenWindow());
+//WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new MainMenuWindow());
 //WindowEngine w_engine(new GameGuideWindow(NULL));
 //WindowEngine w_engine(new HelpScreenWindow(NULL));
 //WindowEngine w_engine(new MapSelectionMenue(new MainMenuWindow()));
 //WindowEngine w_engine(new GameWindow(VoidMapFactory().createMap()));
 //WindowEngine w_engine(new GameWindow(ChokePointMapFactory().createMap()));
+WindowEngine w_engine(new GameWindow(DivideMapFactory().createMap()));
 
 float _cameraAngle = 0.0;
 
@@ -102,7 +103,7 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(300,50);
 
 	glutCreateWindow("Portal 2D");
-//    glutFullScreen();
+    glutFullScreen();
 
 	initRendering();
     setCallbacks();

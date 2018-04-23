@@ -18,6 +18,15 @@ public:
         points = pts;
     }
 
+    Wall(float w, float h, float translate_x= 0, float translate_y= 0){
+        points= {
+            Point(translate_x, translate_y),
+            Point(translate_x+w, translate_y),
+            Point(translate_x+w, translate_y+h),
+            Point(translate_x, translate_y+h)
+        };
+    }
+
     // this function is meant to be called by the Map class only
     // call to setColor glBegin and glEnd have been omitted intentionally for performance concerns
     void draw(){
@@ -28,17 +37,6 @@ public:
             plot(points[i]);
         }
 //        glEnd();
-    }
-
-    static Wall createWall(double w, double h){
-        vector<Point> wall_points= {
-            Point(0,0),
-            Point(w, 0),
-            Point(w, h),
-            Point(0, h)
-        };
-
-        return Wall(wall_points);
     }
 
     void translate(double tx, double ty){
@@ -73,6 +71,16 @@ public:
         points = pts;
     }
 
+    Pit(float w, float h, float translate_x= 0, float translate_y= 0){
+        points= {
+            Point(translate_x, translate_y),
+            Point(translate_x+w, translate_y),
+            Point(translate_x+w, translate_y+h),
+            Point(translate_x, translate_y+h)
+        };
+
+    }
+
     // this function is meant to be called by the Map class only
     // call to setColor glBegin and glEnd have been omitted intentionally for performance concerns
     void draw(){
@@ -85,16 +93,6 @@ public:
 //        glEnd();
     }
 
-    static Pit createPit(double w, double h){
-        vector<Point> pit_points= {
-            Point(0,0),
-            Point(w, 0),
-            Point(w, h),
-            Point(0, h)
-        };
-
-        return Pit(pit_points);
-    }
 
     void translate(double tx, double ty){
         for(int i= 0; i<4; i++){
