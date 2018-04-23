@@ -159,21 +159,21 @@ public:
 
             //calculate collision point
             if(orientation == Up || orientation == Down){
-                collision_point = player.position.x - points[0].x;
+                collision_point = player.next_position.x - points[0].x;
             }
             else{
-                collision_point = player.position.y - points[0].y;
+                collision_point = player.next_position.y - points[0].y;
             }
 
             if(linked_portal->orientation == Up || linked_portal->orientation == Down){
                 Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
 
-                player.position = Point(p.x+collision_point+adj.x, p.y+adj.y);
+                player.next_position = Point(p.x+collision_point+adj.x, p.y+adj.y);
             }
             else{
                 Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
 
-                player.position = Point(p.x+adj.x, p.y+collision_point+adj.y);
+                player.next_position = Point(p.x+adj.x, p.y+collision_point+adj.y);
             }
 
             player.updateDirection(getOppositeDirection(linked_portal->orientation));
