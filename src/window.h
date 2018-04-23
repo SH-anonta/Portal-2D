@@ -543,10 +543,10 @@ public:
             if(player_direction == Up || player_direction == Down){
                 Point intercept = game_map.getNearestHorizontalIntercept(player1.position, other_end_point,player1.position);
 //                printf("%f %f\n", intercept.x, intercept.y);
-//                printf("%f %f\n", other_end_point.x, other_end_point.y);
             }
             else{
                 // else player direction is left or right
+                Point intercept = game_map.getNearestVerticalIntercept(player1.position, other_end_point,player1.position);
             }
 
         }

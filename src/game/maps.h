@@ -179,6 +179,7 @@ public:
 
     // this function assumes there will be at least one wall which intercepts the line
     // a and b are assumed to be end points of a vertical line
+    // finds intercept in horizontal walls
     Point getNearestHorizontalIntercept(Point a, Point b, Point player_pos){
         Point nearest_intercept(9999,9999);
         float nearest_vertical_dist = 9999;
@@ -198,6 +199,35 @@ public:
                     nearest_vertical_dist = top_edge_dist;
                     nearest_intercept.x= player_pos.x;
                     nearest_intercept.y= wall.points[2].y;
+                }
+            }
+        }
+
+        return nearest_intercept;
+    }
+
+    // this function assumes there will be at least one wall which intercepts the line
+    // a and b are assumed to be end points of a horizontal line
+    // finds intercept in vertical walls
+    Point getNearestVerticalIntercept(Point a, Point b, Point player_pos){
+        Point nearest_intercept(9999,9999);
+        float nearest_horizontal_dist = 9999;
+
+        for(Wall& wall : walls){
+            // if the line intercepts with a walls horizontal edge
+            if(linesInterceptHorizontalVertical(a, b, wall.points[0], wall.points[3])){
+                float left_edge_dist = getHorizontalDistance(player_pos, wall.points[0]);
+                float right_edge_dist = getHorizontalDistance(player_pos, wall.points[1]);
+
+                if(nearest_horizontal_dist  > left_edge_dist ){
+                    nearest_horizontal_dist  = left_edge_dist ;
+                    nearest_intercept.x= wall.points[0].x;
+                    nearest_intercept.y= player_pos.y;
+                }
+                if(nearest_horizontal_dist  > right_edge_dist){
+                    nearest_horizontal_dist  = right_edge_dist;
+                    nearest_intercept.x= wall.points[1].x;
+                    nearest_intercept.y= player_pos.y;
                 }
             }
         }
