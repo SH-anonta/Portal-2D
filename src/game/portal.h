@@ -185,13 +185,13 @@ public:
 
         // .06 is just above the thickness of portals
         if(d == Left)
-            return Point(.06,0);
+            return Point(.08,0);
         if(d == Right)
-            return Point(-.06,0);
+            return Point(-.08,0);
         if(d == Up)
-            return Point(0,-.06);
+            return Point(0,-.08);
         if(d == Down)
-            return Point(0,.06);
+            return Point(0,.08);
 
     }
 

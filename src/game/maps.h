@@ -2,9 +2,9 @@
 #define MAPS_H
 
 
-Color DEFAULT_WALL_COLOR= Color(.2, .7, .5);
+Color DEFAULT_WALL_COLOR= Color(.2, .5,.7);
 //Color DEFAULT_PIT_COLOR= Color(0.1,0.05,0.05);
-Color DEFAULT_PIT_COLOR= Color(.05, .15 ,0.05);
+Color DEFAULT_PIT_COLOR= Color(.05, 0.05, .15);
 
 Color MAP_BACKGROUND_COLOR= Color(.04, .12, .08);
 Color MAP_BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
