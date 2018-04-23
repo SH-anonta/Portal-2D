@@ -95,6 +95,30 @@ public:
     }
 };
 
+class StrandedMapFactory: public MapFactory{
+
+public:
+    Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Stranded");
+
+        Pit pit_top = Pit(6, 1, -3, 2);
+        Pit pit_bottom = Pit(6, 1, -3, -3);
+        Pit pit_left = Pit(1, 6, -3, -3);
+        Pit pit_right = Pit(1, 6, 2, -3);
+
+        game_map.addPit(pit_top);
+        game_map.addPit(pit_bottom);
+        game_map.addPit(pit_left);
+        game_map.addPit(pit_right);
+
+        game_map.p1position = Point(-1.5, -1.5);
+        game_map.p2position = Point(1.5, 1.5);
+
+        return game_map;
+    }
+};
+
 
 vector<Map> getAllMaps(){
     vector<Map> maps;
@@ -102,6 +126,7 @@ vector<Map> getAllMaps(){
     maps.push_back(VoidMapFactory().createMap());
     maps.push_back(ChokePointMapFactory().createMap());
     maps.push_back(DivideMapFactory().createMap());
+    maps.push_back(StrandedMapFactory().createMap());
 
     return maps;
 }

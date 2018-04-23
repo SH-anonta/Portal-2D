@@ -8,7 +8,7 @@
 //WindowEngine w_engine(new MapSelectionMenue(new MainMenuWindow()));
 //WindowEngine w_engine(new GameWindow(VoidMapFactory().createMap()));
 //WindowEngine w_engine(new GameWindow(ChokePointMapFactory().createMap()));
-WindowEngine w_engine(new GameWindow(DivideMapFactory().createMap()));
+WindowEngine w_engine(new GameWindow(StrandedMapFactory().createMap()));
 
 float _cameraAngle = 0.0;
 
