@@ -4,6 +4,7 @@
 
 
 const double RELOAD_TIME= 0.1;    // in seconds
+const double PORTAL_GUN_RELOAD_TIME= 0.2;    // in seconds
 Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
 const int DAMAGE_PER_HIT= 5;
 const int MAX_PLAYER_HEALTH= 100;
@@ -18,7 +19,8 @@ public:
     Point next_position;    // next position that will be occupied by the player if the game allows it
     Color color;
 
-    clock_t last_bullet_shoot_time;
+    clock_t last_bullet_shoot_time= 0;
+    clock_t last_portal_open_time= 0;
 
     Player(){
         printf("Player created\n");
@@ -133,7 +135,17 @@ public:
     bool reloadTimeIsOver(){
         clock_t time_now= clock();
 
-        return double(double(time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC) > RELOAD_TIME;
+        return float(float(time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC) > RELOAD_TIME;
+    }
+
+    bool portalGunReloadTimeIsOver(){
+        clock_t time_now= clock();
+
+        return float(float(time_now - last_portal_open_time) / CLOCKS_PER_SEC) > PORTAL_GUN_RELOAD_TIME;
+    }
+
+    bool setPortalOpenTimeNow(){
+        last_portal_open_time = clock();
     }
 
     void takeDamage(){

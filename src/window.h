@@ -286,11 +286,11 @@ public:
     Player player2;
 
 //    Portal portal1= Portal(-1,.1, Down);
-    Portal portal1= Portal(-1,-2.8, Down);
+    Portal p1Portal1= Portal(-1,-2.8, Down);
     Portal portal2= Portal(-1,0, Up);
 //    Portal portal3= Portal(-1.2, .1, Down);
     Portal portal3= Portal(-2.89,-1, Left);
-    Portal portal4= Portal(3,-1, Right);
+    Portal p1Portal2= Portal(3,-1, Right);
 
 
     list<Bullet> bullets;
@@ -303,13 +303,13 @@ public:
         player2= Player(game_map.p2position);
         player2.color = Color(.7,.5, .7);
 
-        portal1.setLinkedPortal(portal4);
+        p1Portal1.setLinkedPortal(p1Portal2);
         portal2.setLinkedPortal(portal3);
 
-        portal1.color = Color(.9, .7, .1);
+        p1Portal1.color = Color(.9, .7, .1);
         portal2.color = Color(.7, .4, .3);
         portal3.color = Color(.7, .4, .7);
-        portal4.color = Color(.8, .5,.3);
+        p1Portal2.color = Color(.8, .5,.3);
 
         for(int i = 0; i<300; i++){
             key_pressed[i]= false;
@@ -351,10 +351,10 @@ public:
 
 
     void drawPortals(){
-        portal1.draw();
+        p1Portal1.draw();
         portal2.draw();
         portal3.draw();
-        portal4.draw();
+        p1Portal2.draw();
     }
 
     void drawHealthBars(){
@@ -481,15 +481,15 @@ public:
         }
 
         // portal
-        portal1.teleportPlayer(player1);
+        p1Portal1.teleportPlayer(player1);
         portal2.teleportPlayer(player1);
         portal3.teleportPlayer(player1);
-        portal4.teleportPlayer(player1);
+        p1Portal2.teleportPlayer(player1);
 
-        portal1.teleportPlayer(player2);
+        p1Portal1.teleportPlayer(player2);
         portal2.teleportPlayer(player2);
         portal3.teleportPlayer(player2);
-        portal4.teleportPlayer(player2);
+        p1Portal2.teleportPlayer(player2);
 
         // if the new position of player causes a collision, reset position to prevision value
         // else update actual position to new position
@@ -521,34 +521,58 @@ public:
         }
     }
 
+
+    // portal trajectory is a line with end points A (player's position)
+    // and B (horizontally or vertically far away, in the player's direction )
+    // this method returns the later mentioned end point
+    Point getPortalGunTragectoryLinePoint(Point player_pos, Direction player_direction){
+        Point other_end_point = player_pos;
+
+        if(player_direction == Up){
+            other_end_point.y += 900;
+        }
+        else if(player_direction == Down){
+            other_end_point.y -= 900;
+        }
+        else if(player_direction == Left){
+            other_end_point.x -= 900;
+        }
+        else{
+            //player1.direction == right
+            other_end_point.x += 900;
+        }
+
+        return other_end_point;
+    }
+
     void spawnNewPortals(){
-        if(key_pressed['q']){
-            Point other_end_point = player1.position;
-            Direction player_direction= player1.direction;
+        // for player 1
+        if(key_pressed['q'] && player1.portalGunReloadTimeIsOver()){
+            reOpenPortal(p1Portal1, p1Portal2);
+        }
+        else if(key_pressed['e'] && player1.portalGunReloadTimeIsOver()){
+            reOpenPortal(p1Portal2, p1Portal1);
+        }
+    }
 
-            if(player_direction == Up){
-                other_end_point.y += 900;
-            }
-            else if(player_direction == Down){
-                other_end_point.y -= 900;
-            }
-            else if(player_direction == Left){
-                other_end_point.x -= 900;
-            }
-            else{
-                //player1.direction == right
-                other_end_point.x += 900;
-            }
+    void reOpenPortal(Portal& portal, Portal& link_portal){
+        Direction player_direction =  player1.direction;
+        Point other_end_point = getPortalGunTragectoryLinePoint(player1.position, player_direction);
 
-            if(player_direction == Up || player_direction == Down){
-                Point intercept = game_map.getNearestHorizontalIntercept(player1.position, other_end_point,player1.position);
+        // record when this portal is opened
+        player1.setPortalOpenTimeNow();
+
+        if(player_direction == Up || player_direction == Down){
+            Point intercept = game_map.getNearestHorizontalIntercept(player1.position, other_end_point,player1.position);
+            portal = Portal(intercept.x, intercept.y, player_direction);
+            portal.setLinkedPortal(link_portal);
 //                printf("%f %f\n", intercept.x, intercept.y);
-            }
-            else{
-                // else player direction is left or right
-                Point intercept = game_map.getNearestVerticalIntercept(player1.position, other_end_point,player1.position);
-            }
-
+        }
+        else{
+            // else player direction is left or right
+            Point intercept = game_map.getNearestVerticalIntercept(player1.position, other_end_point,player1.position);
+            portal = Portal(intercept.x, intercept.y, player_direction);
+            portal.setLinkedPortal(p1Portal2);
         }
     }
 
@@ -562,10 +586,10 @@ public:
 
             bullet->updatePosition();
 
-            portal1.teleportBullet(*bullet);
+            p1Portal1.teleportBullet(*bullet);
             portal2.teleportBullet(*bullet);
             portal3.teleportBullet(*bullet);
-            portal4.teleportBullet(*bullet);
+            p1Portal2.teleportBullet(*bullet);
 
             if(player1.detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
