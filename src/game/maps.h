@@ -4,7 +4,7 @@
 
 Color DEFAULT_WALL_COLOR= Color(.2, .7, .5);
 //Color DEFAULT_PIT_COLOR= Color(0.1,0.05,0.05);
-Color DEFAULT_PIT_COLOR= Color(.05, .12 ,0.05);
+Color DEFAULT_PIT_COLOR= Color(.05, .15 ,0.05);
 
 Color MAP_BACKGROUND_COLOR= Color(.04, .12, .08);
 Color MAP_BACKGROUND_GRID_COLOR= Color(.15, .3, .15);
@@ -62,6 +62,7 @@ public:
                points[0].y <= bullet.position.y &&
                points[3].y >= bullet.position.y;
     }
+
 };
 
 class Pit{
@@ -174,6 +175,57 @@ public:
 
     void setMapName(const string& name){
         map_name = name;
+    }
+
+    // this function assumes there will be at least one wall which intercepts the line
+    // a and b are assumed to be end points of a vertical line
+    Point getNearestHorizontalIntercept(Point& a, Point& b, Point& player_pos){
+        Point nearest_intercept(9999,9999);
+        float nearest_vertical_dist = 9999;
+
+        for(Wall& wall : walls){
+            // if the line intercepts with a walls horizontal edge
+            if(linesInterceptHorizontalVertical(wall.points[0], wall.points[1], a, b)){
+                float bottom_edge_dist = getVerticalDistance(player_pos, wall.points[0]);
+                float top_edge_dist = getVerticalDistance(player_pos, wall.points[2]);
+
+                if(nearest_vertical_dist > bottom_edge_dist){
+                    nearest_vertical_dist = bottom_edge_dist;
+                    nearest_intercept.x= player_pos.x;
+                    nearest_intercept.y= wall.points[0].y;
+                }
+                if(nearest_vertical_dist > top_edge_dist){
+                    nearest_vertical_dist = top_edge_dist;
+                    nearest_intercept.x= player_pos.x;
+                    nearest_intercept.y= wall.points[2].y;
+                }
+            }
+        }
+
+        return nearest_intercept;
+    }
+
+    float getVerticalDistance(Point& a, Point& b){
+        return abs(a.y-b.y);
+    }
+
+    float getHorizontalDistance(Point& a, Point& b){
+        return abs(a.x-b.x);
+    }
+
+
+    // return true if line ab intersects line bc
+    // ab is assumed to be endpoints of a horizontal line
+    // cd is assumed to be endpoints of a vertical line
+    bool linesInterceptHorizontalVertical(Point& a, Point& b, Point& c, Point& d){
+        if(a.x > b.x){
+            swap(a.x, b.x);
+        }
+        if(c.y > d.y){
+            swap(c.y, d.y);
+        }
+
+        return (a.x < c.x && b.x > c.x) && (a.y > c.y && a.y < d.y);
     }
 };
 

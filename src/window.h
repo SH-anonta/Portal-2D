@@ -329,18 +329,16 @@ public:
     }
 
     void execute() override{
-        updateGame();
+        updatePlayerPositions();
+        spawnNewBullets();
+        spawnNewPortals();
+        updateBulletPositions();
+
         drawGame();
     }
 
     void draw()override {
         drawGame();
-    }
-
-    void updateGame(){
-        updatePlayerPositions();
-        spawnNewBullets();
-        updateBulletPositions();
     }
 
     void drawGame(){
@@ -520,6 +518,37 @@ public:
         if(key_pressed['0'] && player2.reloadTimeIsOver()){
             Bullet new_bullet =  player2.shootBullet();
             bullets.push_back(new_bullet);
+        }
+    }
+
+    void spawnNewPortals(){
+        if(key_pressed['q']){
+            Point other_end_point = player1.position;
+            Direction player_direction= player1.direction;
+
+            if(player_direction == Up){
+                other_end_point.y += 900;
+            }
+            else if(player_direction == Down){
+                other_end_point.y -= 900;
+            }
+            else if(player_direction == Left){
+                other_end_point.x -= 900;
+            }
+            else{
+                //player1.direction == right
+                other_end_point.x += 900;
+            }
+
+            if(player_direction == Up || player_direction == Down){
+                Point intercept = game_map.getNearestHorizontalIntercept(player1.position, other_end_point,player1.position);
+//                printf("%f %f\n", intercept.x, intercept.y);
+//                printf("%f %f\n", other_end_point.x, other_end_point.y);
+            }
+            else{
+                // else player direction is left or right
+            }
+
         }
     }
 
