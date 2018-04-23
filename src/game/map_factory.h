@@ -3,8 +3,8 @@
 
 
 class MapFactory{
-    constexpr static const double DEFAULT_WALL_THICKNESS = .1;
 public:
+    constexpr static const double DEFAULT_WALL_THICKNESS = .1;
 
     virtual Map createMap(){
 
@@ -84,9 +84,13 @@ public:
 
         Pit middlePit = Pit(6, 2, -3, -1);
 
-//        Wall left_pit_wall = Wall();
+        Wall left_pit_wall = Wall(2, DEFAULT_WALL_THICKNESS, -3, .9);
+        Wall right_pit_wall = Wall(2, DEFAULT_WALL_THICKNESS, 1, -1);
 
         game_map.addPit(middlePit);
+        game_map.addWall(left_pit_wall);
+        game_map.addWall(right_pit_wall);
+
         return game_map;
     }
 };

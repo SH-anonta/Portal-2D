@@ -103,7 +103,7 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(300,50);
 
 	glutCreateWindow("Portal 2D");
-    glutFullScreen();
+//    glutFullScreen();
 
 	initRendering();
     setCallbacks();
