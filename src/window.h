@@ -6,6 +6,9 @@ class Window;
 class HelpScreenWindow;
 class GameWindow;
 
+
+Window* createConfirmQuitWIndow(Window* previous_window);
+
 class Window{
 public:
     WindowEngine* w_engine;
@@ -271,60 +274,6 @@ public:
 
     }
 
-};
-
-class ConfirmQuitGameWindow: public Window{
-    Window* previous_window;
-public:
-
-    ConfirmQuitGameWindow(Window* previous_window){
-        this->previous_window = previous_window;
-    }
-
-    void execute() override{
-        setColor(DEFAULT_TEXT_COLOR);
-        drawString(-.4,0, "Quit Game?", GLUT_BITMAP_TIMES_ROMAN_24);
-
-        // transparent
-//        glColor4f(0.1, 0.1, 0.1, .8);
-//        glBegin(GL_QUADS);
-//        plot(-4, -4);
-//        plot(4, -4);
-//        plot(4, 4);
-//        plot(-4, 4);
-//        glEnd();
-
-//        this->previous_window->draw();
-        drawMainBackground();
-    }
-
-    void draw()override {
-
-    }
-
-    void onWindowLoad() override{
-        printf("Confirm quit game window loaded\n");
-    }
-
-    void keyPress(unsigned char key, int x, int y) override{
-//        printf("%c\n", key);
-        if(key == 27){
-            // when escape is pressed
-            this->w_engine->switchWindow(previous_window);
-        }
-
-    }
-
-    void specialKeyPress(int key, int x, int y) override{
-//        printf("%d\n", key);
-    }
-
-    void keyUp(unsigned char key, int x, int y) override{
-    }
-
-    void specialKeyUp(int key, int x, int y) override{
-
-    }
 };
 
 class GameWindow: public Window{
@@ -638,7 +587,8 @@ public:
         }
         else if(key == 27){
             // if escape was pressed
-            this->w_engine->switchWindow(new ConfirmQuitGameWindow(this));
+//            this->w_engine->switchWindow(new ConfirmQuitGameWindow(this));
+            this->w_engine->switchWindow(createConfirmQuitWIndow(this));
         }
 
 //        printf("press: %c\n", key);
@@ -890,6 +840,113 @@ public:
     }
 };
 
+
+class ConfirmQuitGameWindow: public Window{
+    Window* previous_window;
+    vector<char*> menu_options = {"Yes", "No"};
+    int selected_option_idx = 0;
+public:
+
+    ConfirmQuitGameWindow(Window* previous_window){
+        this->previous_window = previous_window;
+    }
+
+    void execute() override{
+        draw();
+    }
+
+    void draw()override {
+        setColor(DEFAULT_TEXT_COLOR);
+        drawString(-.4,.5, "Quit Game?", GLUT_BITMAP_TIMES_ROMAN_24);
+
+        drawMenueOptions();
+        // transparent
+//        glColor4f(0.1, 0.1, 0.1, .8);
+//        glBegin(GL_QUADS);
+//        plot(-4, -4);
+//        plot(4, -4);
+//        plot(4, 4);
+//        plot(-4, 4);
+//        glEnd();
+
+//        this->previous_window->draw();
+        drawMainBackground();
+    }
+
+    void handleChosenOption(int chosen_option_idx){
+        //start game with selected map
+        if(chosen_option_idx == 0){
+            // if yes is selected, go back to main menu
+            this->w_engine->switchWindow(new MainMenuWindow());
+        }
+        else if(chosen_option_idx == 1){
+            // if no is selected resume game
+            this->w_engine->switchWindow(previous_window);
+        }
+    }
+
+    void drawMenueOptions(){
+        float LINE_SPACING = 0.25;
+        float y = 0;        //level of line
+
+        for(int i= 0, len = menu_options.size(); i<len; i++){
+            if(selected_option_idx == i){
+                glColor3f(.9,.9,.9);
+            }
+            else{
+                glColor3f(0.2,0.6,.9);
+            }
+
+            drawString(0, y, menu_options[i]);
+            y-= LINE_SPACING;
+        }
+    }
+
+    void onWindowLoad() override{
+        printf("Confirm quit game window loaded\n");
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+//        printf("%c\n", key);
+        if(key == 27){
+            // when escape is pressed, resume game
+            this->w_engine->switchWindow(previous_window);
+        }
+        else if(key == 13){
+            handleChosenOption(selected_option_idx);
+        }
+
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+        if(key == GLUT_KEY_UP){
+            selectOptionAbove();
+        }
+        else if(key == GLUT_KEY_DOWN){
+            selectOptionBellow();
+        }
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
+
+    void selectOptionAbove(){
+        selected_option_idx -= 1;
+        if(selected_option_idx < 0){
+            selected_option_idx = menu_options.size()-1;
+        }
+    }
+
+    void selectOptionBellow(){
+        selected_option_idx = (selected_option_idx+1)%menu_options.size();
+    }
+};
+
+
 class SplashScreenWindow:public Window{
 public:
 
@@ -968,5 +1025,7 @@ public:
     }
 };
 
-
+Window* createConfirmQuitWIndow(Window* previous_window){
+    return new ConfirmQuitGameWindow(previous_window);
+}
 #endif
