@@ -179,7 +179,7 @@ public:
 
     // this function assumes there will be at least one wall which intercepts the line
     // a and b are assumed to be end points of a vertical line
-    Point getNearestHorizontalIntercept(Point& a, Point& b, Point& player_pos){
+    Point getNearestHorizontalIntercept(Point a, Point b, Point player_pos){
         Point nearest_intercept(9999,9999);
         float nearest_vertical_dist = 9999;
 
