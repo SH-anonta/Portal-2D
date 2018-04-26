@@ -34,19 +34,97 @@ public:
 
 };
 
+// player wrapper classes:
+
 class PlayerWrapper: public BasePlayer{
-    PlayerWrapper* player;
+    BasePlayer* player;
 public:
+
+    PlayerWrapper(BasePlayer* player){
+        this->player = player;
+    }
 
     void updatePosition() override{
         player->updatePosition();
     }
 
-    void getPlayerObject(){
+    void resetNextPosition() override{
+        player->resetNextPosition();
+    }
 
+    void draw() override{
+        player->draw();
     }
 
 
+    bool detectHit(Bullet& bullet) override{
+        return player->detectHit(bullet);
+    }
+
+    // movement methods
+    void moveUp() override{
+        player->moveUp();
+    }
+
+    void moveDown() override{
+        player->moveDown();
+    }
+
+    void moveLeft() override{
+        player->moveLeft();
+    }
+
+    void moveRight() override{
+        player->moveRight();
+    }
+
+    void shiftUp() override{
+        player->shiftUp();
+    }
+
+    void shiftDown() override{
+        player->shiftDown();
+    }
+
+    void shiftLeft() override{
+        player->shiftLeft();
+    }
+
+    void shiftRight() override{
+        player->shiftRight();
+    }
+
+
+    bool reloadTimeIsOver() override{
+        return player->reloadTimeIsOver();
+    }
+
+    bool portalGunReloadTimeIsOver() override{
+        return player->portalGunReloadTimeIsOver();
+    }
+
+    void setPortalOpenTimeNow() override{
+        player->setPortalOpenTimeNow();
+    }
+
+    void takeDamage() override{
+        player->takeDamage();
+    }
+
+    Bullet shootBullet() override{
+        return player->shootBullet();
+    }
+
+    void updateDirection(Direction new_direction) override{
+        player->updateDirection(new_direction);
+    }
+
+
+};
+
+class PlayerShield: public PlayerWrapper{
+    void draw(){
+    }
 };
 
 #endif
