@@ -4,6 +4,8 @@
 class BasePlayer{
 public:
 
+    virtual Point getPosition()= 0;
+
     virtual void updatePosition()= 0;
     virtual void resetNextPosition()= 0;
     virtual void draw()= 0;
@@ -37,11 +39,20 @@ public:
 // player wrapper classes:
 
 class PlayerWrapper: public BasePlayer{
+protected:
     BasePlayer* player;
 public:
 
     PlayerWrapper(BasePlayer* player){
         this->player = player;
+    }
+
+    BasePlayer* getWrappedObject(){
+        return player;
+    }
+
+    Point getPosition() override{
+        return player->getPosition();
     }
 
     void updatePosition() override{
@@ -123,7 +134,31 @@ public:
 };
 
 class PlayerShield: public PlayerWrapper{
+public:
+
+    PlayerShield(BasePlayer* player)
+    :PlayerWrapper(player){
+
+    }
+
     void draw(){
+        glColor3f(0,1,0);
+        glBegin(GL_LINE_LOOP);
+
+        Point p = player->getPosition();
+        // draw shield
+        plot(p.x-.1, p.y-.1);
+        plot(p.x+.1, p.y-.1);
+        plot(p.x+.1, p.y+.1);
+        plot(p.x-.1, p.y+.1);
+
+        player->draw();
+        glEnd();
+    }
+
+    void takeDamage(){
+        // intentionally reuse to take damage
+        return;
     }
 };
 

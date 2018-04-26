@@ -47,6 +47,10 @@ public:
         last_bullet_shoot_time= 0;
     }
 
+    Point getPosition(){
+        return position;
+    }
+
     // simply assign next_position to position
     void updatePosition() override{
         position.x= next_position.x;
