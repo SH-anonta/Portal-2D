@@ -72,9 +72,6 @@ public:
         return player;
     }
 
-    Point getPosition() override{
-        return player->getPosition();
-    }
 
     void updatePosition() override{
         player->updatePosition();
@@ -151,7 +148,47 @@ public:
         player->updateDirection(new_direction);
     }
 
+    // getters
+    int getHealth() override{
+        return player->getHealth();
+    }
 
+    Direction getDirection() override{
+        return player->getDirection();
+    }
+
+    Point getPosition() override{
+        return player->getPosition();
+    }
+
+    Point getNextPosition() override{
+        return player->getNextPosition();
+    }
+
+    Color getColor() override{
+        return player->getColor();
+    }
+
+    // setters
+    void setHealth(int health) override{
+        player->setHealth(health);
+    }
+
+    void setDirection(Direction d) override{
+        player->setDirection(d);
+    }
+
+    void setPosition(Point& pos) override{
+        player->setPosition(pos);
+    }
+
+    void setNextPosition(const Point& pos) override{
+        player->setNextPosition(pos);
+    }
+
+    void setColor(const Color& color) override{
+        player->setColor(color);
+    }
 };
 
 class PlayerShield: public PlayerWrapper{
