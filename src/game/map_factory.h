@@ -46,6 +46,7 @@ public:
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Choke Point");
+        float WALL_THICKNESS = .1;
 
         // walls
         Wall middle_horizontal1= Wall(2.95, WALL_THICKNESS, -3.0, 0);

@@ -94,7 +94,14 @@ void initRendering() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void initHook(){
+    // initialize seed for random function
+    srand (time(NULL)+846);
+}
+
 int main(int argc, char** argv){
+    initHook();
+
     //Initialize GLUT
 	glutInit(&argc, argv);
 

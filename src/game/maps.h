@@ -56,6 +56,15 @@ public:
                points[3].y >= player.next_position.y-buffer;
     }
 
+    // check if a given position has collision with this wall, and has buffer units of space in between
+    bool detectCollision(const Point& position, float buffer = .5){
+
+        return points[0].x <= position.x+buffer &&
+               points[1].x >= position.x-buffer &&
+               points[0].y <= position.y+buffer &&
+               points[3].y >= position.y-buffer;
+    }
+
     bool detectCollision(Bullet& bullet){
         return points[0].x <= bullet.position.x &&
                points[1].x >= bullet.position.x &&
@@ -111,12 +120,27 @@ public:
                points[0].y <= player.next_position.y &&
                points[3].y >= player.next_position.y;
     }
+
+    // check if a given position has collision with this pit, and has buffer units of space in between
+    bool detectCollision(const Point& position, float buffer = .5){
+        return points[0].x <= position.x+buffer &&
+               points[1].x >= position.x-buffer &&
+               points[0].y <= position.y+buffer &&
+               points[3].y >= position.y-buffer;
+    }
 };
 
 class Map{
     vector<Wall> walls;
     vector<Pit> pits;
     string map_name;
+
+    // default map dimensions
+    float x_min = -3;
+    float x_max = 3;
+    float y_max = 3;
+    float y_min = -3;
+
 public:
     Point p1position;
     Point p2position;
@@ -257,9 +281,44 @@ public:
 
         return (a.x < c.x && b.x > c.x) && (a.y > c.y && a.y < d.y);
     }
-};
 
-double WALL_THICKNESS = .1;
+    // return a point in the map which does not collide with any wall or pit with buffer units in between
+    Point getValidSpawnPoint(float buffer= 2.0){
+        float spawn_x = randomf()*6 - 3;  // get random value from (-3 to 3)
+        float spawn_y = randomf()*6 - 3;  // get random value from (-3 to 3)
+
+        while(true){
+            spawn_x = randomf()*6 - 3;  // get random value from (-3 to 3)
+            spawn_y = randomf()*6 - 3;  // get random value from (-3 to 3)
+
+//            printf("%f\n", spawn_x);
+//            printf("%f\n", spawn_y);
+
+            if(!detectCollision(Point(spawn_x,spawn_y), 0.2)){
+                break;
+            }
+        }
+
+        return Point(spawn_x,spawn_y);
+    }
+
+    // check if a given position has collision with this wall, and has buffer units of space in between
+    bool detectCollision(const Point& position, float buffer = .5){
+        for(int i= 0, len = walls.size(); i<len; i++){
+            if(walls[i].detectCollision(position, buffer)){
+                return true;
+            }
+        }
+
+        for(int i= 0, len= pits.size(); i<len; i++){
+            if(pits[i].detectCollision(position, buffer)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
 
 
 #endif

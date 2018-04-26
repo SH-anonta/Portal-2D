@@ -298,6 +298,8 @@ public:
 
     list<Bullet> bullets;
 
+    Point collectable;
+
     GameWindow(Map gmap): Window(){
         printf("Game window loaded\n");
         game_map = gmap;
@@ -339,14 +341,12 @@ public:
         spawnNewPortals();
         updateBulletPositions();
 
-        drawGame();
+        draw();
     }
 
     void draw()override {
-        drawGame();
-    }
+        drawCollectables();
 
-    void drawGame(){
         drawPlayers();
         drawPortals();
         Bullet::drawBullets(bullets);   // draw all bullets at once
@@ -354,6 +354,16 @@ public:
         drawMap();
     }
 
+    void drawCollectables(){
+        glColor3f(1,0,0);
+
+        glBegin(GL_LINE_LOOP);
+        plot(collectable.x-.1, collectable.y-.1);
+        plot(collectable.x+.1, collectable.y-.1);
+        plot(collectable.x+.1, collectable.y+.1);
+        plot(collectable.x-.1, collectable.y+.1);
+        glEnd();
+    }
 
     void drawPortals(){
         p1Portal1.draw();
@@ -660,7 +670,9 @@ public:
 //            this->w_engine->switchWindow(new ConfirmQuitGameWindow(this));
             this->w_engine->switchWindow(createConfirmQuitWIndow(this));
         }
-
+        else if(key == 't'){
+            collectable = game_map.getValidSpawnPoint();
+        }
 //        printf("press: %c\n", key);
 
 
