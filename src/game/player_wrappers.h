@@ -4,8 +4,6 @@
 class BasePlayer{
 public:
 
-    virtual Point getPosition()= 0;
-
     virtual void updatePosition()= 0;
     virtual void resetNextPosition()= 0;
     virtual void draw()= 0;
@@ -33,6 +31,29 @@ public:
     virtual Bullet shootBullet()= 0;
 
     virtual void updateDirection(Direction new_direction)= 0;
+
+    // getters
+    virtual int getHealth()= 0;
+
+    virtual Direction getDirection()= 0;
+
+    virtual Point getPosition()= 0;
+
+    virtual Point getNextPosition()= 0;
+
+    virtual Color getColor()= 0;
+
+    // setters
+    virtual void setHealth(int health)= 0;
+
+    virtual void setDirection(Direction d)= 0;
+
+    virtual void setPosition(Point& pos)= 0;
+
+    virtual void setNextPosition(const Point& pos)= 0;
+
+    virtual void setColor(const Color& color)= 0;
+
 
 };
 

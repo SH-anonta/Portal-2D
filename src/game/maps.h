@@ -49,11 +49,13 @@ public:
     }
 
     bool detectCollision(Player& player){
+        Point next_position = player.getNextPosition();
+
         float buffer = .06;
-        return points[0].x <= player.next_position.x+buffer &&
-               points[1].x >= player.next_position.x-buffer &&
-               points[0].y <= player.next_position.y+buffer &&
-               points[3].y >= player.next_position.y-buffer;
+        return points[0].x <= next_position.x+buffer &&
+               points[1].x >= next_position.x-buffer &&
+               points[0].y <= next_position.y+buffer &&
+               points[3].y >= next_position.y-buffer;
     }
 
     // check if a given position has collision with this wall, and has buffer units of space in between
@@ -114,11 +116,12 @@ public:
     }
 
     bool detectCollision(Player& player){
+        Point next_position = player.getNextPosition();
 
-        return points[0].x <= player.next_position.x &&
-               points[1].x >= player.next_position.x &&
-               points[0].y <= player.next_position.y &&
-               points[3].y >= player.next_position.y;
+        return points[0].x <= next_position.x &&
+               points[1].x >= next_position.x &&
+               points[0].y <= next_position.y &&
+               points[3].y >= next_position.y;
     }
 
     // check if a given position has collision with this pit, and has buffer units of space in between

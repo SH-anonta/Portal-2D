@@ -288,7 +288,7 @@ public:
     bool key_pressed[300];
     bool SHIFT_IS_PRESSED= false;
     Player* player1;
-    Player* player2 = new Player(game_map.p2position);
+    Player* player2;
 
     Portal p1Portal1= Portal(-2.9, 0, Left);
     Portal p1Portal2= Portal(0,-2.8, Down);
@@ -309,8 +309,8 @@ public:
         player1 = new Player(game_map.p1position);
         player2 = new Player(game_map.p2position);
 
-        player1->color = Color(.2, .8, .3);
-        player2->color = Color(.7, .7, .5);
+        player1->setColor(Color(.2, .8, .3));
+        player2->setColor(Color(.7, .7, .5));
 
         p1Portal1.setLinkedPortal(p1Portal2);
         p2Portal1.setLinkedPortal(p2Portal2);
@@ -382,8 +382,8 @@ public:
     void drawHealthBars(){
 
         float thickness = .05;
-        float p1_bar_width = (float)player1->health / (float)MAX_PLAYER_HEALTH;
-        float p2_bar_width = (float)player2->health / (float)MAX_PLAYER_HEALTH;
+        float p1_bar_width = (float)player1->getHealth() / (float)MAX_PLAYER_HEALTH;
+        float p2_bar_width = (float)player2->getHealth() / (float)MAX_PLAYER_HEALTH;
 
         glLineWidth(1);
         glColor4f(.9,.9,.9, .9);
@@ -590,21 +590,22 @@ public:
     }
 
     void reOpenPortal(Player& player, Portal& portal, Portal& link_portal){
-        Direction player_direction =  player.direction;
-        Point other_end_point = getPortalGunTragectoryLinePoint(player.position, player_direction);
+        Direction player_direction =  player.getDirection();
+        Point other_end_point = getPortalGunTragectoryLinePoint(player.getPosition(), player_direction);
 
         // record when this portal is opened
         player.setPortalOpenTimeNow();
+        Point player_pos = player.getPosition();
 
         if(player_direction == Up || player_direction == Down){
-            Point intercept = game_map.getNearestHorizontalIntercept(player.position, other_end_point,player.position);
+            Point intercept = game_map.getNearestHorizontalIntercept(player_pos, other_end_point, player_pos);
             portal = Portal(intercept.x, intercept.y, player_direction);
             portal.setLinkedPortal(link_portal);
 //                printf("%f %f\n", intercept.x, intercept.y);
         }
         else{
             // else player direction is left or right
-            Point intercept = game_map.getNearestVerticalIntercept(player.position, other_end_point,player.position);
+            Point intercept = game_map.getNearestVerticalIntercept(player_pos, other_end_point, player_pos);
             portal = Portal(intercept.x, intercept.y, player_direction);
             portal.setLinkedPortal(link_portal);
         }

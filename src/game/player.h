@@ -11,7 +11,6 @@ const int MAX_PLAYER_HEALTH= 100;
 double PLAYER_SPEED = .01;   // positions per iteration
 
 class Player: public BasePlayer{
-public:
     static constexpr float move_step= .03;
     int health;
     Direction direction = Up;
@@ -21,6 +20,7 @@ public:
 
     clock_t last_bullet_shoot_time= 0;
     clock_t last_portal_open_time= 0;
+public:
 
     Player(){
         printf("Player created\n");
@@ -47,10 +47,6 @@ public:
         last_bullet_shoot_time= 0;
     }
 
-    Point getPosition(){
-        return position;
-    }
-
     // simply assign next_position to position
     void updatePosition() override{
         position.x= next_position.x;
@@ -63,7 +59,7 @@ public:
     }
 
     void draw() override{
-        setColor(color);
+        ::setColor(color);
 
         float h = .07;
         float w = .07;
@@ -185,6 +181,47 @@ public:
         direction = new_direction;
     }
 
+    // getters
+    int getHealth() override{
+        return health;
+    }
+
+    Direction getDirection() override{
+        return direction;
+    }
+
+    Point getPosition() override{
+        return position;
+    }
+
+    Point getNextPosition() override{
+        return next_position;
+    }
+
+    Color getColor() override{
+        return color;
+    }
+
+    // setters
+    void setHealth(int health) override{
+        this->health = health;
+    }
+
+    void setDirection(Direction d) override{
+        direction = d;
+    }
+
+    void setPosition(Point& pos) override{
+        position = pos;
+    }
+
+    void setNextPosition(const Point& pos) override{
+        next_position = pos;
+    }
+
+    void setColor(const Color& color) override{
+        this->color = color;
+    }
 };
 
 #endif

@@ -127,12 +127,13 @@ public:
     }
 
     bool detectCollision(Player& player){
+        Point next_position = player.getNextPosition();
 
         float buffer = .08;
-        return points[0].x <= player.next_position.x+buffer &&
-               points[1].x >= player.next_position.x-buffer &&
-               points[0].y <= player.next_position.y+buffer &&
-               points[3].y >= player.next_position.y-buffer;
+        return points[0].x <= next_position .x+buffer &&
+               points[1].x >= next_position .x-buffer &&
+               points[0].y <= next_position .y+buffer &&
+               points[3].y >= next_position .y-buffer;
     }
 
     // position adjustment after teliportation
@@ -155,25 +156,27 @@ public:
 //            printf("Portal collision\n");
 
             Point& p = linked_portal->points[0];
+            Point next_position = player.getNextPosition();
+
             float collision_point = 0;
 
             //calculate collision point
             if(orientation == Up || orientation == Down){
-                collision_point = player.next_position.x - points[0].x;
+                collision_point = next_position.x - points[0].x;
             }
             else{
-                collision_point = player.next_position.y - points[0].y;
+                collision_point = next_position.y - points[0].y;
             }
 
             if(linked_portal->orientation == Up || linked_portal->orientation == Down){
                 Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
 
-                player.next_position = Point(p.x+collision_point+adj.x, p.y+adj.y);
+                player.setNextPosition(Point(p.x+collision_point+adj.x, p.y+adj.y));
             }
             else{
                 Point adj = getPlayerPositionAdjustment(linked_portal->orientation);
 
-                player.next_position = Point(p.x+adj.x, p.y+collision_point+adj.y);
+                player.setNextPosition(Point(p.x+adj.x, p.y+collision_point+adj.y));
             }
 
             player.updateDirection(getOppositeDirection(linked_portal->orientation));
