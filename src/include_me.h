@@ -1,6 +1,7 @@
 // library must be included before anything else
 #include <cstdio>
 #include <cmath>
+#include <random>
 #include <vector>
 #include <list>
 #include <ctime>
