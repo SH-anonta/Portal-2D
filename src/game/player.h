@@ -29,7 +29,7 @@ public:
         health= MAX_PLAYER_HEALTH;
     }
 
-    Player(Point& pos){
+    Player(const Point& pos){
         printf("Player created\n");
         position.x= next_position.x = pos.x;
         position.y= next_position.y = pos.y;

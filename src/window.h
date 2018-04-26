@@ -287,8 +287,8 @@ public:
 
     bool key_pressed[300];
     bool SHIFT_IS_PRESSED= false;
-    Player player1;
-    Player player2;
+    Player* player1;
+    Player* player2 = new Player(game_map.p2position);
 
     Portal p1Portal1= Portal(-2.9, 0, Left);
     Portal p1Portal2= Portal(0,-2.8, Down);
@@ -303,11 +303,14 @@ public:
         printf("Game window loaded\n");
         game_map = gmap;
 
-        player1= Player(game_map.p1position);
-        player2= Player(game_map.p2position);
+//        player1= Player(game_map.p1position);
+//        player2= Player(game_map.p2position);
 
-        player1.color = Color(.2, .8, .3);
-        player2.color = Color(.7, .7, .5);
+        player1 = new Player(game_map.p1position);
+        player2 = new Player(game_map.p2position);
+
+        player1->color = Color(.2, .8, .3);
+        player2->color = Color(.7, .7, .5);
 
         p1Portal1.setLinkedPortal(p1Portal2);
         p2Portal1.setLinkedPortal(p2Portal2);
@@ -322,6 +325,11 @@ public:
         }
 
 
+    }
+
+    ~GameWindow(){
+        delete player1;
+        delete player2;
     }
 
     void onWindowLoad() override{
@@ -374,8 +382,8 @@ public:
     void drawHealthBars(){
 
         float thickness = .05;
-        float p1_bar_width = (float)player1.health / (float)MAX_PLAYER_HEALTH;
-        float p2_bar_width = (float)player2.health / (float)MAX_PLAYER_HEALTH;
+        float p1_bar_width = (float)player1->health / (float)MAX_PLAYER_HEALTH;
+        float p2_bar_width = (float)player2->health / (float)MAX_PLAYER_HEALTH;
 
         glLineWidth(1);
         glColor4f(.9,.9,.9, .9);
@@ -434,31 +442,31 @@ public:
         if(SHIFT_IS_PRESSED){
             // player 1 shift movements
             if(key_pressed['w']){
-                player1.shiftUp();
+                player1->shiftUp();
             }
             if(key_pressed['a']){
-                player1.shiftLeft();
+                player1->shiftLeft();
             }
             if(key_pressed['s']){
-                player1.shiftDown();
+                player1->shiftDown();
             }
             if(key_pressed['d']){
-                player1.shiftRight();
+                player1->shiftRight();
             }
         }
         else{
             //player 1 movements
             if(key_pressed['w']){
-                player1.moveUp();
+                player1->moveUp();
             }
             if(key_pressed['a']){
-                player1.moveLeft();
+                player1->moveLeft();
             }
             if(key_pressed['s']){
-                player1.moveDown();
+                player1->moveDown();
             }
             if(key_pressed['d']){
-                player1.moveRight();
+                player1->moveRight();
             }
         }
 
@@ -466,71 +474,71 @@ public:
         if(key_pressed[13]){
             //player 2 shift movements
             if(key_pressed['5']){
-                player2.shiftUp();
+                player2->shiftUp();
             }
             if(key_pressed['1']){
-                player2.shiftLeft();
+                player2->shiftLeft();
             }
             if(key_pressed['2']){
-                player2.shiftDown();
+                player2->shiftDown();
             }
             if(key_pressed['3']){
-                player2.shiftRight();
+                player2->shiftRight();
             }
         }
         else{
             //player 2 movements
             if(key_pressed['5']){
-                player2.moveUp();
+                player2->moveUp();
             }
             if(key_pressed['1']){
-                player2.moveLeft();
+                player2->moveLeft();
             }
             if(key_pressed['2']){
-                player2.moveDown();
+                player2->moveDown();
             }
             if(key_pressed['3']){
-                player2.moveRight();
+                player2->moveRight();
             }
         }
 
         // portal
-        p1Portal1.teleportPlayer(player1);
-        p2Portal1.teleportPlayer(player1);
-        p1Portal2.teleportPlayer(player1);
-        p2Portal2.teleportPlayer(player1);
+        p1Portal1.teleportPlayer(*player1);
+        p2Portal1.teleportPlayer(*player1);
+        p1Portal2.teleportPlayer(*player1);
+        p2Portal2.teleportPlayer(*player1);
 
-        p1Portal1.teleportPlayer(player2);
-        p2Portal1.teleportPlayer(player2);
-        p1Portal2.teleportPlayer(player2);
-        p2Portal2.teleportPlayer(player2);
+        p1Portal1.teleportPlayer(*player2);
+        p2Portal1.teleportPlayer(*player2);
+        p1Portal2.teleportPlayer(*player2);
+        p2Portal2.teleportPlayer(*player2);
 
         // if the new position of player causes a collision, reset position to prevision value
         // else update actual position to new position
-        if(game_map.detectCollision(player1)){
-            player1.resetNextPosition();
+        if(game_map.detectCollision(*player1)){
+            player1->resetNextPosition();
         }
         else{
-            player1.updatePosition();
+            player1->updatePosition();
         }
 
-        if(game_map.detectCollision(player2)){
-            player2.resetNextPosition();
+        if(game_map.detectCollision(*player2)){
+            player2->resetNextPosition();
         }
         else{
-            player2.updatePosition();
+            player2->updatePosition();
         }
 
     }
 
     void spawnNewBullets(){
-        if(key_pressed[' '] && player1.reloadTimeIsOver()){
-            Bullet new_bullet =  player1.shootBullet();
+        if(key_pressed[' '] && player1->reloadTimeIsOver()){
+            Bullet new_bullet =  player1->shootBullet();
             bullets.push_back(new_bullet);
         }
 
-        if(key_pressed['0'] && player2.reloadTimeIsOver()){
-            Bullet new_bullet =  player2.shootBullet();
+        if(key_pressed['0'] && player2->reloadTimeIsOver()){
+            Bullet new_bullet =  player2->shootBullet();
             bullets.push_back(new_bullet);
         }
     }
@@ -561,22 +569,22 @@ public:
 
     void spawnNewPortals(){
         // for player 1
-        if(key_pressed['q'] && player1.portalGunReloadTimeIsOver()){
-            reOpenPortal(player1, p1Portal1, p1Portal2);
+        if(key_pressed['q'] && player1->portalGunReloadTimeIsOver()){
+            reOpenPortal(*player1, p1Portal1, p1Portal2);
             p1Portal1.color = P1PORTAL1_COLOR;
         }
-        else if(key_pressed['e'] && player1.portalGunReloadTimeIsOver()){
-            reOpenPortal(player1, p1Portal2, p1Portal1);
+        else if(key_pressed['e'] && player1->portalGunReloadTimeIsOver()){
+            reOpenPortal(*player1, p1Portal2, p1Portal1);
             p1Portal2.color = P1PORTAL2_COLOR;
         }
 
 
-        if(key_pressed['4'] && player2.portalGunReloadTimeIsOver()){
-            reOpenPortal(player2, p2Portal1, p2Portal2);
+        if(key_pressed['4'] && player2->portalGunReloadTimeIsOver()){
+            reOpenPortal(*player2, p2Portal1, p2Portal2);
             p2Portal1.color = P2PORTAL1_COLOR;
         }
-        else if(key_pressed['6'] && player2.portalGunReloadTimeIsOver()){
-            reOpenPortal(player2, p2Portal2, p2Portal1);
+        else if(key_pressed['6'] && player2->portalGunReloadTimeIsOver()){
+            reOpenPortal(*player2, p2Portal2, p2Portal1);
             p2Portal2.color = P2PORTAL2_COLOR;
         }
     }
@@ -617,13 +625,13 @@ public:
             p2Portal1.teleportBullet(*bullet);
             p2Portal2.teleportBullet(*bullet);
 
-            if(player1.detectHit(*bullet)){
+            if(player1->detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
-                player1.takeDamage();
+                player1->takeDamage();
             }
-            else if(player2.detectHit(*bullet)){
+            else if(player2->detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
-                player2.takeDamage();
+                player2->takeDamage();
             }
             else if(game_map.detectCollision(*bullet)){
                 bullet= bullets.erase(bullet);
@@ -639,8 +647,8 @@ public:
     }
 
     void drawPlayers(){
-        player1.draw();
-        player2.draw();
+        player1->draw();
+        player2->draw();
     }
 
     // this method must be invoked by a GLUT "core input callback"
