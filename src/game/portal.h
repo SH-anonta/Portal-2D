@@ -126,7 +126,7 @@ public:
         }
     }
 
-    bool detectCollision(Player& player){
+    bool detectCollision(BasePlayer& player){
         Point next_position = player.getNextPosition();
 
         float buffer = .08;
@@ -151,7 +151,7 @@ public:
 
     }
 
-    void teleportPlayer(Player& player){
+    void teleportPlayer(BasePlayer& player){
         if(detectCollision(player)){
 //            printf("Portal collision\n");
 

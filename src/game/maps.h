@@ -48,7 +48,7 @@ public:
         }
     }
 
-    bool detectCollision(Player& player){
+    bool detectCollision(BasePlayer& player){
         Point next_position = player.getNextPosition();
 
         float buffer = .06;
@@ -115,7 +115,7 @@ public:
         }
     }
 
-    bool detectCollision(Player& player){
+    bool detectCollision(BasePlayer& player){
         Point next_position = player.getNextPosition();
 
         return points[0].x <= next_position.x &&
@@ -182,7 +182,7 @@ public:
         pits.push_back(pit);
     }
 
-    bool detectCollision(Player& player){
+    bool detectCollision(BasePlayer& player){
         for(int i= 0, len= walls.size(); i<len; i++){
             if(walls[i].detectCollision(player)) return true;
         }

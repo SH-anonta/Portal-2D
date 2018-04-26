@@ -287,8 +287,8 @@ public:
 
     bool key_pressed[300];
     bool SHIFT_IS_PRESSED= false;
-    Player* player1;
-    Player* player2;
+    BasePlayer* player1;
+    BasePlayer* player2;
 
     Portal p1Portal1= Portal(-2.9, 0, Left);
     Portal p1Portal2= Portal(0,-2.8, Down);
@@ -589,7 +589,7 @@ public:
         }
     }
 
-    void reOpenPortal(Player& player, Portal& portal, Portal& link_portal){
+    void reOpenPortal(BasePlayer& player, Portal& portal, Portal& link_portal){
         Direction player_direction =  player.getDirection();
         Point other_end_point = getPortalGunTragectoryLinePoint(player.getPosition(), player_direction);
 
