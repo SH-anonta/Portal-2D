@@ -10,7 +10,7 @@ const int DAMAGE_PER_HIT= 5;
 const int MAX_PLAYER_HEALTH= 100;
 double PLAYER_SPEED = .01;   // positions per iteration
 
-class Player{
+class Player: public BasePlayer{
 public:
     static constexpr float move_step= .03;
     int health;
@@ -48,17 +48,17 @@ public:
     }
 
     // simply assign next_position to position
-    void updatePosition(){
+    void updatePosition() override{
         position.x= next_position.x;
         position.y= next_position.y;
     }
 
-    void resetNextPosition(){
+    void resetNextPosition() override{
         next_position.x= position.x;
         next_position.y= position.y;
     }
 
-    void draw(){
+    void draw() override{
         setColor(color);
 
         float h = .07;
@@ -90,71 +90,71 @@ public:
     }
 
 
-    bool detectHit(Bullet& bullet){
+    bool detectHit(Bullet& bullet) override{
         return abs(position.x - bullet.position.x) < .06 && abs(position.y - bullet.position.y) < .06;
     }
 
     // movement methods
-    void moveUp(){
+    void moveUp() override{
         next_position.y+= move_step;
         direction = Up;
     }
 
-    void moveDown(){
+    void moveDown() override{
         next_position.y-= move_step;
         direction = Down;
     }
 
-    void moveLeft(){
+    void moveLeft() override{
         next_position.x-= move_step;
         direction = Left;
     }
 
-    void moveRight(){
+    void moveRight() override{
         next_position.x+= move_step;
         direction = Right;
     }
 
-    void shiftUp(){
+    void shiftUp() override{
         next_position.y+= move_step;
     }
 
-    void shiftDown(){
+    void shiftDown() override{
         next_position.y-= move_step;
     }
 
-    void shiftLeft(){
+    void shiftLeft() override{
         next_position.x-= move_step;
     }
 
-    void shiftRight(){
+    void shiftRight() override{
         next_position.x+= move_step;
     }
 
 
-    bool reloadTimeIsOver(){
+    bool reloadTimeIsOver() override{
         clock_t time_now= clock();
 
         return float(float(time_now - last_bullet_shoot_time) / CLOCKS_PER_SEC) > RELOAD_TIME;
     }
 
-    bool portalGunReloadTimeIsOver(){
+    bool portalGunReloadTimeIsOver() override{
         clock_t time_now= clock();
 
         return float(float(time_now - last_portal_open_time) / CLOCKS_PER_SEC) > PORTAL_GUN_RELOAD_TIME;
     }
 
-    bool setPortalOpenTimeNow(){
+    void setPortalOpenTimeNow() override{
         last_portal_open_time = clock();
     }
 
-    void takeDamage(){
+    void takeDamage() override{
         if(health > 0){
             health -= DAMAGE_PER_HIT;
         }
     }
 
-    Bullet shootBullet(){
+    Bullet shootBullet() override{
         //record when this bullet was shot
         last_bullet_shoot_time= clock();
         float adj_x = 0;
@@ -177,13 +177,10 @@ public:
         return Bullet(position.x+adj_x, position.y+adj_y, direction);
     }
 
-    void updateDirection(Direction new_direction){
+    void updateDirection(Direction new_direction) override{
         direction = new_direction;
     }
 
-    void openPortalOne(){
-
-    }
 };
 
 #endif

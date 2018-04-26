@@ -278,9 +278,8 @@ public:
 
 const Color P1PORTAL1_COLOR = Color(1.000,0.592,0.439);
 const Color P1PORTAL2_COLOR = Color(0.439,0.839,1.000);
-const Color P2PORTAL1_COLOR = Color(0.737,0.169,0.078);;
+const Color P2PORTAL1_COLOR = Color(0.737,0.169,0.078);
 const Color P2PORTAL2_COLOR = Color(0.016,0.098,0.400);
-;
 
 class GameWindow: public Window{
 public:

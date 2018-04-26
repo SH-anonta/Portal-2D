@@ -114,7 +114,7 @@ int main(int argc, char** argv){
 
 	initRendering();
     setCallbacks();
-    glutTimerFunc(25, update, 0);
+    glutTimerFunc(10, update, 0);
 
     glutMainLoop();
     return 0;

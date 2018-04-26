@@ -18,11 +18,11 @@ using namespace std;
 #include "./game/backgrounds.h"
 #include "./text_draw.h"
 #include "./game/bullet.h"
+#include "./game/player_wrappers.h"
 #include "./game/player.h"
 #include "./game/portal.h"
 #include "./game/maps.h"
 #include "./game/map_factory.h"
-#include "./game/game.h"
 #include "./window.h"
 
 #ifndef INCLUDE_ME_H
