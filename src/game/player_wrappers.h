@@ -193,25 +193,37 @@ public:
 
 class PlayerShield: public PlayerWrapper{
 public:
+    float shield_rotate_angle;
 
     PlayerShield(BasePlayer* player)
     :PlayerWrapper(player){
-
+        shield_rotate_angle = 0;
     }
 
     void draw(){
         glColor3f(0,1,0);
+        Point p = player->getPosition();
+
+        glPushMatrix();
+        shield_rotate_angle+= 5;
+
+        Point position = player->getPosition();
+        glTranslatef(position.x, position.y, 0);
+        glRotatef(shield_rotate_angle, 0,0, -1);
+        glTranslatef(-1*position.x, -1*position.y, 0);
+
         glBegin(GL_LINE_LOOP);
 
-        Point p = player->getPosition();
         // draw shield
         plot(p.x-.1, p.y-.1);
         plot(p.x+.1, p.y-.1);
         plot(p.x+.1, p.y+.1);
         plot(p.x-.1, p.y+.1);
+        glEnd();
+
+        glPopMatrix();
 
         player->draw();
-        glEnd();
     }
 
     void takeDamage(){

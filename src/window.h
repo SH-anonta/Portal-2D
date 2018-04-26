@@ -306,7 +306,7 @@ public:
 //        player1= Player(game_map.p1position);
 //        player2= Player(game_map.p2position);
 
-        player1 = new Player(game_map.p1position);
+        player1 = new PlayerShield(new Player(game_map.p1position));
         player2 = new Player(game_map.p2position);
 
         player1->setColor(Color(.2, .8, .3));
