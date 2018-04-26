@@ -283,11 +283,16 @@ public:
     }
 
     // return a point in the map which does not collide with any wall or pit with buffer units in between
-    Point getValidSpawnPoint(float buffer= 2.0){
+    Point getValidSpawnPoint(float buffer= .1){
         float spawn_x = randomf()*6 - 3;  // get random value from (-3 to 3)
         float spawn_y = randomf()*6 - 3;  // get random value from (-3 to 3)
 
+        int attepmt_no = 1;
+
         while(true){
+            if(attepmt_no > 30){
+                printf("WARNING: Map::getValidSpawnPoint my be stuck in infinite loop due to large buffer parameter\n", spawn_x);
+            }
             spawn_x = randomf()*6 - 3;  // get random value from (-3 to 3)
             spawn_y = randomf()*6 - 3;  // get random value from (-3 to 3)
 
@@ -297,6 +302,8 @@ public:
             if(!detectCollision(Point(spawn_x,spawn_y), 0.2)){
                 break;
             }
+
+            attepmt_no++;
         }
 
         return Point(spawn_x,spawn_y);
