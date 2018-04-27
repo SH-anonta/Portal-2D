@@ -362,7 +362,7 @@ public:
 
     void updateCollectables(){
         // spawn new collectables if time
-        static clock_t next_spawn_time = clock()+CLOCKS_PER_SEC*3;
+        static clock_t next_spawn_time = clock()+CLOCKS_PER_SEC*10;
 
         if(clock() > next_spawn_time){
             next_spawn_time = clock()+CLOCKS_PER_SEC*3;

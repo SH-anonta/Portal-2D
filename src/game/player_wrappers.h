@@ -209,12 +209,14 @@ public:
 class PlayerShield: public PlayerWrapper{
 public:
     float shield_rotate_angle;
-    int iterations;
+    clock_t obit;
 
     PlayerShield(BasePlayer* player)
     :PlayerWrapper(player){
         shield_rotate_angle = 0;
-        iterations= 0;
+
+        // this wrapper will be removed after 5 seconds
+        obit = clock()+ 5*CLOCKS_PER_SEC;
     }
 
     void draw() override{
@@ -250,8 +252,7 @@ public:
     }
 
     BasePlayer* updateWrapperChain(){
-        if(iterations < 300){
-            iterations++;
+        if(clock() < obit){
             return this;
         }
         else{
