@@ -303,6 +303,8 @@ public:
     list<Bullet> bullets;
     list<Collectable*> collectables;
 
+    CollectableFactory* collectable_factory;
+
     GameWindow(Map gmap): Window(){
         printf("Game window loaded\n");
         game_map = gmap;
@@ -328,13 +330,13 @@ public:
             key_pressed[i]= false;
         }
 
-//        // todo remove
-//        collectable  new HealthCollectable(game_map.getValidSpawnPoint());
+        collectable_factory = new RandomCollectableFactory();
     }
 
     ~GameWindow(){
         delete player1;
         delete player2;
+        delete collectable_factory;
     }
 
     void onWindowLoad() override{
@@ -364,7 +366,9 @@ public:
 
         if(clock() > next_spawn_time){
             next_spawn_time = clock()+CLOCKS_PER_SEC*3;
-            collectables.push_back(new HealthCollectable(game_map.getValidSpawnPoint()));
+            Collectable* col = collectable_factory->getCollectable(game_map.getValidSpawnPoint());
+//            col->setPosition(game_map.getValidSpawnPoint());
+            collectables.push_back(col);
         }
 
         // update existing collectables
@@ -393,11 +397,11 @@ public:
     }
 
     void draw()override {
-        drawCollectables();
 
         drawPlayers();
         drawPortals();
         Bullet::drawBullets(bullets);   // draw all bullets at once
+        drawCollectables();
         drawHealthBars();
         drawMap();
     }
@@ -730,7 +734,10 @@ public:
             this->w_engine->switchWindow(createConfirmQuitWIndow(this));
         }
         else if(key == 't'){
-            collectables.push_back(new HealthCollectable(game_map.getValidSpawnPoint()));
+//            collectables.push_back(new HealthCollectable(game_map.getValidSpawnPoint()));
+            Collectable* col = collectable_factory->getCollectable(game_map.getValidSpawnPoint());
+//            col->setPosition(game_map.getValidSpawnPoint());
+            collectables.push_back(col);
         }
 //        printf("press: %c\n", key);
 

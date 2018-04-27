@@ -36,6 +36,10 @@ public:
     // when the player has a collision with this collectable,
     // use the returned wrapper to change the player's behavior
     virtual BasePlayer* getWrappedPlayer(BasePlayer* player)= 0;
+
+    void setPosition(const Point& pos){
+        position = pos;
+    }
 };
 
 class HealthCollectable: public Collectable{
@@ -66,4 +70,35 @@ public:
     }
 };
 
+
+class ShieldCollectable: public Collectable{
+    vector<Point> points;
+
+public:
+
+    ShieldCollectable(const Point& pos): Collectable(pos){
+        const float d = .08;
+        points.push_back(Point(pos.x, pos.y -d));
+        points.push_back(Point(pos.x+.06, pos.y -.05));
+        points.push_back(Point(pos.x+.06, pos.y +d));
+        points.push_back(Point(pos.x-.06, pos.y +d));
+        points.push_back(Point(pos.x-.06, pos.y -.05));
+    }
+
+    void draw() override{
+//        glLineWidth(5);
+        glColor3f(0,1,0);
+        glBegin(GL_POLYGON);
+
+        for(Point& p : points){
+            plot(p);
+        }
+
+        glEnd();
+    }
+
+    BasePlayer* getWrappedPlayer(BasePlayer* player) override{
+        return new PlayerShield(player);
+    }
+};
 #endif

@@ -218,7 +218,7 @@ public:
     }
 
     void draw() override{
-        glColor3f(0,1,0);
+        glColor3f(0,.8,0);
         Point p = player->getPosition();
 
         glPushMatrix();

@@ -23,6 +23,7 @@ using namespace std;
 #include "./game/player.h"
 #include "./game/portal.h"
 #include "./game/collectable.h"
+#include "./game/collectable_factory.h"
 #include "./game/maps.h"
 #include "./game/map_factory.h"
 #include "./window.h"
