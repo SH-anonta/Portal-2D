@@ -8,25 +8,32 @@ void plot(double x, double y){
 }
 
 void drawHeart(float x, float y){
+    // draw a heart that has it's center at 0,0
+    // width = .08
+    // height = .08
+    glLineWidth(5);
+    glColor3f(0,1,0);
+    glBegin(GL_LINES);
 
-    vector
-    glColor3f(1,0,0);
-    glBegin(GL_POINTS);
-    plot(0.075,0);    // <- plot the heart here
+    plot(-.08, 0);
+    plot(.08, 0);
+    plot(0, -.08);
+    plot(0, .08);
     glEnd();
 }
 
 // this is where all drawing code belongs
 void drawScreen(){
-    glColor3f(1,0,0);
-    glBegin(GL_LINE_LOOP);
-    plot(0,0);
-    plot(.15,0);
-    plot(.15,.15);
-    plot(.0,.15);
-    glEnd();
+    glColor3f(0,1,0);
+//    glBegin(GL_LINE_LOOP);
+//    float d = .08;
+//    plot(-d,-d);
+//    plot(d,-d);
+//    plot(d,d);
+//    plot(-d,d);
+//    glEnd();
 
-    drawHeart();
+    drawHeart(0,0);
 
 }
 
