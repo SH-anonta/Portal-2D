@@ -10,6 +10,8 @@ public:
 
     virtual void updatePosition()= 0;
     virtual void resetNextPosition()= 0;
+
+
     virtual void draw()= 0;
 
     virtual bool detectHit(Bullet& bullet)= 0;
@@ -77,7 +79,7 @@ public:
     }
 
     BasePlayer* stripAllWrappers() override{
-        return player;
+        return player->stripAllWrappers();
     }
 
     void updatePosition() override{
@@ -324,6 +326,17 @@ public:
     void shiftRight() override{
     }
 
+    bool reloadTimeIsOver(){
+        return false;
+    }
+
+    bool portalGunReloadTimeIsOver(){
+        return false;
+    }
+
+    BasePlayer* stripAllWrappers(){
+        return this;
+    }
 
 };
 
