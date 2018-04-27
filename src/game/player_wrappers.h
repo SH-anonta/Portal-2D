@@ -60,6 +60,8 @@ public:
 
     virtual void setColor(const Color& color)= 0;
 
+    virtual void increaseHealth(float inc)= 0;
+
 
 };
 
@@ -198,6 +200,10 @@ public:
     void setColor(const Color& color) override{
         player->setColor(color);
     }
+
+    void increaseHealth(float inc) override{
+        player->increaseHealth(inc);
+    }
 };
 
 class PlayerShield: public PlayerWrapper{
@@ -259,7 +265,6 @@ public:
 
 class FallingIntoPit: public PlayerWrapper{
 public:
-    float shield_rotate_angle;
     int iterations;
 
     // to create the illusion of the player falling into the pit
@@ -268,7 +273,6 @@ public:
 
     FallingIntoPit(BasePlayer* player)
     :PlayerWrapper(player){
-        shield_rotate_angle = 0;
         iterations= 0;
     }
 
@@ -338,6 +342,23 @@ public:
         return this;
     }
 
+};
+
+
+
+class AcquireHealth: public PlayerWrapper{
+public:
+    AcquireHealth(BasePlayer* player)
+    :PlayerWrapper(player){
+    }
+
+
+    BasePlayer* updateWrapperChain(){
+        // player's health should increase by 20
+        player->increaseHealth(20);
+
+        return player;
+    }
 };
 
 #endif

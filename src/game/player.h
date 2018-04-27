@@ -12,7 +12,7 @@ double PLAYER_SPEED = .01;   // positions per iteration
 
 class Player: public BasePlayer{
     static constexpr float move_step= .03;
-    int health;
+    float health;
     Direction direction = Up;
     Point position;
     Point next_position;    // next position that will be occupied by the player if the game allows it
@@ -229,6 +229,15 @@ public:
 
     void setColor(const Color& color) override{
         this->color = color;
+    }
+
+    void increaseHealth(float inc) override{
+        if(health + inc > MAX_PLAYER_HEALTH){
+            health  = MAX_PLAYER_HEALTH;
+        }
+        else{
+            health += inc;
+        }
     }
 };
 

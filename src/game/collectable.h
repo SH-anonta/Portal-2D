@@ -62,7 +62,7 @@ public:
     }
 
     BasePlayer* getWrappedPlayer(BasePlayer* player) override{
-        return new PlayerShield(player);
+        return new AcquireHealth(player);
     }
 };
 
