@@ -13,6 +13,7 @@
 using namespace std;
 
 #include "./primitives.h"
+#include "./game/geometry.h"
 #include "./plot.h"
 #include "./debug.h"
 #include "./game/backgrounds.h"
@@ -21,6 +22,7 @@ using namespace std;
 #include "./game/player_wrappers.h"
 #include "./game/player.h"
 #include "./game/portal.h"
+#include "./game/collectable.h"
 #include "./game/maps.h"
 #include "./game/map_factory.h"
 #include "./window.h"

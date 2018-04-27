@@ -47,6 +47,10 @@ public:
         last_bullet_shoot_time= 0;
     }
 
+    BasePlayer* updateWrapperChain() override{
+        return this;
+    }
+
     // simply assign next_position to position
     void updatePosition() override{
         position.x= next_position.x;

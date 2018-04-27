@@ -343,12 +343,18 @@ public:
     }
 
     void execute() override{
+        updatePlayers();
         updatePlayerPositions();
         spawnNewBullets();
         spawnNewPortals();
         updateBulletPositions();
 
         draw();
+    }
+
+    void updatePlayers(){
+        player1 = player1->updateWrapperChain();
+        player2 = player2->updateWrapperChain();
     }
 
     void draw()override {

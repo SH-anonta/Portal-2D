@@ -4,6 +4,9 @@
 class BasePlayer{
 public:
 
+    // update the chain of PlayerWrappers
+    virtual BasePlayer* updateWrapperChain()= 0;
+
     virtual void updatePosition()= 0;
     virtual void resetNextPosition()= 0;
     virtual void draw()= 0;
@@ -68,10 +71,9 @@ public:
         this->player = player;
     }
 
-    BasePlayer* getWrappedObject(){
-        return player;
+    BasePlayer* updateWrapperChain() override{
+        return this;
     }
-
 
     void updatePosition() override{
         player->updatePosition();
@@ -194,10 +196,12 @@ public:
 class PlayerShield: public PlayerWrapper{
 public:
     float shield_rotate_angle;
+    int iterations;
 
     PlayerShield(BasePlayer* player)
     :PlayerWrapper(player){
         shield_rotate_angle = 0;
+        iterations= 0;
     }
 
     void draw(){
@@ -230,6 +234,18 @@ public:
         // intentionally reuse to take damage
         return;
     }
+
+    BasePlayer* updateWrapperChain(){
+        if(iterations < 300){
+            iterations++;
+            return this;
+        }
+        else{
+            return player;
+        }
+    }
 };
+
+
 
 #endif

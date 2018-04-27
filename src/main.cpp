@@ -15,14 +15,15 @@ float _cameraAngle = 0.0;
 
 // this is where all drawing code belongs
 void drawScreen(){
+//    printf("%f\n", float(clock())/CLOCKS_PER_SEC);
     w_engine.execute();
 }
 
 void update(int value) {
+	glutTimerFunc(10, update, 0);
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 
 	//Tell GLUT to call update again in 25 milliseconds
-	glutTimerFunc(10, update, 0);
 }
 
 
