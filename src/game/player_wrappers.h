@@ -6,6 +6,7 @@ public:
 
     // update the chain of PlayerWrappers
     virtual BasePlayer* updateWrapperChain()= 0;
+    virtual BasePlayer* stripAllWrappers()= 0;
 
     virtual void updatePosition()= 0;
     virtual void resetNextPosition()= 0;
@@ -73,6 +74,10 @@ public:
 
     BasePlayer* updateWrapperChain() override{
         return this;
+    }
+
+    BasePlayer* stripAllWrappers() override{
+        return player;
     }
 
     void updatePosition() override{
@@ -204,12 +209,12 @@ public:
         iterations= 0;
     }
 
-    void draw(){
+    void draw() override{
         glColor3f(0,1,0);
         Point p = player->getPosition();
 
         glPushMatrix();
-        shield_rotate_angle+= 5;
+        shield_rotate_angle+= 3;
 
         Point position = player->getPosition();
         glTranslatef(position.x, position.y, 0);
@@ -247,6 +252,79 @@ public:
     }
 };
 
+// when the player enters a pit
+// this decorator wills cause the player to loose health very quickly, resulting in death
 
+class FallingIntoPit: public PlayerWrapper{
+public:
+    float shield_rotate_angle;
+    int iterations;
+
+    // to create the illusion of the player falling into the pit
+    // when this decorator is applied, the player is displayed to be smaller and smaller on each iteration
+    float scale = 1;
+
+    FallingIntoPit(BasePlayer* player)
+    :PlayerWrapper(player){
+        shield_rotate_angle = 0;
+        iterations= 0;
+    }
+
+    void draw() override{
+        glPushMatrix();
+
+        // player's position will be fixed.
+        Point pos = player->getPosition();
+
+        glTranslatef(pos.x, pos.y, 0);
+        glScalef(scale,scale,1);
+        glTranslatef(-1*pos.x, -1*pos.y, 0);
+
+        if(scale > 0){
+            scale -= .05;
+        }
+
+        player->draw();
+        glPopMatrix();
+    }
+
+    // this also causes all existing decorators to be removed
+    BasePlayer* updateWrapperChain(){
+        player->takeDamage();
+
+        player = player->stripAllWrappers();
+        // this is a permanent decorator
+        return this;
+    }
+
+
+    // players can't move when they fall into a pit
+    // movement methods
+    void moveUp() override{
+    }
+
+    void moveDown() override{
+    }
+
+    void moveLeft() override{
+    }
+
+    void moveRight() override{
+    }
+
+    void shiftUp() override{
+    }
+
+    void shiftDown() override{
+    }
+
+    void shiftLeft() override{
+    }
+
+    void shiftRight() override{
+    }
+
+
+};
 
 #endif

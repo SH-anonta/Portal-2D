@@ -328,6 +328,18 @@ public:
 
         return false;
     }
+
+    bool detectPitCollision(BasePlayer* player){
+        Point pos = player->getPosition();
+
+        for(Pit& pit : pits){
+            if(pit.detectCollision(pos, 0)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 };
 
 

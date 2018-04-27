@@ -51,6 +51,10 @@ public:
         return this;
     }
 
+    BasePlayer* stripAllWrappers() override{
+        return this;
+    }
+
     // simply assign next_position to position
     void updatePosition() override{
         position.x= next_position.x;

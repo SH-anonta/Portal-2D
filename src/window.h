@@ -290,6 +290,11 @@ public:
     BasePlayer* player1;
     BasePlayer* player2;
 
+    // these flags are used to prevent a player getting wrapped by "FallingIntoPit" decorator multiple times
+    bool player1_is_alive= true;
+    bool player2_is_alive= true;
+
+
     Portal p1Portal1= Portal(-2.9, 0, Left);
     Portal p1Portal2= Portal(0,-2.8, Down);
     Portal p2Portal1= Portal(3, 0, Right);
@@ -354,7 +359,16 @@ public:
     }
 
     void updateCollectables(){
-        auto citer = collectables.begin();
+        // spawn new collectables if time
+        static clock_t next_spawn_time = clock()+CLOCKS_PER_SEC*3;
+
+        if(clock() > next_spawn_time){
+            next_spawn_time = clock()+CLOCKS_PER_SEC*3;
+            collectables.push_back(new HealthCollectable(game_map.getValidSpawnPoint()));
+        }
+
+        // update existing collectables
+        auto citer = collectables.begin();  //collectables iterator
         auto last = collectables.end();
 
         while(citer != last){
@@ -556,6 +570,16 @@ public:
             player2->updatePosition();
         }
 
+
+        // if players enter a pit, they die instantly
+        if(player1_is_alive && game_map.detectPitCollision(player1)){
+            player1 = new FallingIntoPit(player1);
+            player1_is_alive= false;
+        }
+        else if(player2_is_alive && game_map.detectPitCollision(player2)){
+            player2 = new FallingIntoPit(player2);
+            player2_is_alive= false;
+        }
     }
 
     void spawnNewBullets(){
