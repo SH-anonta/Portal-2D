@@ -7,7 +7,7 @@ protected:
     Point position;
 public:
 
-    Collectable(Point& pos){
+    Collectable(const Point& pos){
         position = pos;
     }
 
@@ -22,8 +22,8 @@ public:
         glEnd();
     }
 
-    virtual bool detectCollision(BasePlayer& player){
-        return pointDistance(player.getPosition(), position) < 0.18;
+    bool detectCollision(BasePlayer* player){
+        return pointDistance(player->getPosition(), position) < 0.18;
     };
 
     virtual void updateState(){
@@ -32,12 +32,37 @@ public:
     virtual bool checkExistance(){
         return true;
     }
+
+    // when the player has a collision with this collectable,
+    // use the returned wrapper to change the player's behavior
+    virtual BasePlayer* getWrappedPlayer(BasePlayer* player)= 0;
 };
 
-class Health: public Collectable{
+class HealthCollectable: public Collectable{
+    vector<Point> points;
 public:
-    Health(Point& pos): Collectable(pos){
 
+    HealthCollectable(const Point& pos): Collectable(pos){
+        points.push_back(Point(pos.x -.08, pos.y));
+        points.push_back(Point(pos.x +.08, pos.y));
+        points.push_back(Point(pos.x, pos.y -.08));
+        points.push_back(Point(pos.x, pos.y +.08));
+    }
+
+    void draw() override{
+        glLineWidth(5);
+        glColor3f(0,1,0);
+        glBegin(GL_LINES);
+
+        for(Point& p : points){
+            plot(p);
+        }
+
+        glEnd();
+    }
+
+    BasePlayer* getWrappedPlayer(BasePlayer* player) override{
+        return new PlayerShield(player);
     }
 };
 

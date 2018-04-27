@@ -296,8 +296,7 @@ public:
     Portal p2Portal2= Portal(0, 2.8, Up);
 
     list<Bullet> bullets;
-
-    Point collectable;
+    list<Collectable*> collectables;
 
     GameWindow(Map gmap): Window(){
         printf("Game window loaded\n");
@@ -306,7 +305,7 @@ public:
 //        player1= Player(game_map.p1position);
 //        player2= Player(game_map.p2position);
 
-        player1 = new PlayerShield(new Player(game_map.p1position));
+        player1 = new Player(game_map.p1position);
         player2 = new Player(game_map.p2position);
 
         player1->setColor(Color(.2, .8, .3));
@@ -324,7 +323,8 @@ public:
             key_pressed[i]= false;
         }
 
-
+//        // todo remove
+//        collectable  new HealthCollectable(game_map.getValidSpawnPoint());
     }
 
     ~GameWindow(){
@@ -345,11 +345,32 @@ public:
     void execute() override{
         updatePlayers();
         updatePlayerPositions();
+        updateCollectables();
         spawnNewBullets();
         spawnNewPortals();
         updateBulletPositions();
 
         draw();
+    }
+
+    void updateCollectables(){
+        auto citer = collectables.begin();
+        auto last = collectables.end();
+
+        while(citer != last){
+            // if player 1 touches the collectable
+            if((*citer)->detectCollision(player1)){
+                player1 = (*citer)->getWrappedPlayer(player1);
+                citer = collectables.erase(citer);
+            }
+            else if((*citer)->detectCollision(player2)){
+                player2 = (*citer)->getWrappedPlayer(player2);
+                citer = collectables.erase(citer);
+            }
+            else{
+                citer++;
+            }
+        }
     }
 
     void updatePlayers(){
@@ -368,14 +389,14 @@ public:
     }
 
     void drawCollectables(){
-        glColor3f(1,0,0);
+        auto citer = collectables.begin();
+        auto last = collectables.end();
 
-        glBegin(GL_LINE_LOOP);
-        plot(collectable.x-.1, collectable.y-.1);
-        plot(collectable.x+.1, collectable.y-.1);
-        plot(collectable.x+.1, collectable.y+.1);
-        plot(collectable.x-.1, collectable.y+.1);
-        glEnd();
+//        printf("%d\n", collectables.size());
+        while(citer != last){
+            (*citer)->draw();
+            citer++;
+        }
     }
 
     void drawPortals(){
@@ -685,7 +706,7 @@ public:
             this->w_engine->switchWindow(createConfirmQuitWIndow(this));
         }
         else if(key == 't'){
-            collectable = game_map.getValidSpawnPoint();
+            collectables.push_back(new HealthCollectable(game_map.getValidSpawnPoint()));
         }
 //        printf("press: %c\n", key);
 

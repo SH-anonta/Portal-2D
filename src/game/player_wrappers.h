@@ -216,6 +216,7 @@ public:
         glRotatef(shield_rotate_angle, 0,0, -1);
         glTranslatef(-1*position.x, -1*position.y, 0);
 
+        glLineWidth(1);
         glBegin(GL_LINE_LOOP);
 
         // draw shield
