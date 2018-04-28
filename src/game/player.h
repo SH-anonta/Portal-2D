@@ -156,9 +156,12 @@ public:
         last_portal_open_time = clock();
     }
 
-    void takeDamage() override{
-        if(health > 0){
-            health -= DAMAGE_PER_HIT;
+    void takeDamage(float damage) override{
+        if(health - damage < 0){
+            health = 0;
+        }
+        else{
+            health -= damage;
         }
     }
 
@@ -190,7 +193,7 @@ public:
     }
 
     // getters
-    int getHealth() override{
+    float getHealth() override{
         return health;
     }
 
@@ -211,7 +214,7 @@ public:
     }
 
     // setters
-    void setHealth(int health) override{
+    void setHealth(float health) override{
         this->health = health;
     }
 

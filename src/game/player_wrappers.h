@@ -32,14 +32,14 @@ public:
 
     virtual void setPortalOpenTimeNow()= 0;
 
-    virtual void takeDamage()= 0;
+    virtual void takeDamage(float damage)= 0;
 
     virtual Bullet shootBullet()= 0;
 
     virtual void updateDirection(Direction new_direction)= 0;
 
     // getters
-    virtual int getHealth()= 0;
+    virtual float getHealth()= 0;
 
     virtual Direction getDirection()= 0;
 
@@ -50,7 +50,7 @@ public:
     virtual Color getColor()= 0;
 
     // setters
-    virtual void setHealth(int health)= 0;
+    virtual void setHealth(float health)= 0;
 
     virtual void setDirection(Direction d)= 0;
 
@@ -147,8 +147,8 @@ public:
         player->setPortalOpenTimeNow();
     }
 
-    void takeDamage() override{
-        player->takeDamage();
+    void takeDamage(float damage) override{
+        player->takeDamage(damage);
     }
 
     Bullet shootBullet() override{
@@ -160,7 +160,7 @@ public:
     }
 
     // getters
-    int getHealth() override{
+    float getHealth() override{
         return player->getHealth();
     }
 
@@ -181,7 +181,7 @@ public:
     }
 
     // setters
-    void setHealth(int health) override{
+    void setHealth(float health) override{
         player->setHealth(health);
     }
 
@@ -246,7 +246,7 @@ public:
         player->draw();
     }
 
-    void takeDamage(){
+    void takeDamage(float damage){
         // intentionally reuse to take damage
         return;
     }
@@ -297,7 +297,8 @@ public:
 
     // this also causes all existing decorators to be removed
     BasePlayer* updateWrapperChain(){
-        player->takeDamage();
+        player->takeDamage(5);
+        printf("%f\n", player->getHealth());
 
         player = player->stripAllWrappers();
         // this is a permanent decorator

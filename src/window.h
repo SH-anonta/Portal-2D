@@ -355,13 +355,6 @@ public:
     }
 
     void execute() override{
-        if(!player1_is_alive){
-            w_engine->switchWindow(createGameOverWindow("Player1 wins"));
-        }
-        else if(!player2_is_alive){
-            w_engine->switchWindow(createGameOverWindow("Player2 wins"));
-        }
-
         updatePlayers();
         updatePlayerPositions();
         updateCollectables();
@@ -372,10 +365,10 @@ public:
         draw();
 
         if(player1->getHealth()  == 0){
-            player1_is_alive = false;
+            w_engine->switchWindow(createGameOverWindow("Player 2 wins"));
         }
         else if(player2->getHealth()  == 0){
-            player2_is_alive = false;
+            w_engine->switchWindow(createGameOverWindow("Player 1 wins"));
         }
     }
 
@@ -701,11 +694,11 @@ public:
 
             if(player1->detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
-                player1->takeDamage();
+                player1->takeDamage(5);
             }
             else if(player2->detectHit(*bullet)){
                 bullet= bullets.erase(bullet);
-                player2->takeDamage();
+                player2->takeDamage(5);
             }
             else if(game_map.detectCollision(*bullet)){
                 bullet= bullets.erase(bullet);
