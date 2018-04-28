@@ -216,7 +216,7 @@ public:
         shield_rotate_angle = 0;
 
         // this wrapper will be removed after 5 seconds
-        obit = clock()+ 5*CLOCKS_PER_SEC;
+        obit = clock()+ 10*CLOCKS_PER_SEC;
     }
 
     void draw() override{

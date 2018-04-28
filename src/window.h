@@ -8,6 +8,7 @@ class GameWindow;
 
 
 Window* createConfirmQuitWIndow(Window* previous_window);
+Window* createGameOverWindow(string message);
 
 class Window{
 public:
@@ -276,6 +277,8 @@ public:
 
 };
 
+
+
 const Color P1PORTAL1_COLOR = Color(1.000,0.592,0.439);
 const Color P1PORTAL2_COLOR = Color(0.439,0.839,1.000);
 const Color P2PORTAL1_COLOR = Color(0.737,0.169,0.078);
@@ -304,6 +307,7 @@ public:
     list<Collectable*> collectables;
 
     CollectableFactory* collectable_factory;
+    clock_t next_spawn_time;
 
     GameWindow(Map gmap): Window(){
         printf("Game window loaded\n");
@@ -331,6 +335,7 @@ public:
         }
 
         collectable_factory = new RandomCollectableFactory();
+        next_spawn_time = clock()+CLOCKS_PER_SEC*10;
     }
 
     ~GameWindow(){
@@ -350,6 +355,13 @@ public:
     }
 
     void execute() override{
+        if(!player1_is_alive){
+            w_engine->switchWindow(createGameOverWindow("Player1 wins"));
+        }
+        else if(!player2_is_alive){
+            w_engine->switchWindow(createGameOverWindow("Player2 wins"));
+        }
+
         updatePlayers();
         updatePlayerPositions();
         updateCollectables();
@@ -358,14 +370,20 @@ public:
         updateBulletPositions();
 
         draw();
+
+        if(player1->getHealth()  == 0){
+            player1_is_alive = false;
+        }
+        else if(player2->getHealth()  == 0){
+            player2_is_alive = false;
+        }
     }
 
     void updateCollectables(){
         // spawn new collectables if time
-        static clock_t next_spawn_time = clock()+CLOCKS_PER_SEC*10;
 
         if(clock() > next_spawn_time){
-            next_spawn_time = clock()+CLOCKS_PER_SEC*3;
+            next_spawn_time = clock()+CLOCKS_PER_SEC*10 + CLOCKS_PER_SEC*randomf()*10;
             Collectable* col = collectable_factory->getCollectable(game_map.getValidSpawnPoint());
 //            col->setPosition(game_map.getValidSpawnPoint());
             collectables.push_back(col);
@@ -1173,7 +1191,54 @@ public:
     }
 };
 
+
+class GameOverWindow: public Window{
+    string message;
+public:
+
+    GameOverWindow(string msg){
+        message = msg ;
+    }
+
+    void execute() override{
+        draw();
+    }
+
+    void draw()override {
+        setColor(DEFAULT_TEXT_COLOR);
+        drawString(-.4,.5, "Game over", GLUT_BITMAP_TIMES_ROMAN_24);
+        drawString(-.5,.0, (char*)message.c_str(), GLUT_BITMAP_TIMES_ROMAN_24);
+
+        drawMainBackground();
+    }
+
+    void onWindowLoad() override{
+        printf("Confirm quit game window loaded\n");
+    }
+
+    void keyPress(unsigned char key, int x, int y) override{
+        if(key == 13){
+            this->w_engine->switchWindow(new MainMenuWindow());
+        }
+    }
+
+    void specialKeyPress(int key, int x, int y) override{
+    }
+
+    void keyUp(unsigned char key, int x, int y) override{
+    }
+
+    void specialKeyUp(int key, int x, int y) override{
+
+    }
+};
+
 Window* createConfirmQuitWIndow(Window* previous_window){
     return new ConfirmQuitGameWindow(previous_window);
 }
+
+Window* createGameOverWindow(string msg){
+    return new GameOverWindow(msg);
+}
+
 #endif

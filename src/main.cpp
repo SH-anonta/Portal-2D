@@ -8,7 +8,7 @@
 //WindowEngine w_engine(new MapSelectionMenue(new MainMenuWindow()));
 //WindowEngine w_engine(new GameWindow(VoidMapFactory().createMap()));
 WindowEngine w_engine(new GameWindow(DivideMapFactory().createMap()));
-//WindowEngine w_engine(new GameWindow(StrandedMapFactory().createMap()));
+//WindowEngine w_engine(new GameOverWindow("Player1 Wins"));
 
 float _cameraAngle = 0.0;
 
