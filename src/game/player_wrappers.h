@@ -298,8 +298,6 @@ public:
     // this also causes all existing decorators to be removed
     BasePlayer* updateWrapperChain(){
         player->takeDamage(5);
-        printf("%f\n", player->getHealth());
-
         player = player->stripAllWrappers();
         // this is a permanent decorator
         return this;

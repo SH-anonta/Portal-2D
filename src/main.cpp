@@ -97,7 +97,9 @@ void initRendering() {
 
 void initHook(){
     // initialize seed for random function
-    srand (time(NULL)+846);
+    srand(time(NULL)+846);
+
+//    RandomMazeMapFactory().createMap();
 }
 
 int main(int argc, char** argv){
@@ -115,8 +117,8 @@ int main(int argc, char** argv){
 
 	initRendering();
     setCallbacks();
-    glutTimerFunc(25, update, 0);
 
+    glutTimerFunc(25, update, 0);
     glutMainLoop();
     return 0;
 }

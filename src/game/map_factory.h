@@ -120,6 +120,91 @@ public:
     }
 };
 
+class RandomMazeMapFactory: public MapFactory{
+    int MAZE_DIMENSION; // # of row and column
+    vector<vector<char>> maze;
+    int wall_count;
+    int desired_wall_count;
+
+    void generateRandomMaze(){
+        int n = MAZE_DIMENSION;
+
+        maze.clear();
+        for(int i= 0; i<n; i++){
+            maze.push_back(vector<char>(MAZE_DIMENSION, '#'));
+        }
+
+        wall_count = MAZE_DIMENSION*MAZE_DIMENSION;
+        desired_wall_count = randomf() * (wall_count/2);
+
+        int tries = 1;
+        while(desired_wall_count != wall_count){
+            int seed_x = randomf()*MAZE_DIMENSION;
+            int seed_y = randomf()*MAZE_DIMENSION;
+
+            createRandomPath(seed_x, seed_y);
+            tries++;
+        }
+
+//        printf("%d\n", tries);
+    }
+
+    void printMaze(){
+        int rows= maze.size();
+        int cols= maze[0].size();
+
+        for(int r= 0; r<rows; r++){
+            for(int c= 0; c<cols; c++){
+                printf("%c", maze[r][c]);
+            }
+            printf("\n");
+        }
+    }
+
+    void createRandomPath(int x, int y){
+//        printf("AAAAAAAAA\n");
+//        printf("%d\n", wall_delete_count);
+//        printf("%d %d\n", x, y);
+
+
+        if(x < 0 || y < 0 || x >= MAZE_DIMENSION || y >= MAZE_DIMENSION){
+            return;
+        }
+
+        if(desired_wall_count == wall_count){
+            return;
+        }
+
+        if(maze[x][y] == '#'){
+            maze[x][y] = ' ';
+            wall_count--;
+        }
+
+        int tries = 0;
+        // keep trying random direction until a valid one is found
+
+        // randomly choose a direction to take
+        int nx = randomf() < .5 ? x-1 : x+1;
+        int ny = randomf() < .5 ? y+1 : y-1;
+        createRandomPath(nx, ny);
+    }
+
+public:
+    Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Random Map");
+
+        MAZE_DIMENSION = 30;
+
+        generateRandomMaze();
+
+        printMaze();
+
+        return game_map;
+    }
+
+
+};
 
 vector<Map> getAllMaps(){
     vector<Map> maps;
