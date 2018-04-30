@@ -60,6 +60,8 @@ public:
 
     virtual void setColor(const Color& color)= 0;
 
+    virtual void setSpeed(float speed)= 0;
+
     virtual void increaseHealth(float inc)= 0;
 
 
@@ -199,6 +201,10 @@ public:
 
     void setColor(const Color& color) override{
         player->setColor(color);
+    }
+
+    void setSpeed(float speed) override{
+        player->setSpeed(speed);
     }
 
     void increaseHealth(float inc) override{
@@ -459,6 +465,36 @@ public:
 
 
 };
+
+class SpeedBoost: public PlayerWrapper{
+public:
+    clock_t obit;
+
+    SpeedBoost(BasePlayer* player)
+    :PlayerWrapper(player){
+
+        // this wrapper will be removed after 5 seconds
+        player->setSpeed(.06);
+        obit = clock()+ 10*CLOCKS_PER_SEC;
+    }
+
+    void draw() override{
+        player->draw();
+    }
+
+    BasePlayer* updateWrapperChain(){
+        if(clock() < obit){
+            return this;
+        }
+        else{
+            // reset the player speed
+            player->setSpeed(.03);
+            return player;
+        }
+    }
+
+};
+
 
 
 #endif

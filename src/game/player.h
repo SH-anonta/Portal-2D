@@ -8,10 +8,11 @@ const double PORTAL_GUN_RELOAD_TIME= 0.2;    // in seconds
 Color DEFAULT_PLAYER_COLOR = Color(.2,.2,.8);
 const int DAMAGE_PER_HIT= 5;
 const int MAX_PLAYER_HEALTH= 100;
-double PLAYER_SPEED = .01;   // positions per iteration
+double DEFAULT_PLAYER_SPEED = .03;   // positions per iteration
 
 class Player: public BasePlayer{
     static constexpr float move_step= .03;
+    float speed;
     float health;
     Direction direction = Up;
     Point position;
@@ -27,6 +28,7 @@ public:
         last_bullet_shoot_time= 0;
         color = DEFAULT_PLAYER_COLOR;
         health= MAX_PLAYER_HEALTH;
+        speed = DEFAULT_PLAYER_SPEED;
     }
 
     Player(const Point& pos){
@@ -35,7 +37,7 @@ public:
         position.y= next_position.y = pos.y;
         color = DEFAULT_PLAYER_COLOR;
         health= MAX_PLAYER_HEALTH;
-
+        speed = DEFAULT_PLAYER_SPEED;
         last_bullet_shoot_time= 0;
     }
 
@@ -45,6 +47,7 @@ public:
         position.y= next_position.y = y;
         health= MAX_PLAYER_HEALTH;
         last_bullet_shoot_time= 0;
+        speed = DEFAULT_PLAYER_SPEED;
     }
 
     BasePlayer* updateWrapperChain() override{
@@ -104,39 +107,39 @@ public:
 
     // movement methods
     void moveUp() override{
-        next_position.y+= move_step;
+        next_position.y+= speed;
         direction = Up;
     }
 
     void moveDown() override{
-        next_position.y-= move_step;
+        next_position.y-= speed;
         direction = Down;
     }
 
     void moveLeft() override{
-        next_position.x-= move_step;
+        next_position.x-= speed;
         direction = Left;
     }
 
     void moveRight() override{
-        next_position.x+= move_step;
+        next_position.x+= speed;
         direction = Right;
     }
 
     void shiftUp() override{
-        next_position.y+= move_step;
+        next_position.y+= speed;
     }
 
     void shiftDown() override{
-        next_position.y-= move_step;
+        next_position.y-= speed;
     }
 
     void shiftLeft() override{
-        next_position.x-= move_step;
+        next_position.x-= speed;
     }
 
     void shiftRight() override{
-        next_position.x+= move_step;
+        next_position.x+= speed;
     }
 
 
@@ -232,6 +235,10 @@ public:
 
     void setColor(const Color& color) override{
         this->color = color;
+    }
+
+    void setSpeed(float speed) override{
+        this->speed = speed;
     }
 
     void increaseHealth(float inc) override{

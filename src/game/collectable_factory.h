@@ -25,8 +25,11 @@ public:
         else if(random < .5){
             return new ShieldCollectable(pos);
         }
-        else{
+        else if(random < .75){
             return new BearTrapCollectable(pos);
+        }
+        else{
+            return new SpeedBoostCollectable(pos);
         }
     }
 };

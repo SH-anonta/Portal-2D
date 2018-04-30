@@ -163,4 +163,40 @@ public:
     }
 };
 
+
+class SpeedBoostCollectable: public Collectable{
+public:
+
+    SpeedBoostCollectable(const Point& pos): Collectable(pos){
+    }
+
+    void draw() override{
+        int d = .1;
+        glColor3f(.2, .2, 1);
+
+        glLineWidth(3);
+
+        glPushMatrix();
+        glTranslatef(position.x, position.y, 0);
+
+        glBegin(GL_LINE_STRIP);
+        plot(-d, -.1);
+        plot(-d+.05, 0);
+        plot(-d, .1);
+        glEnd();
+
+        glBegin(GL_LINE_STRIP);
+        plot(-d+.05, -.1);
+        plot(-d+.05+.05, 0);
+        plot(-d+.05, .1);
+        glEnd();
+
+        glPopMatrix();
+    }
+
+    BasePlayer* getWrappedPlayer(BasePlayer* player) override{
+        return new SpeedBoost(player);
+    }
+};
+
 #endif
