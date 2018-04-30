@@ -101,4 +101,66 @@ public:
         return new PlayerShield(player);
     }
 };
+
+
+
+class BearTrapCollectable: public Collectable{
+
+public:
+
+    BearTrapCollectable(const Point& pos): Collectable(pos){
+
+
+    }
+
+    void draw() override{
+//        glLineWidth(5);
+        glColor3f(.8,0,0);
+
+        float d= .1;
+
+        glPushMatrix();
+        glTranslatef(position.x, position.y, 0);
+
+        glLineWidth(3);
+        glBegin(GL_LINES);
+
+        //bottom line
+        plot(-d, -d);
+        plot(d, -d);
+
+        // top line
+        plot(-d, d);
+        plot(d, d);
+
+        glEnd();
+
+        glLineWidth(1);
+        // middle bars
+        glBegin(GL_LINES);
+        plot(-d, -d);
+        plot(-d, d);
+
+        plot(-.05, -d);
+        plot(-.05, d);
+
+        plot(0, -d);
+        plot(0, d);
+
+        plot(.05, -d);
+        plot(.05, d);
+
+        plot(d, -d);
+        plot(d, d);
+
+        glEnd();
+
+        glPopMatrix();
+    }
+
+    BasePlayer* getWrappedPlayer(BasePlayer* player) override{
+        return new BearTrap(player);
+    }
+};
+
 #endif

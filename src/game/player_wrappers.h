@@ -361,4 +361,104 @@ public:
     }
 };
 
+
+
+class BearTrap: public PlayerWrapper{
+public:
+    clock_t obit;
+
+    BearTrap(BasePlayer* player)
+    :PlayerWrapper(player){
+
+        // this wrapper will be removed after 5 seconds
+        obit = clock()+ 5*CLOCKS_PER_SEC;
+    }
+
+    void draw() override{
+
+        drawCage();
+        player->draw();
+    }
+
+    void drawCage(){
+        glColor3f(.8,0,0);
+        Point pos = player->getPosition();
+        float d= .1;
+
+        glPushMatrix();
+        glTranslatef(pos.x, pos.y, 0);
+
+        glLineWidth(3);
+        glBegin(GL_LINES);
+
+        //bottom line
+        plot(-d, -d);
+        plot(d, -d);
+
+        // top line
+        plot(-d, d);
+        plot(d, d);
+
+        glEnd();
+
+        glLineWidth(1);
+        // middle bars
+        glBegin(GL_LINES);
+        plot(-d, -d);
+        plot(-d, d);
+
+        plot(-.05, -d);
+        plot(-.05, d);
+
+        plot(0, -d);
+        plot(0, d);
+
+        plot(.05, -d);
+        plot(.05, d);
+
+        plot(d, -d);
+        plot(d, d);
+
+        glEnd();
+
+        glPopMatrix();
+    }
+
+    BasePlayer* updateWrapperChain(){
+        if(clock() < obit){
+            return this;
+        }
+        else{
+            return player;
+        }
+    }
+
+    void moveUp() override{
+    }
+
+    void moveDown() override{
+    }
+
+    void moveLeft() override{
+    }
+
+    void moveRight() override{
+    }
+
+    void shiftUp() override{
+    }
+
+    void shiftDown() override{
+    }
+
+    void shiftLeft() override{
+    }
+
+    void shiftRight() override{
+    }
+
+
+};
+
+
 #endif
