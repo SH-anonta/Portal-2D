@@ -22,6 +22,7 @@ public:
     }
 
     void draw(){
+        glPointSize(4);
         setColor(DEFAULT_BULLET_COLOR);
         glBegin(GL_POINTS);
         plot(position);
@@ -33,6 +34,7 @@ public:
         auto bullets_end = bullets.end();
         auto bullet =  bullets.begin();
 
+        glPointSize(4);
         setColor(DEFAULT_BULLET_COLOR);
         glBegin(GL_POINTS);
 
