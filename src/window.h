@@ -297,6 +297,8 @@ public:
     bool player1_is_alive= true;
     bool player2_is_alive= true;
 
+    bool player1_shift_mode;
+    bool player2_shift_mode;
 
     Portal p1Portal1= Portal(-2.9, 0, Left);
     Portal p1Portal2= Portal(0,-2.8, Down);
@@ -321,6 +323,9 @@ public:
 
         player1->setColor(Color(.2, .8, .3));
         player2->setColor(Color(.7, .7, .5));
+
+        player1_shift_mode = true;
+        player1_shift_mode = false;
 
         p1Portal1.setLinkedPortal(p1Portal2);
         p2Portal1.setLinkedPortal(p2Portal2);
@@ -495,8 +500,7 @@ public:
     }
 
     void updatePlayerPositions(){
-        if(SHIFT_IS_PRESSED){
-            // player 1 shift movements
+        if(player1_shift_mode){
             if(key_pressed['w']){
                 player1->shiftUp();
             }
@@ -526,8 +530,8 @@ public:
             }
         }
 
-        // if enter key is pressed
-        if(key_pressed[13]){
+
+        if(player2_shift_mode){
             //player 2 shift movements
             if(key_pressed['5']){
                 player2->shiftUp();
@@ -736,8 +740,13 @@ public:
         updateShiftKeyStatus();
 
         //TODO: remove, only here for debugging purpose
-        if(key == 'x'){
-            bullets.clear();
+
+        if(key == 'f'){
+            player1_shift_mode = !player1_shift_mode;
+        }
+        else if(key == '+'){
+            // if key is enter
+            player2_shift_mode = !player2_shift_mode;
         }
         else if(key == 27){
             // if escape was pressed
