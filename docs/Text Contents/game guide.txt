@@ -32,7 +32,7 @@ Collecting them will cause some temporary effect on you
 	Increases your health
 
 	Poison
-	Decreases your health
+	Slowly Decreases your health
 
 	Speed Boost
 	Increases your movement speed
@@ -46,13 +46,7 @@ Collecting them will cause some temporary effect on you
 	Machine Gun
 	Your gun fires more bullets per second
 
-	Jet Pack
-	you can walk on pits 
-
-	Death pill
-	You die instantly
-
-	Bear trap
+	Trap
 	You can't move
 
 

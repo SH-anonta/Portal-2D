@@ -19,6 +19,7 @@ public:
     Collectable* getCollectable(const Point& pos) override{
         float random = randomf();
 
+
         if(random < .25){
             return new HealthCollectable(pos);
         }
@@ -26,10 +27,13 @@ public:
             return new ShieldCollectable(pos);
         }
         else if(random < .75){
+            return new SpeedBoostCollectable(pos);
+        }
+        else if(random < .9){
             return new BearTrapCollectable(pos);
         }
         else{
-            return new SpeedBoostCollectable(pos);
+            return new PoisonCollectable(pos);
         }
     }
 };

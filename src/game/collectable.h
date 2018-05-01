@@ -199,4 +199,47 @@ public:
     }
 };
 
+
+class PoisonCollectable: public Collectable{
+
+
+public:
+
+    PoisonCollectable(const Point& pos): Collectable(pos){
+    }
+
+    void draw() override{
+        glLineWidth(4);
+        glColor3f(.8,0,0);
+
+        glPushMatrix();
+        glTranslatef(position.x, position.y, 0);
+        glBegin(GL_LINES);
+
+        float d = .08;
+
+        plot(-d, 0);
+        plot(d, -.1);
+
+        plot(d, 0);
+        plot(-d, -.1);
+
+        glEnd();
+
+        glPointSize(10);
+
+        glBegin(GL_POINTS);
+        plot(0,.05);
+        glEnd();
+
+        glPopMatrix();
+    }
+
+    BasePlayer* getWrappedPlayer(BasePlayer* player) override{
+        return new Poision(player);
+    }
+};
+
+
+
 #endif

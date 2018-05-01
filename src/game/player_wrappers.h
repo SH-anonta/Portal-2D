@@ -258,6 +258,7 @@ public:
     }
 
     BasePlayer* updateWrapperChain(){
+        player = player->updateWrapperChain();
         if(clock() < obit){
             return this;
         }
@@ -376,8 +377,8 @@ public:
     BearTrap(BasePlayer* player)
     :PlayerWrapper(player){
 
-        // this wrapper will be removed after 5 seconds
-        obit = clock()+ 5*CLOCKS_PER_SEC;
+        // this wrapper will be removed after 3 seconds
+        obit = clock()+ 3*CLOCKS_PER_SEC;
     }
 
     void draw() override{
@@ -431,6 +432,8 @@ public:
     }
 
     BasePlayer* updateWrapperChain(){
+        player = player->updateWrapperChain();
+
         if(clock() < obit){
             return this;
         }
@@ -483,6 +486,8 @@ public:
     }
 
     BasePlayer* updateWrapperChain(){
+        player = player->updateWrapperChain();
+
         if(clock() < obit){
             return this;
         }
@@ -493,6 +498,38 @@ public:
         }
     }
 
+};
+
+
+class Poision: public PlayerWrapper{
+public:
+    int iterations;     // how many iterations this wrapper has
+    const int REMOVE_AT_ITERATION = 200;
+    const float DAMAGE_PER_ITERATION = .1;
+
+    Poision(BasePlayer* player)
+    :PlayerWrapper(player){
+        iterations = 0;
+    }
+
+    void draw() override{
+        player->draw();
+    }
+
+    BasePlayer* updateWrapperChain(){
+        player = player->updateWrapperChain();
+
+        if(iterations == REMOVE_AT_ITERATION){
+            return player;
+        }
+        else{
+            player->takeDamage(DAMAGE_PER_ITERATION);
+            iterations++;
+            return this;
+        }
+
+
+    }
 };
 
 
