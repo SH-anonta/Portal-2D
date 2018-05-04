@@ -603,11 +603,13 @@ public:
 
     void spawnNewBullets(){
         if(key_pressed[' '] && player1->reloadTimeIsOver()){
+            AudioFacade::playShootingSound();
             Bullet new_bullet =  player1->shootBullet();
             bullets.push_back(new_bullet);
         }
 
         if(key_pressed['0'] && player2->reloadTimeIsOver()){
+            AudioFacade::playShootingSound();
             Bullet new_bullet =  player2->shootBullet();
             bullets.push_back(new_bullet);
         }

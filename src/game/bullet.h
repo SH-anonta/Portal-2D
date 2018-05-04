@@ -34,7 +34,7 @@ public:
         auto bullets_end = bullets.end();
         auto bullet =  bullets.begin();
 
-        glPointSize(4);
+        glPointSize(5);
         setColor(DEFAULT_BULLET_COLOR);
         glBegin(GL_POINTS);
 

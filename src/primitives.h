@@ -49,7 +49,7 @@ public:
 
 float randomf(){
     // return random number ranging form 0 to 1
-    return float(rand())/RAND_MAX;
+    return float(rand()-1)/RAND_MAX;
 }
 
 #endif

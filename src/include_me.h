@@ -9,6 +9,10 @@
 #include <cstring>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include<windows.h>
+#include<mmsystem.h>
+#include<windows.h>
+#include<mmsystem.h>
 
 using namespace std;
 
@@ -16,6 +20,7 @@ using namespace std;
 #include "./game/geometry.h"
 #include "./plot.h"
 #include "./debug.h"
+#include "./audio.h"
 #include "./game/backgrounds.h"
 #include "./text_draw.h"
 #include "./game/bullet.h"
