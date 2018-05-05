@@ -221,18 +221,199 @@ class VerticalPathsMapFactory:public MapFactory
     }
 };
 
+class islandsMapFactory: public MapFactory{
+
+public:
+    Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Islands");
+        float WALL_THICKNESS = .1;
+
+        // walls
+        Wall one = Wall(0.1, 0.7, -2.4, 1.55);
+        Wall two = Wall(0.7, 0.1, 1.8, 2.2);
+        Wall three = Wall(0.1, 0.8, 1.0, 1.1);
+        Wall four = Wall(0.1, 0.6, -2.2, -0.2);
+        Wall five = Wall(0.7, 0.1, -1.0, -0.35);
+        Wall six = Wall(0.7, 0.1, 0.0, 0.45);
+        Wall seven = Wall(0.1, 0.6, 2.43, -0.2);
+        Wall eight = Wall(0.9, 0.1, -1.7, -2.32);
+        Wall nine = Wall(0.1, 0.9, 2.43, -2.3);
+
+        game_map.addWall(one);
+        game_map.addWall(two);
+        game_map.addWall(three);
+        game_map.addWall(four);
+        game_map.addWall(five);
+        game_map.addWall(six);
+        game_map.addWall(seven);
+        game_map.addWall(eight);
+        game_map.addWall(nine);
+
+        // pits
+        Pit bottom_pit = Pit(6,0.5, -3.0, -2.8);
+        Pit top_pit = Pit(6,0.5, -3.0, 2.28);
+        Pit left_pit = Pit(0.6, 5.7, -3.0, -2.8);
+        Pit right_pit = Pit(0.6, 5.7, 2.5, -2.8);
+
+        Pit middle_bottom = Pit(1, 2.4, -0.5, -2.8);
+        Pit middle_top = Pit(1, 2.4, -0.5, 0.5);
+        Pit middle_left1 = Pit(0.8, 1, -3.0, -0.5);
+        Pit middle_left2 = Pit(0.5, 1.0, -1.5, -0.4);
+        Pit middle_right = Pit(1.0, 1.0, 0.75, -0.4);
+        Pit lower_edge = Pit(6.0, 0.2, -3.0, 0.5);
+        Pit upper_edge = Pit(6.0, 0.2, -3.0, -0.5);
+
+
+        game_map.addPit(bottom_pit);
+        game_map.addPit(top_pit);
+        game_map.addPit(left_pit);
+        game_map.addPit(right_pit);
+
+        game_map.addPit(middle_bottom);
+        game_map.addPit(middle_top);
+        game_map.addPit(middle_left1);
+        game_map.addPit(middle_left2);
+        game_map.addPit(middle_right);
+        game_map.addPit(lower_edge);
+        game_map.addPit(upper_edge);
+
+        game_map.p1position = Point(-2.0, -2.0);
+        game_map.p2position = Point(2.0, 2.0);
+
+
+
+        return game_map;
+    }
+};
+
+
 class RandomMazeMapFactory: public MapFactory{
+    int MAZE_DIMENSION; // # of row and column
+    vector<vector<char>> maze;
+    int wall_count;
+    int desired_wall_count;
+
+    void generateRandomMaze(){
+        int n = MAZE_DIMENSION;
+
+        maze.clear();
+        for(int i= 0; i<n; i++){
+            maze.push_back(vector<char>(MAZE_DIMENSION, '#'));
+        }
+
+        wall_count = MAZE_DIMENSION*MAZE_DIMENSION;
+        desired_wall_count = (randomf() * (wall_count*3));
+
+        desired_wall_count%=90;
+        printf("%d\n",desired_wall_count);
+        int tries = 1;
+        while(desired_wall_count != wall_count){
+            int seed_x = randomf()*MAZE_DIMENSION;
+            int seed_y = randomf()*MAZE_DIMENSION;
+
+            createRandomPath(seed_x, seed_y);
+            tries++;
+        }
+
+//        printf("%d\n", tries);
+    }
+
+    void printMaze(){
+        int rows= maze.size();
+        int cols= maze[0].size();
+
+        for(int r= 0; r<rows; r++){
+            for(int c= 0; c<cols; c++){
+                printf("%c", maze[r][c]);
+            }
+            printf("\n");
+        }
+    }
+
+    void createRandomPath(int x, int y){
+
+        if(x < 0 || y < 0 || x >= MAZE_DIMENSION || y >= MAZE_DIMENSION){
+            return;
+        }
+
+        if(desired_wall_count == wall_count){
+            return;
+        }
+
+        if(maze[x][y] == '#'){
+            maze[x][y] = ' ';
+            wall_count--;
+        }
+
+        int tries = 0;
+        // keep trying random direction until a valid one is found
+
+        // randomly choose a direction to take
+        int nx = randomf() < .5 ? x-1 : x+1;
+        int ny = randomf() < .5 ? y+1 : y-1;
+        createRandomPath(nx, ny);
+    }
 
 public:
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Random Map");
 
+        MAZE_DIMENSION = 10;
+
+       generateRandomMaze();
+
+        printMaze();
+        double initsize=0.4;
+        float WALL_THICKNESS = .1;
+        int rows= maze.size();
+        int cols= maze[0].size();
+         double  w=initsize,x=-2.5,y=2;
+         int flag=0;
+        for(int r= 0; r<rows; r++){
+            x=-3;
+            y-=initsize;
+            for(int c= 0; c<cols; c++){
+                if(maze[r][c]=='#'){
+                     // w+=0.033;
+                      Wall one=Wall(w,WALL_THICKNESS,x,y);
+                      game_map.addWall(one);
+                   //   w+=0.033;
+                      x+=initsize;
+                     // flag=1;
+                  }
+
+
+            }
+
+        }
+        y=2,x=-2.5,w=initsize;
+       for(int r= 0; r<rows; r++){
+              y=2.0;
+              x+=initsize;
+            for(int c= 0; c<cols; c++){
+                  if(maze[c][r]=='#')
+                  {
+                      //w+=0.033;
+                      Wall one=Wall(WALL_THICKNESS,w,x,y);
+                      game_map.addWall(one);
+                     // w-=0.033;
+                      y-=initsize;
+                     // flag=1;
+                  }
+
+
+            }
+
+        }
+
         return game_map;
     }
 
 
 };
+
 
 vector<Map> getAllMaps(){
     vector<Map> maps;
@@ -243,6 +424,9 @@ vector<Map> getAllMaps(){
     maps.push_back(StrandedMapFactory().createMap());
     maps.push_back(PitNestsMapFactory().createMap());
     maps.push_back(VerticalPathsMapFactory().createMap());
+    maps.push_back(islandsMapFactory().createMap());
+//    srand(time(NULL)+1);
+//    maps.push_back(RandomMazeMapFactory().createMap());
 
     return maps;
 }

@@ -28,7 +28,7 @@ Collectibles
 During the game, collectible items will pop up randomly
 Collecting them will cause some temporary effect on you
 	
-	Hearts
+	Health
 	Increases your health
 
 	Poison
@@ -37,14 +37,8 @@ Collecting them will cause some temporary effect on you
 	Speed Boost
 	Increases your movement speed
 
-	Speed Bump
-	Increases your movement speed
-
 	Shield
 	Protects you from all damage
-
-	Machine Gun
-	Your gun fires more bullets per second
 
 	Trap
 	You can't move
