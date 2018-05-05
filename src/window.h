@@ -829,13 +829,16 @@ public:
 class MapSelectionMenue: public Window{
     // options are shown from top to bottom, option at index 0 is shown on top
     Window* previous_window;
-    vector<Map> menu_options = getAllMaps();
+    Map current_map;
+
+    vector<MapFactory*> menu_options = getAllMapFactories();
     int selected_option_idx = 0;
 
 public:
 
     MapSelectionMenue(Window* previous_window){
         this->previous_window = previous_window;
+        current_map = menu_options[0]->createMap();
     }
 
     void execute() override{
@@ -864,13 +867,13 @@ public:
         glPushMatrix();
         glTranslatef(1,0,0);
         glScalef(.5,.5, 1);
-        menu_options[selected_option_idx].draw();
+        current_map.draw();
         glPopMatrix();
     }
 
     void handleChosenOption(int chosen_option_idx){
         //start game with selected map
-        this->w_engine->switchWindow(new GameWindow(menu_options[chosen_option_idx]));
+        this->w_engine->switchWindow(new GameWindow(current_map));
     }
 
     void drawMenueOptions(){
@@ -888,7 +891,7 @@ public:
                 glColor3f(0.2,0.6,.9);
             }
 
-            drawString(0, y, (char*)menu_options[i].getMapName().c_str());
+            drawString(0, y, (char*)menu_options[i]->getMapName().c_str());
             y-= LINE_SPACING;
         }
     }
@@ -917,6 +920,9 @@ public:
         else if(key == GLUT_KEY_DOWN){
             selectOptionBellow();
         }
+        else if(key == GLUT_KEY_RIGHT){
+            current_map = menu_options[selected_option_idx]->createMap();
+        }
 
 //        printf("%d\n", selected_option_idx);
     }
@@ -934,10 +940,13 @@ public:
         if(selected_option_idx < 0){
             selected_option_idx = menu_options.size()-1;
         }
+
+        current_map = menu_options[selected_option_idx]->createMap();
     }
 
     void selectOptionBellow(){
         selected_option_idx = (selected_option_idx+1)%menu_options.size();
+        current_map = menu_options[selected_option_idx]->createMap();
     }
 };
 

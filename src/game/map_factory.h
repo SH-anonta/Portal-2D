@@ -9,12 +9,19 @@ public:
     virtual Map createMap(){
 
     }
+
+    virtual string getMapName(){
+    }
 };
 
 // create a map with four borders only
 class VoidMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "The Void";
+    }
+
     Map createMap() override{
         Map gmap;
         double thickness= .1;
@@ -43,6 +50,10 @@ public:
 class ChokePointMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "Choke Point";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Choke Point");
@@ -68,6 +79,10 @@ public:
 class PocketsMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "Pockets";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Pockets");
@@ -79,6 +94,10 @@ public:
 class DivideMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "The Divide";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Divide");
@@ -99,6 +118,10 @@ public:
 class StrandedMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "Stranded";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Stranded");
@@ -124,6 +147,10 @@ public:
 class PitNestsMapFactory:public MapFactory
 {
     public:
+    string getMapName() override{
+        return "Pit Nests";
+    }
+
     Map createMap() override
     {
         double thickness=.1;
@@ -185,6 +212,10 @@ class PitNestsMapFactory:public MapFactory
 class VerticalPathsMapFactory:public MapFactory
 {
     public:
+    string getMapName() override{
+        return "Vertical Paths";
+    }
+
     Map createMap() override
     {
         double thickness=.1;
@@ -224,6 +255,10 @@ class VerticalPathsMapFactory:public MapFactory
 class islandsMapFactory: public MapFactory{
 
 public:
+    string getMapName() override{
+        return "Islands";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Islands");
@@ -360,6 +395,11 @@ class RandomMazeMapFactory: public MapFactory{
     }
 
 public:
+
+    string getMapName() override{
+        return "Random Maze";
+    }
+
     Map createMap() override{
         Map game_map = VoidMapFactory().createMap();
         game_map.setMapName("Random Map");
@@ -368,7 +408,7 @@ public:
 
        generateRandomMaze();
 
-        printMaze();
+//        printMaze();
        double initsize=0.5;
         float WALL_THICKNESS = .1;
         int rows= maze.size();
@@ -452,7 +492,8 @@ public:
         }
 
 
-
+        game_map.p1position = game_map.getValidSpawnPoint();
+        game_map.p2position = game_map.getValidSpawnPoint();
 
         return game_map;
     }
@@ -476,4 +517,21 @@ vector<Map> getAllMaps(){
     return maps;
 }
 
+
+
+vector<MapFactory*> getAllMapFactories(){
+    vector<MapFactory*> maps;
+
+    maps.push_back(new VoidMapFactory());
+    maps.push_back(new ChokePointMapFactory());
+    maps.push_back(new DivideMapFactory());
+    maps.push_back(new StrandedMapFactory());
+    maps.push_back(new PitNestsMapFactory());
+    maps.push_back(new VerticalPathsMapFactory());
+    maps.push_back(new islandsMapFactory());
+//    srand(time(NULL)+1);
+    maps.push_back(new RandomMazeMapFactory());
+
+    return maps;
+}
 #endif

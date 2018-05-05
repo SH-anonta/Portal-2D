@@ -1,14 +1,14 @@
 #include "./include_me.h"
 
 //WindowEngine w_engine(new ConfirmQuitGameWindow(NULL));
-//WindowEngine w_engine(new SplashScreenWindow());
+WindowEngine w_engine(new SplashScreenWindow());
 //WindowEngine w_engine(new MainMenuWindow());
 //WindowEngine w_engine(new GameGuideWindow(NULL));
 //WindowEngine w_engine(new HelpScreenWindow(NULL));
 //WindowEngine w_engine(new GameWindow(DivideMapFactory().createMap()));
 //WindowEngine w_engine(new GameWindow(islandsMapFactory().createMap()));
 //WindowEngine w_engine(new GameOverWindow("Player1 Wins"));
-WindowEngine w_engine(new MapSelectionMenue(new MainMenuWindow()));
+//WindowEngine w_engine(new MapSelectionMenue(new MainMenuWindow()));
 //WindowEngine w_engine(new GameWindow(RandomMazeMapFactory().createMap()));
 
 
