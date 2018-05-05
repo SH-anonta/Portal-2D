@@ -332,6 +332,10 @@ class RandomMazeMapFactory: public MapFactory{
     }
 
     void createRandomPath(int x, int y){
+//        printf("AAAAAAAAA\n");
+//        printf("%d\n", wall_delete_count);
+//        printf("%d %d\n", x, y);
+
 
         if(x < 0 || y < 0 || x >= MAZE_DIMENSION || y >= MAZE_DIMENSION){
             return;
@@ -365,55 +369,96 @@ public:
        generateRandomMaze();
 
         printMaze();
-        double initsize=0.4;
+       double initsize=0.5;
         float WALL_THICKNESS = .1;
         int rows= maze.size();
         int cols= maze[0].size();
-         double  w=initsize,x=-2.5,y=2;
+         double  w=initsize,x=-3,y=3,increase=.5;
          int flag=0;
         for(int r= 0; r<rows; r++){
-            x=-3;
-            y-=initsize;
+              x=-3;
+              y-=increase;
+              flag=0;
+              w=0;
             for(int c= 0; c<cols; c++){
-                if(maze[r][c]=='#'){
+                  if(maze[r][c]=='#')
+                  {
                      // w+=0.033;
+                        flag=1;
+                        w+=initsize;                      //   w+=0.033
+                     // flag=1;
+                  }
+                  else if(flag && maze[r][c]==' ')
+                  {
                       Wall one=Wall(w,WALL_THICKNESS,x,y);
                       game_map.addWall(one);
-                   //   w+=0.033;
+                      flag=0;
+                    x+=initsize;
+                  }
+                  else
+                  {
                       x+=initsize;
-                     // flag=1;
                   }
 
 
             }
+            if(flag)
+            {
+                 Wall one=Wall(w,WALL_THICKNESS,x,y);
+                      game_map.addWall(one);
+                      flag=0;
+                    x+=w;
+            }
 
         }
-        y=2,x=-2.5,w=initsize;
+        y=-2.7,x=-3,w=initsize;
+        double temp=.4;
        for(int r= 0; r<rows; r++){
-              y=2.0;
+              y=-2.7;
               x+=initsize;
-            for(int c= 0; c<cols; c++){
+              flag=0;
+              w=0;
+            for(int c= cols-1; c>=0; c--){
                   if(maze[c][r]=='#')
                   {
-                      //w+=0.033;
+                     // w+=0.033;
+                        flag=1;
+                        w+=initsize;                      //   w+=0.033
+                     // flag=1;
+                  }
+                  else if(flag && maze[c][r]==' ')
+                  {
                       Wall one=Wall(WALL_THICKNESS,w,x,y);
                       game_map.addWall(one);
-                     // w-=0.033;
-                      y-=initsize;
-                     // flag=1;
+                      flag=0;
+                    y+=temp;
+                  }
+                  else
+                  {
+                      y+=temp;
                   }
 
 
             }
+            if(flag)
+            {
+                Wall one=Wall(WALL_THICKNESS,w,x,y);
+                      game_map.addWall(one);
+                      flag=0;
+                    y-=w;
+            }
+
 
         }
+
+
+
 
         return game_map;
     }
 
 
 };
-
 
 vector<Map> getAllMaps(){
     vector<Map> maps;
@@ -426,7 +471,7 @@ vector<Map> getAllMaps(){
     maps.push_back(VerticalPathsMapFactory().createMap());
     maps.push_back(islandsMapFactory().createMap());
 //    srand(time(NULL)+1);
-//    maps.push_back(RandomMazeMapFactory().createMap());
+    maps.push_back(RandomMazeMapFactory().createMap());
 
     return maps;
 }

@@ -214,7 +214,7 @@ public:
     void draw()override {
         glPushMatrix();
 
-        glTranslatef(0, text_translate_y, 0);
+        glTranslatef(.2, text_translate_y, 0);
 
         drawTexts();
         glPopMatrix();
@@ -222,9 +222,58 @@ public:
         drawMainBackground();
     }
 
-    void drawTexts(){
+    void drawTexts()
+    {
         glColor3f(.9,.9,.9);
-        drawString(0, 0, "Place holder text");
+        auto font1=GLUT_BITMAP_TIMES_ROMAN_24;
+        auto font2=GLUT_BITMAP_HELVETICA_18;
+
+
+            double increase=-.1;
+        drawString(-3, 2.7, "Game objective",font1);
+
+        drawString(-3, 2.4, "Shoot your opponent until their health drops to nothing");
+        drawString(-3, 2.1, "Map");
+        drawString(-3, 1.9, "You will be placed on a map to fight your opponent. Maps have...");
+        drawString(-2.5, 1.6+increase, "Walls");
+        drawString(-2.5, 1.4+increase, "You can't move or shoot through walls. You can however open portals on them");
+        drawString(-2.5, 1.2+increase, "Pits");
+        drawString(-2.5, 1.0+increase, "If you fall into a pit, you die instantly");
+        drawString(-2.5, 0.8+increase, "Hearts");
+        drawString(-2.5, 0.6+increase, "Hearts spawn randomly on the map, collect them to increase your health");
+
+        drawString(-3, 0.2+increase, "Guns");
+        drawString(-3, 0.0+increase, "You will be placed on a map to fight your opponent. Maps have...");
+
+        drawString(-3, -0.4+increase, "Portal Guns");
+        drawString(-3, -0.6+increase, "You can open two portals (Portal A and B)");
+        drawString(-3, -0.8+increase, "You can travel and shoot through them");
+        drawString(-3, -1.0+increase, "Portals are opened on the nearest wall in front of you");
+        drawString(-3, -1.2+increase, "Opening portal A will close any open portal A. Same goes for portal B");
+
+
+        drawString(-3, -1.6+increase, "Collectibles");
+        drawString(-3, -1.8+increase, "During the game, collectible items will pop up randomly");
+        drawString(-3, -2.0+increase, "Collecting them will cause some temporary effect on you");
+        drawString(-2.5, -2.4+increase, "Health");
+        drawString(-2.5, -2.6+increase, "Increases your health");
+        drawString(-2.5, -2.8+increase, "Poison");
+        drawString(-2.5, -3.0+increase, "Slowly Decreases your health");
+        drawString(-2.5, -3.2+increase, "Speed Boost");
+        drawString(-2.5, -3.4+increase, "Increases your movement speed");
+        drawString(-2.5, -3.6+increase, "Shield");
+        drawString(-2.5, -3.8+increase, "Protects you from all damage");
+        drawString(-2.5, -4.0+increase, "Trap");
+        drawString(-2.5, -4.2+increase, "You can't move");
+
+
+       drawString(-3, -4.6+increase, "Controls ");
+        drawString(-3, -4.8+increase, "You can bring up the controls screen during a running game by pressing F12");
+
+
+
+
+
     }
 
     void keyPress(unsigned char key, int x, int y) override{
@@ -1182,7 +1231,6 @@ public:
 
     }
 };
-
 
 class GameOverWindow: public Window{
     string message;
