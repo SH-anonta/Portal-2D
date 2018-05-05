@@ -378,6 +378,9 @@ public:
 
         collectable_factory = new RandomCollectableFactory();
         next_spawn_time = clock()+CLOCKS_PER_SEC*10;
+
+        player1_shift_mode= false;
+        player2_shift_mode= false;
     }
 
     ~GameWindow(){
@@ -403,6 +406,9 @@ public:
         spawnNewBullets();
         spawnNewPortals();
         updateBulletPositions();
+
+//        if(player2_shift_mode)
+//            printf("AAAAAAAAA\n");
 
         draw();
 

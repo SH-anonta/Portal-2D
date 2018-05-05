@@ -15,6 +15,7 @@ class Player: public BasePlayer{
     float speed;
     float health;
     Direction direction = Up;
+
     Point position;
     Point next_position;    // next position that will be occupied by the player if the game allows it
     Color color;
@@ -29,6 +30,7 @@ public:
         color = DEFAULT_PLAYER_COLOR;
         health= MAX_PLAYER_HEALTH;
         speed = DEFAULT_PLAYER_SPEED;
+        direction = Up;
     }
 
     Player(const Point& pos){
@@ -39,6 +41,7 @@ public:
         health= MAX_PLAYER_HEALTH;
         speed = DEFAULT_PLAYER_SPEED;
         last_bullet_shoot_time= 0;
+        direction = Up;
     }
 
     Player(double x, double y){
@@ -48,6 +51,7 @@ public:
         health= MAX_PLAYER_HEALTH;
         last_bullet_shoot_time= 0;
         speed = DEFAULT_PLAYER_SPEED;
+        direction = Up;
     }
 
     BasePlayer* updateWrapperChain() override{

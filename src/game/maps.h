@@ -134,6 +134,7 @@ public:
 };
 
 class Map{
+    public:
     vector<Wall> walls;
     vector<Pit> pits;
     string map_name;
@@ -144,7 +145,7 @@ class Map{
     float y_max = 3;
     float y_min = -3;
 
-public:
+
     Point p1position;
     Point p2position;
 

@@ -323,6 +323,71 @@ public:
 };
 
 
+class SpiralMapFactory: public MapFactory{
+
+public:
+
+    string getMapName() override{
+        return "Spiral";
+    }
+
+
+    Map createMap() override{
+        Map game_map = VoidMapFactory().createMap();
+        game_map.setMapName("Spiral");
+        float WALL_THICKNESS = .1;
+
+        // walls
+        Wall horizontal1= Wall(4.2, WALL_THICKNESS, -2.1, -2);
+        Wall horizontal2= Wall(4.2, WALL_THICKNESS, -2.1, 1.8);
+        Wall horizontal3= Wall(3.1, WALL_THICKNESS, -1.0, -1);
+        Wall horizontal4= Wall(2.2, WALL_THICKNESS, -1.0, 1.0);
+        Wall horizontal5= Wall(1.7, WALL_THICKNESS, -0.4, -0.3);
+        Wall horizontal6= Wall(.9, WALL_THICKNESS, -0.4, 0.4);
+
+
+        Wall vertical1= Wall(WALL_THICKNESS, 3.9 , -2.1, -2);
+        Wall vertical2= Wall(WALL_THICKNESS, 2.7 , 2.0, -0.9);
+        Wall vertical3= Wall(WALL_THICKNESS, 2.1 , -1.0, -1);
+        Wall vertical4= Wall(WALL_THICKNESS, 1.3 , 1.2, -0.2);
+        Wall vertical5= Wall(WALL_THICKNESS, 0.7 , -0.4, -0.3);
+
+
+
+        game_map.addWall(horizontal1);
+        game_map.addWall(horizontal2);
+        game_map.addWall(horizontal3);
+        game_map.addWall(horizontal4);
+        game_map.addWall(horizontal5);
+        game_map.addWall(horizontal6);
+
+
+        game_map.addWall(vertical1);
+        game_map.addWall(vertical2);
+        game_map.addWall(vertical3);
+        game_map.addWall(vertical4);
+        game_map.addWall(vertical5);
+
+        // pits
+        Pit horizontal_pit1 = Pit(0.5,0.9, -.3, -2.9);
+        Pit horizontal_pit2 = Pit(0.5,1, -.3, 1.8);
+
+
+        Pit vertical_pit1 = Pit(0.9,2, -3, -0.5);
+        Pit vertical_pit2 = Pit(1,0.8, -2, -0.1);
+        Pit vertical_pit3 = Pit(1,0.5, 2, -0.5);
+
+        game_map.addPit(horizontal_pit1);
+        game_map.addPit(horizontal_pit2);
+
+        game_map.addPit(vertical_pit1);
+        game_map.addPit(vertical_pit2);
+        game_map.addPit(vertical_pit3);
+
+        return game_map;
+    }
+};
+
 class RandomMazeMapFactory: public MapFactory{
     int MAZE_DIMENSION; // # of row and column
     vector<vector<char>> maze;
@@ -495,11 +560,14 @@ public:
         game_map.p1position = game_map.getValidSpawnPoint();
         game_map.p2position = game_map.getValidSpawnPoint();
 
+        printf("Walls: %d\n", game_map.walls.size());
         return game_map;
     }
 
 
 };
+
+
 
 vector<Map> getAllMaps(){
     vector<Map> maps;
@@ -529,7 +597,7 @@ vector<MapFactory*> getAllMapFactories(){
     maps.push_back(new PitNestsMapFactory());
     maps.push_back(new VerticalPathsMapFactory());
     maps.push_back(new islandsMapFactory());
-//    srand(time(NULL)+1);
+    maps.push_back(new SpiralMapFactory());
     maps.push_back(new RandomMazeMapFactory());
 
     return maps;
